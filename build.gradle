@@ -1,0 +1,126 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+plugins {
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'kr.entree.spigradle' version '2.2.4'
+    id 'io.freefair.lombok' version '6.3.0'
+    id 'com.gorylenko.gradle-git-properties' version '2.3.2'
+    id 'java'
+    id 'jacoco'
+    id 'idea'
+}
+
+apply from: "$rootDir/gradle/jacoco.gradle"
+apply from: "$rootDir/gradle/publish.gradle"
+
+if (project.hasProperty("local_script")) {
+    apply from: file(local_script + "/build.local.gradle")
+}
+
+sourceCompatibility = 17
+targetCompatibility = 17
+
+ext {
+    mcVersion = project.property("mcVersion")
+}
+
+group project.property("group")
+
+spigot {
+    name = project.property("pluginName")
+    authors = [project.property("author")]
+    apiVersion = project.property("apiVersion")
+    description = project.property("description")
+    version = project.property("version")
+    load = STARTUP
+    depends = ['Towny']
+    softDepends = ['DiscordSRV']
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs += ["-parameters"]
+    options.fork = true
+    options.forkOptions.executable = 'javac'
+}
+
+archivesBaseName = project.property("pluginName")
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    spigot()
+    maven { url = 'https://jitpack.io' }
+    maven { url = 'https://libraries.minecraft.net/' }
+//    maven { url = 'https://repo.spongepowered.org/maven/' }
+    maven { url = 'https://nexus.scarsz.me/content/groups/public/' }
+//    maven { url = 'https://repo.aikar.co/content/groups/aikar/' }
+    maven { url = 'https://repo.dmulloy2.net/repository/public/' }
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/public/' }
+    maven { url = 'https://oss.sonatype.org/content/repositories/snapshots/' }
+}
+
+dependencies {
+    // using spigot-api
+    // implementation spigot(mcVersion)
+    // or using paper-api
+    implementation "io.papermc.paper:paper-api:${mcVersion}-R0.1-SNAPSHOT"
+
+    // Command Handling! https://commandframework.cloud
+    implementation "cloud.commandframework:cloud-paper:1.5.0"
+    implementation "cloud.commandframework:cloud-minecraft-extras:1.5.0"
+    // Dependency for our way of command handling
+    implementation "me.lucko:commodore:1.10"
+    // For handling multi platform configuration, simply amazing
+    implementation "org.spongepowered:configurate-yaml:4.1.2"
+    // Adventure
+    implementation "net.kyori:adventure-text-minimessage:4.1.0-20210112.212738"
+
+    // Towny
+    implementation "com.github.TownyAdvanced:Towny:0.97.2.0"
+
+    // DiscordSRV, optional dependency
+    implementation 'com.discordsrv:discordsrv:1.24.0'
+
+    // Test dependencies
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+    testImplementation 'org.mockito:mockito-core:4.0.0'
+    testImplementation 'com.github.seeseemelk:MockBukkit-v1.18:1.15.5'
+    testImplementation 'org.assertj:assertj-core:3.21.0'
+}
+
+shadowJar {
+    classifier = ''
+    dependencies {
+        include(dependency('cloud.commandframework:cloud-paper:1.5.0'))
+        include(dependency('me.lucko:commodore:1.10'))
+        include(dependency('com.discordsrv:discordsrv:1.24.0'))
+    }
+}
+
+gitProperties {
+    failOnNoGitDirectory = false
+}
+
+tasks.build.dependsOn(shadowJar)
+tasks.publish.dependsOn(shadowJar)
+tasks.prepareSpigotPlugins.dependsOn(shadowJar)
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "skipped", "failed"
+    }
+    ignoreFailures = true
+}
+
+processResources {
+    project.properties.put("version", this.version)
+    expand project.properties
+}
+
+defaultTasks 'build'
