@@ -2,6 +2,8 @@ package me.romvnly.TownyPlus;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -12,13 +14,13 @@ public abstract class TestBase {
     protected ServerMock server;
     protected TownyPlusMain plugin;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         server = MockBukkit.mock();
-        plugin = MockBukkit.load(TownyPlusMain.class);
+        plugin = (TownyPlusMain) MockBukkit.load(TownyPlusMain.class);
     }
 
-    @AfterEach
+    @After
     public void tearDown() {
         MockBukkit.unmock();
     }

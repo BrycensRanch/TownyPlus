@@ -11,12 +11,13 @@ import me.romvnly.TownyPlus.command.CommandManager;
 import me.romvnly.TownyPlus.util.CommandUtil;
 import me.romvnly.TownyPlus.util.Constants;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.Template;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import net.kyori.adventure.text.minimessage.Template;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -108,8 +109,7 @@ public final class BypassCommand extends BaseCommand {
                 })
                 .build();
         this.commandManager.registerSubcommand(builder ->
-                builder.literal("bypass")
-                        .meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.get().parse("Bypass towny's stupid protections!"))
+                builder.literal("bypass").meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.get().parse("Bypass towny's stupid protections!"))
                         .argument(toggleArgument, CommandUtil.description("On/off to force enable/disable"))
                         .argument(timeArgument, CommandUtil.description("Duration to bypass towny's protections on Towns"))
                         .argument(SinglePlayerSelectorArgument.optional("player"), CommandUtil.description("Defaults to the executing player if unspecified (console must specify a player)"))

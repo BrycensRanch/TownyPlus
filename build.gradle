@@ -1,3 +1,5 @@
+//file:noinspection SpellCheckingInspection
+//file:noinspection GroovyAssignabilityCheck
 buildscript {
     repositories {
         mavenCentral()
@@ -6,7 +8,7 @@ buildscript {
 
 plugins {
     id 'com.github.johnrengelman.shadow' version '7.1.2'
-    id 'kr.entree.spigradle' version '2.2.4'
+    id 'kr.entree.spigradle' version '2.3.4'
     id 'io.freefair.lombok' version '6.3.0'
     id 'com.gorylenko.gradle-git-properties' version '2.3.2'
     id 'java'
@@ -32,13 +34,14 @@ group project.property("group")
 
 spigot {
     name = project.property("pluginName")
-    authors = [project.property("author")]
+    authors = List.of(project.property("author").toString())
     apiVersion = project.property("apiVersion")
     description = project.property("description")
     version = project.property("version")
     load = STARTUP
     depends = ['Towny']
-    softDepends = ['DiscordSRV']
+//    softDepends = ['DiscordSRV']
+
 }
 
 compileJava {
@@ -60,8 +63,9 @@ repositories {
     maven { url = 'https://nexus.scarsz.me/content/groups/public/' }
 //    maven { url = 'https://repo.aikar.co/content/groups/aikar/' }
     maven { url = 'https://repo.dmulloy2.net/repository/public/' }
-    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/public/' }
+    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/public/' }
     maven { url = 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    maven { url = 'https://repo.glaremasters.me/repository/towny/'}
 }
 
 dependencies {
@@ -71,26 +75,31 @@ dependencies {
     implementation "io.papermc.paper:paper-api:${mcVersion}-R0.1-SNAPSHOT"
 
     // Command Handling! https://commandframework.cloud
-    implementation "cloud.commandframework:cloud-paper:1.5.0"
-    implementation "cloud.commandframework:cloud-minecraft-extras:1.5.0"
+    implementation 'cloud.commandframework:cloud-paper:1.6.1'
+    implementation 'cloud.commandframework:cloud-minecraft-extras:1.6.1'
     // Dependency for our way of command handling
-    implementation "me.lucko:commodore:1.10"
+    implementation 'me.lucko:commodore:1.11'
     // For handling multi platform configuration, simply amazing
     implementation "org.spongepowered:configurate-yaml:4.1.2"
-    // Adventure
-    implementation "net.kyori:adventure-text-minimessage:4.1.0-20210112.212738"
-
+    implementation 'junit:junit:4.13.1'
     // Towny
-    implementation "com.github.TownyAdvanced:Towny:0.97.2.0"
+    compileOnly 'com.palmergames.bukkit.towny:towny:0.97.5.8'
+    // Adventure
+    implementation "net.kyori:adventure-api:4.9.3"
+    implementation "net.kyori:adventure-text-minimessage:4.1.0-SNAPSHOT"
 
-    // DiscordSRV, optional dependency
-    implementation 'com.discordsrv:discordsrv:1.24.0'
+//    // DiscordSRV, optional dependency
+//    compileOnly 'com.discordsrv:discordsrv:1.24.0'
+//    // JDA for DiscordSRV
+//    implementation("net.dv8tion:JDA:5.0.0-alpha.4") {
+//        exclude module: 'opus-java'
+//    }
 
     // Test dependencies
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
-    testImplementation 'org.mockito:mockito-core:4.0.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+    testImplementation 'org.mockito:mockito-core:4.2.0'
     testImplementation 'com.github.seeseemelk:MockBukkit-v1.18:1.15.5'
-    testImplementation 'org.assertj:assertj-core:3.21.0'
+    testImplementation 'org.assertj:assertj-core:3.22.0'
 }
 
 shadowJar {
@@ -100,6 +109,9 @@ shadowJar {
         include(dependency('me.lucko:commodore:1.10'))
         include(dependency('com.discordsrv:discordsrv:1.24.0'))
     }
+    relocate 'cloud.commandframework', "${packageName}.cloud"
+    relocate 'me.lucko:commodore', "${packageName}.commodore"
+    relocate 'com.discordsrv', "${packageName}.discordsrv"
 }
 
 gitProperties {
