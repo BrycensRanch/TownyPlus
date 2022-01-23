@@ -1,5 +1,6 @@
 package me.romvnly.TownyPlus;
 
+import kr.entree.spigradle.annotations.SpigotPlugin;
 import me.romvnly.TownyPlus.command.CommandManager;
 import me.romvnly.TownyPlus.configuration.Config;
 import me.romvnly.TownyPlus.configuration.Lang;
@@ -8,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.util.logging.Level;
 
+@SpigotPlugin
 public final class TownyPlusMain extends JavaPlugin {
     public static TownyPlusMain plugin;
 

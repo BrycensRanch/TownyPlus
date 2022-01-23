@@ -37,7 +37,6 @@ spigot {
     authors = List.of(project.property("author").toString())
     apiVersion = project.property("apiVersion")
     description = project.property("description")
-    version = project.property("version")
     load = STARTUP
     depends = ['Towny']
 //    softDepends = ['DiscordSRV']
@@ -81,12 +80,11 @@ dependencies {
     implementation 'me.lucko:commodore:1.11'
     // For handling multi platform configuration, simply amazing
     implementation "org.spongepowered:configurate-yaml:4.1.2"
-    implementation 'junit:junit:4.13.1'
     // Towny
     compileOnly 'com.palmergames.bukkit.towny:towny:0.97.5.8'
     // Adventure
     implementation "net.kyori:adventure-api:4.9.3"
-    implementation "net.kyori:adventure-text-minimessage:4.1.0-SNAPSHOT"
+    compileOnly "net.kyori:adventure-text-minimessage:4.1.0-SNAPSHOT"
 
 //    // DiscordSRV, optional dependency
 //    compileOnly 'com.discordsrv:discordsrv:1.24.0'
@@ -105,13 +103,13 @@ dependencies {
 shadowJar {
     classifier = ''
     dependencies {
-        include(dependency('cloud.commandframework:cloud-paper:1.5.0'))
-        include(dependency('me.lucko:commodore:1.10'))
-        include(dependency('com.discordsrv:discordsrv:1.24.0'))
+//        include(dependency('com.discordsrv:discordsrv:1.24.0'))
+        include(dependency('com.palmergames.bukkit.towny:towny:0.97.5.8'))
+        include(dependency("net.kyori:adventure-text-minimessage:4.1.0-SNAPSHOT"))
+
     }
-    relocate 'cloud.commandframework', "${packageName}.cloud"
-    relocate 'me.lucko:commodore', "${packageName}.commodore"
-    relocate 'com.discordsrv', "${packageName}.discordsrv"
+//    relocate 'com.discordsrv', "${packageName}.discordsrv"
+    relocate 'com.palmergames.bukkit.towny', "${packageName}.towny"
 }
 
 gitProperties {

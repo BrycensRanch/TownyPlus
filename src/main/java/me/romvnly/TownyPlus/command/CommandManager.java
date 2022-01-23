@@ -81,7 +81,7 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
 
     private Command.@NonNull Builder<CommandSender> rootBuilder() {
         final List<String> MAIN_COMMAND_ALIASES = new ArrayList<>();
-        List.of("tb", "townybypass", "townbypass").forEach(entry -> MAIN_COMMAND_ALIASES.add(entry));
+        List.of("townyplus", "townplus").forEach(entry -> MAIN_COMMAND_ALIASES.add(entry));
         return this.commandBuilder("townyoverride", MAIN_COMMAND_ALIASES.toArray(String[]::new))
 
                 /* MinecraftHelp uses the MinecraftExtrasMetaKeys.DESCRIPTION meta, this is just so we give Bukkit a description
