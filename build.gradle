@@ -62,7 +62,6 @@ repositories {
     maven { url = 'https://nexus.scarsz.me/content/groups/public/' }
 //    maven { url = 'https://repo.aikar.co/content/groups/aikar/' }
     maven { url = 'https://repo.dmulloy2.net/repository/public/' }
-    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/public/' }
     maven { url = 'https://oss.sonatype.org/content/repositories/snapshots/' }
     maven { url = 'https://repo.glaremasters.me/repository/towny/'}
 }
