@@ -1,3 +1,13 @@
+/*
+ * This file is part of TownyPlus, licensed under the GPL v3 License.
+ * Copyright (C) Romvnly <https://github.com/Romvnly-Gaming>
+ * Copyright (C) spigot-plugin-template team and contributors
+ * Copyright (C) Pl3xmap team and contributors
+ * Copyright (C) DiscordSRV team and contributors
+ * @author Romvnly
+ * @link https://github.com/Romvnly-Gaming/TownyPlus
+ */
+
 package me.romvnly.TownyPlus.configuration;
 
 import java.util.ArrayList;
@@ -67,7 +77,7 @@ public class Config extends BaseConfig {
         UI_SIDEBAR_PINNED = config.getString("settings.ui.sidebar.pinned", UI_SIDEBAR_PINNED);
     }
 
-    public static String MAIN_COMMAND_LABEL = "pl3xmap";
+    public static String MAIN_COMMAND_LABEL = "townyplus";
     public static final List<String> MAIN_COMMAND_ALIASES = new ArrayList<>();
 
     private static void commandSettings() {

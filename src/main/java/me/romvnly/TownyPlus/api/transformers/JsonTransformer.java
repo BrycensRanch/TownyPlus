@@ -8,17 +8,18 @@
  * @link https://github.com/Romvnly-Gaming/TownyPlus
  */
 
-package me.romvnly.TownyPlus;
+package me.romvnly.TownyPlus.api.transformers;
 
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.junit.jupiter.api.Test;
+import com.google.gson.Gson;
+import spark.ResponseTransformer;
 
-public class TemplatePluginTests extends TestBase {
+public class JsonTransformer implements ResponseTransformer {
 
-    @Test
-    public void shouldFirePlayerJoinEvent() {
-        server.addPlayer();
+    private Gson gson = new Gson();
 
-        server.getPluginManager().assertEventFired(PlayerJoinEvent.class);
+    @Override
+    public String render(Object model) {
+        return gson.toJson(model);
     }
+
 }

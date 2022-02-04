@@ -8,17 +8,16 @@
  * @link https://github.com/Romvnly-Gaming/TownyPlus
  */
 
-package me.romvnly.TownyPlus;
+package me.romvnly.TownyPlus.api.exceptions;
 
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.junit.jupiter.api.Test;
+public class ChannelException extends Exception {
 
-public class TemplatePluginTests extends TestBase {
-
-    @Test
-    public void shouldFirePlayerJoinEvent() {
-        server.addPlayer();
-
-        server.getPluginManager().assertEventFired(PlayerJoinEvent.class);
+    public ChannelException() {
+        super();
     }
+
+    public ChannelException(String message) {
+        super(message);
+    }
+
 }

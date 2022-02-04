@@ -1,3 +1,13 @@
+/*
+ * This file is part of TownyPlus, licensed under the GPL v3 License.
+ * Copyright (C) Romvnly <https://github.com/Romvnly-Gaming>
+ * Copyright (C) spigot-plugin-template team and contributors
+ * Copyright (C) Pl3xmap team and contributors
+ * Copyright (C) DiscordSRV team and contributors
+ * @author Romvnly
+ * @link https://github.com/Romvnly-Gaming/TownyPlus
+ */
+
 package me.romvnly.TownyPlus.command.commands;
 
 import cloud.commandframework.CommandHelpHandler;
@@ -11,9 +21,11 @@ import me.romvnly.TownyPlus.command.BaseCommand;
 import me.romvnly.TownyPlus.command.CommandManager;
 import me.romvnly.TownyPlus.util.CommandUtil;
 import me.romvnly.TownyPlus.util.Constants;
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.Template;
 import org.bukkit.command.CommandSender;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -25,9 +37,9 @@ public final class HelpCommand extends BaseCommand {
 
     public HelpCommand(final @NonNull TownyPlusMain plugin, final @NonNull CommandManager commandManager) {
         super(plugin, commandManager);
-        this.minecraftHelp = new MinecraftHelp<>(
+        this.minecraftHelp = new MinecraftHelp(
                 String.format("/%s help", "townyplus"),
-                AudienceProvider.nativeAudience(),
+                sender -> (Audience) plugin.adventure(),
                 commandManager
         );
         this.minecraftHelp.setHelpColors(MinecraftHelp.HelpColors.of(
@@ -57,7 +69,7 @@ public final class HelpCommand extends BaseCommand {
 
         this.commandManager.registerSubcommand(builder ->
                 builder.literal("help")
-                        .meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.get().parse("Get help for TownyOverride commands"))
+                        .meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.get().parse("Get help for <pluginName> commands", Template.of("pluginName", plugin.getName())))
                         .argument(helpQueryArgument, CommandUtil.description("Help Query"))
                         .permission(Constants.HELP_PERMISSION)
                         .handler(this::executeHelp));

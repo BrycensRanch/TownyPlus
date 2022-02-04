@@ -8,17 +8,19 @@
  * @link https://github.com/Romvnly-Gaming/TownyPlus
  */
 
-package me.romvnly.TownyPlus;
+package me.romvnly.TownyPlus.api;
 
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.junit.jupiter.api.Test;
+public enum StatusResponse {
+    SUCCESS("Success"), ERROR("Error");
 
-public class TemplatePluginTests extends TestBase {
+    final private String status;
 
-    @Test
-    public void shouldFirePlayerJoinEvent() {
-        server.addPlayer();
-
-        server.getPluginManager().assertEventFired(PlayerJoinEvent.class);
+    StatusResponse(String status) {
+        this.status = status;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
 }

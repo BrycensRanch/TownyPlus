@@ -1,17 +1,5 @@
 apply plugin: 'maven-publish'
 
-def getBranch() {
-    def process = 'git branch --show-current'.execute()
-    process.waitFor()
-    return process.text.trim()
-}
-
-def getHash() {
-    def process = 'git rev-parse HEAD'.execute()
-    process.waitFor()
-    return process.text.trim()
-}
-
 java {
     withJavadocJar()
     withSourcesJar()
@@ -22,8 +10,6 @@ jar {
         attributes (
                 'Build-Jdk': "${System.properties['java.vendor']} ${System.properties['java.vm.version']}",
                 'Created-By': "Gradle ${gradle.gradleVersion}",
-                'Git-Branch': getBranch(),
-                'Git-Hash': getHash()
         )
     }
 }

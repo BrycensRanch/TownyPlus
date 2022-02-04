@@ -69,6 +69,10 @@ cmake-build-*/
 # IntelliJ
 out/
 
+# Run paper debug thingy
+debug/
+run/*
+
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 

@@ -8,13 +8,26 @@ buildscript {
 
 plugins {
     id 'com.github.johnrengelman.shadow' version '7.1.2'
-    id 'kr.entree.spigradle' version '2.3.4'
-    id 'io.freefair.lombok' version '6.3.0'
+    id 'net.minecrell.plugin-yml.bukkit' version '0.5.1'
+    id "org.cadixdev.licenser" version "0.6.1"
+    id 'xyz.jpenilla.run-paper' version '1.0.6'
     id 'com.gorylenko.gradle-git-properties' version '2.3.2'
     id 'java'
     id 'jacoco'
     id 'idea'
 }
+
+// Thanks BanManager, but your log message is now my property
+logger.lifecycle("""
+*******************************************
+ You are building TownyPlus!
+ If you encounter trouble:
+ 1) Try running 'build' in a separate Gradle run
+ 2) Use gradlew and not gradle
+ 3) If you still need help, ask on Discord #tickets! https://2v1.me/discord
+ Output files will be in /build/libs
+*******************************************
+""")
 
 apply from: "$rootDir/gradle/jacoco.gradle"
 apply from: "$rootDir/gradle/publish.gradle"
@@ -32,15 +45,44 @@ ext {
 
 group project.property("group")
 
-spigot {
-    name = project.property("pluginName")
-    authors = List.of(project.property("author").toString())
-    apiVersion = project.property("apiVersion")
-    description = project.property("description")
-    load = STARTUP
-    depends = ['Towny']
-//    softDepends = ['DiscordSRV']
+bukkit {
 
+    // Plugin main class (required)
+    main = project.property("packageName") + ".TownyPlusMain"
+
+    // API version (should be set for 1.13+)
+    apiVersion = project.property("apiVersion")
+
+    // Other possible properties from plugin.yml (optional)
+    load = 'POSTWORLD' // or 'POSTWORLD'
+    name = project.property("pluginName")
+    description = project.property("description")
+    depend = ['Towny']
+    softDepend = ['DiscordSRV', 'TownyChat', 'VentureChat', 'ProtocolLib']
+    defaultPermission = 'TRUE' // 'TRUE', 'FALSE', 'OP' or 'NOT_OP'
+    website = "https://github.com/Romvnly-Gaming/TownyPlus"
+//    commands {
+//        test {
+//            description = 'This is a test command!'
+//            aliases = ['t']
+//            permission = 'testplugin.test'
+//            usage = 'Just run the command!'
+//            // permissionMessage = 'You may not test this command!'
+//        }
+//        // ...
+//    }
+
+//    permissions {
+//        'testplugin.*' {
+//            children = ['testplugin.test'] // Defaults permissions to true
+//            // You can also specify the values of the permissions
+//            childrenMap = ['testplugin.test': false]
+//        }
+//        'testplugin.test' {
+//            description = 'Allows you to run the test command'
+//            setDefault('OP') // 'TRUE', 'FALSE', 'OP' or 'NOT_OP'
+//        }
+//    }
 }
 
 compileJava {
@@ -55,21 +97,22 @@ archivesBaseName = project.property("pluginName")
 repositories {
     mavenLocal()
     mavenCentral()
-    spigot()
     maven { url = 'https://jitpack.io' }
+    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url = 'https://hub.jeff-media.com/nexus/repository/jeff-media-public/' }
     maven { url = 'https://libraries.minecraft.net/' }
     maven { url = 'https://repo.dmulloy2.net/repository/public/' }
     maven { url = 'https://oss.sonatype.org/content/repositories/snapshots/' }
 //    maven { url = 'https://repo.spongepowered.org/maven/' }
-//    maven { url = 'https://nexus.scarsz.me/content/groups/public/' }
+    maven { url = 'https://nexus.scarsz.me/content/groups/public/' }
     maven { url = 'https://repo.glaremasters.me/repository/towny/'}
 }
 
 dependencies {
     // using spigot-api
-    // implementation spigot(mcVersion)
+    compileOnly "org.spigotmc:spigot-api:${mcVersion}-R0.1-SNAPSHOT" // The Spigot API with no shadowing. Requires the OSS repo.
     // or using paper-api
-    implementation "io.papermc.paper:paper-api:${mcVersion}-R0.1-SNAPSHOT"
+//    implementation "io.papermc.paper:paper-api:${mcVersion}-R0.1-SNAPSHOT"
 
     // Command Handling! https://commandframework.cloud
     implementation 'cloud.commandframework:cloud-paper:1.6.1'
@@ -77,46 +120,86 @@ dependencies {
     // Dependency for our way of command handling
     implementation 'me.lucko:commodore:1.11'
     // For handling multi platform configuration, simply amazing
-    implementation "org.spongepowered:configurate-yaml:4.1.2"
+    library "org.spongepowered:configurate-yaml:4.1.2"
+    // Spigot/GitHub Releases Update checker. Am I that lazy? Yes.
+    implementation 'com.jeff_media:SpigotUpdateChecker:2.2.0'
     // Towny
     compileOnly 'com.palmergames.bukkit.towny:towny:0.97.5.13'
+    compileOnly 'com.palmergames.bukkit:TownyChat:0.45'
+
+    // Stealing all your data lmfao
+    compileOnly 'org.bstats:bstats-bukkit:3.0.0'
+    // HTTP server idk
+    library "com.sparkjava:spark-core:2.9.3"
+    // DiscordSRV, optional dependency
+    implementation 'com.discordsrv:discordsrv:1.24.0'
+//    // JDA for DiscordSRV
+    implementation("net.dv8tion:JDA:5.0.0-alpha.4") {
+        exclude module: 'opus-java'
+    }
+    // VentureChat support for chat listening
+    compileOnly "mineverse.aust1n46:venturechat:2.20.1"
+    // ProtocolLib (required by venturechat)
+    compileOnly "com.comphenix.protocol:ProtocolLib:4.5.0"
+
     // Adventure
     implementation "net.kyori:adventure-api:4.9.3"
-    implementation("net.kyori:adventure-text-minimessage:4.1.0-SNAPSHOT") {
-        exclude group: 'net.kyori.adventure', module: 'adventure-api'
-    }
-
-//    // DiscordSRV, optional dependency
-//    compileOnly 'com.discordsrv:discordsrv:1.24.0'
-//    // JDA for DiscordSRV
-//    implementation("net.dv8tion:JDA:5.0.0-alpha.4") {
-//        exclude module: 'opus-java'
-//    }
+    implementation "net.kyori:adventure-platform-bukkit:4.0.1"
+    implementation "net.kyori:adventure-text-minimessage:4.1.0-SNAPSHOT"
 
     // Test dependencies
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
-    testImplementation 'org.mockito:mockito-core:4.3.0'
+    testImplementation 'org.mockito:mockito-core:4.3.1'
     testImplementation 'com.github.seeseemelk:MockBukkit-v1.18:1.15.5'
     testImplementation 'org.assertj:assertj-core:3.22.0'
 }
-
 shadowJar {
-    classifier = ''
+    archiveClassifier.set("")
     dependencies {
-//        include(dependency('com.discordsrv:discordsrv:1.24.0'))
-        include(dependency('com.palmergames.bukkit.towny:towny:0.97.5.8'))
+        // These are sorted by internal dependencies to ones for compatability/functionatlity related to other plugins
+        include(dependency('net.kyori::'))
+        include(dependency('org.bstats::'))
+        include(dependency('com.jeff_media::'))
+        include(dependency('me.lucko::'))
+        include(dependency('cloud.commandframework::'))
+        include(dependency('com.palmergames.bukkit::'))
+        include(dependency('com.github.TownyAdvanced::'))
+        include(dependency('com.discordsrv::'))
+        include(dependency('github.scarsz.discordsrv::'))
+        include(dependency('mineverse.aust1n46::'))
+        include(dependency('com.comphenix.protocol::'))
     }
-//    relocate 'com.discordsrv', "${packageName}.discordsrv"
-    relocate 'com.palmergames.bukkit.towny', "${packageName}.towny"
+    relocate 'cloud.commandframework', "${packageName}.libs.commands"
+    relocate 'me.lucko', "${packageName}.libs.lucko"
+    relocate 'com.jeff_media', "${packageName}.libs.jeff_media"
+    relocate 'org.bstats', "${packageName}.libs.bstats"
+    relocate 'net.kyori', "${packageName}.libs.kyori"
+    relocate 'mineverse.aust1n46', "${packageName}.libs.aust1n46"
+    relocate 'com.comphenix.protocol', "${packageName}.libs.protocol"
+    relocate 'com.discordsrv', "${packageName}.libs.discordsrv"
+}
+license {
+    include '**/*.java'
+
+    matching('**/*.java') {
+        header = file('HEADER.txt')
+    }
 }
 
 gitProperties {
     failOnNoGitDirectory = false
 }
 
+sourcesJar.enabled = false
 tasks.build.dependsOn(shadowJar)
 tasks.publish.dependsOn(shadowJar)
-tasks.prepareSpigotPlugins.dependsOn(shadowJar)
+
+runServer {
+    // Configure the Minecraft version for our task.
+    // This is the only required configuration besides applying the plugin.
+    // Your plugin's jar (or shadowJar if present) will be used automatically.
+    minecraftVersion(project.property("mcVersion"))
+}
 
 test {
     useJUnitPlatform()

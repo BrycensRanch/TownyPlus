@@ -190,3 +190,15 @@ refactor(respawn): bed respawn event renamed
 ```
 
 <br/>
+
+## Releasing a new version of the plugin
+
+One of the major benefits of this template is the fact that it will **automatically release a new version** on every
+push to `master` based on your commit messages. This makes sure your plugin is released following
+the [semantic versioning](https://semver.org/) guidelines. For this to work you have to follow a few simple rules:
+
+* Commit only working and tested code to the master branch. *Use Pull Requests to work on bigger features or bug fixes
+  and merge them when you are ready.*
+* Every bugfix, feature and change should have one commit associated with it. *Do not mix multiple bugs, features, etc.
+  into one huge commit message. Keep your commit size small and commit often.*
+* Your commit messages must follow the [conventional commit rules](https://www.conventionalcommits.org/).

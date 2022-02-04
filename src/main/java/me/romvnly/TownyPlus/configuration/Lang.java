@@ -1,3 +1,13 @@
+/*
+ * This file is part of TownyPlus, licensed under the GPL v3 License.
+ * Copyright (C) Romvnly <https://github.com/Romvnly-Gaming>
+ * Copyright (C) spigot-plugin-template team and contributors
+ * Copyright (C) Pl3xmap team and contributors
+ * Copyright (C) DiscordSRV team and contributors
+ * @author Romvnly
+ * @link https://github.com/Romvnly-Gaming/TownyPlus
+ */
+
 package me.romvnly.TownyPlus.configuration;
 
 import java.io.File;
@@ -23,7 +33,7 @@ public final class Lang {
 
     // MiniMessage formatted strings, to be sent using Logger.info(String, Template...) or Lang.send(CommandSender, String, Template...)
     @LangKey("description")
-    public static String BUKKIT_COMMAND_DESCRIPTION = "Bypass towny's stupid protections for Admins, limited as their power should be!. '/townyoverride help'";
+    public static String BUKKIT_COMMAND_DESCRIPTION = "It's time to upgrade your Towny server. '/townyplus help' for more information";
     @LangKey("render-not-in-progress")
     public static String RENDER_NOT_IN_PROGRESS = "<red>No renders running for <world>";
     @LangKey("cancelled-render")
