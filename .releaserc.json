@@ -28,7 +28,8 @@
           {
             "path": "**/build/libs/*.jar"
           }
-        ]
+        ],
+        "addReleases": "bottom"
       }
     ],
     [
