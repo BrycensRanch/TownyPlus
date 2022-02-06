@@ -36,8 +36,8 @@ if (project.hasProperty("local_script")) {
     apply from: file(local_script + "/build.local.gradle")
 }
 
-sourceCompatibility = 17
-targetCompatibility = 17
+sourceCompatibility = 11
+targetCompatibility = 11
 
 ext {
     mcVersion = project.property("mcVersion")
@@ -198,7 +198,7 @@ runServer {
     // Configure the Minecraft version for our task.
     // This is the only required configuration besides applying the plugin.
     // Your plugin's jar (or shadowJar if present) will be used automatically.
-    minecraftVersion(project.property("mcVersion"))
+    minecraftVersion(project.property("testServerMCVersion"))
 }
 
 test {

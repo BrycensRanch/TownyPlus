@@ -129,14 +129,17 @@ public final class BypassCommand extends BaseCommand {
         Audience sender = plugin.adventure().sender(context.getSender());
         boolean toggled;
         switch (toggleString.toLowerCase()) {
-            case "on" -> toggled = true;
-            case "off" -> toggled = false;
-            default -> {
+            case "on":
+                toggled = true;
+                break;
+            case "off":
+                toggled = false;
+                break;
+            default:
                 sender.sendMessage(MiniMessage.get().parse("Sorry, I didn't get that. Please enter on/off"));
                 return;
-            }
         }
-        Duration time = null;
+        Duration time;
         try {
             time = Duration.ofMillis(parseDuration(context.getOrDefault("time", "30s")));
         } catch (IllegalArgumentException e) {
