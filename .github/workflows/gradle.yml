@@ -30,7 +30,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build
-        run: ./gradlew build -x test
+        run: ./gradlew build -x test -x signShadowJar
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
@@ -91,7 +91,7 @@ jobs:
 
   release:
     needs: [ build, test ]
-    if: github.ref == 'refs/heads/master' || 'refs/heads/beta' || github.ref == 'refs/heads/alpha'
+    if: github.ref == 'master' || github.ref == 'beta' || github.ref == 'alpha' || github.ref == 'rc'
 
     runs-on: ubuntu-latest
 
