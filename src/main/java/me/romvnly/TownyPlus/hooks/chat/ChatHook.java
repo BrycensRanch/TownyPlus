@@ -40,4 +40,8 @@ public interface ChatHook extends PluginHook {
                 .legacySection()
                 .serialize(message));
     }
+
+    default void reload() {
+        throw new UnsupportedOperationException(getClass().getName() + " has no implementation for broadcastMessageToChannel");
+    }
 }

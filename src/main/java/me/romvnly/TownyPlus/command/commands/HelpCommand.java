@@ -54,8 +54,8 @@ public final class HelpCommand extends BaseCommand {
 
     @Override
     public void register() {
-        final var commandHelpHandler = this.commandManager.getCommandHelpHandler();
-        final var helpQueryArgument = StringArgument.<CommandSender>newBuilder("query")
+        final var commandHelpHandler = this.commandManager.createCommandHelpHandler();
+        final var helpQueryArgument = StringArgument.<CommandSender>builder("query")
                 .greedy()
                 .asOptional()
                 .withSuggestionsProvider((context, input) -> {

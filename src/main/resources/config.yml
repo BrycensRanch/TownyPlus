@@ -3,5 +3,12 @@
 # Don't forget to use PlaceholderAPI! Best options for custiomizable messages for server owners!
 
 maxtime: 10m # MF set this to something low or 0 to have it forever!!
-discordsrv: true # TODO make this shit use discordsrv channels along with configurable messages
 coreprotect: true # TODO allow this to generate some kind of pastebin placeholder that can be used in the discordsrv embed
+# TODO make this shit use discordsrv channels along with configurable messages
+discordsrv:
+  enabled: true
+restapi:
+   enabled: true
+   externalURL: 'none'
+   host: '0.0.0.0'
+   port: 8080

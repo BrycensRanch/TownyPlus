@@ -21,21 +21,35 @@ import github.scarsz.discordsrv.dependencies.jda.api.entities.Member;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.Role;
 import github.scarsz.discordsrv.util.DiscordUtil;
 import me.romvnly.TownyPlus.TownyPlusMain;
+import me.romvnly.TownyPlus.command.CommandManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
+import me.romvnly.TownyPlus.TownyPlusMain;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.UUID;
 
 public class DiscordSRVListener {
+    private TownyPlusMain plugin;
+    public DiscordSRVListener(final @NonNull TownyPlusMain plugin, final @NonNull CommandManager commandManager) {
+        super();
+        this.plugin = plugin;
+    }
     @Subscribe(priority = ListenerPriority.MONITOR)
     public void discordMessageReceived(DiscordGuildMessageReceivedEvent event) {
-        if (event.getGuild() == null) return;
 //        if (event.getGuild().getId() != "422627791738109953") return; // testing server
 //        if (event.getChannel().getId() != "912487580241645568") return;  // town chat
+    // ive learned my lesson regarding running things on the main thread
+    new BukkitRunnable() {
+        @Override
+        public void run() {
+        if (event.getGuild() == null) return;
         UUID linkedUUID = DiscordSRV.getPlugin().getAccountLinkManager().getUuid(event.getAuthor().getId());
         if (linkedUUID == null) {
             event.getChannel().sendMessage("AYO HOMES YOU NOT LINKED TO DISCORDSRV!! LINK NOW!! GO IN GAME TYPE DAT /discord link");
@@ -55,7 +69,11 @@ public class DiscordSRVListener {
                 .append(Component.text().content("[" + event.getAuthor().getName() + " | " + topRole.getName() + "] ").color(NamedTextColor.LIGHT_PURPLE).build())
                 .append(Component.text().content(event.getMessage().getContentStripped()).color(NamedTextColor.AQUA).build())
                 .build();
-        TownyPlusMain.plugin.chatHook.broadcastMessageToChannel("Town", textComponent);
+                TownyPlusMain.plugin.getLogger().info("Processing message from Discord");
+                TownyPlusMain.plugin.getLogger().info(textComponent.toString());
 
+        TownyPlusMain.plugin.chatHook.broadcastMessageToChannel("Town", textComponent, resident);
+    }
+    }.runTask(this.plugin);
     }
 }

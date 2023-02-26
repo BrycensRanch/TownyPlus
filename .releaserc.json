@@ -1,18 +1,31 @@
 {
   "branches": [
     "master",
+    "+([0-9])?(.{+([0-9]),x}).x",
     {
       "name": "beta",
+      "channel": "beta",
       "prerelease": true
     },
     {
       "name": "alpha",
+      "channel": "alpha",
       "prerelease": true
     }
   ],
   "plugins": [
     "@semantic-release/commit-analyzer",
-    [
+    {
+      "preset": "conventionalcommits",
+      "releaseRules": [
+        { "type": "docs", "release": "patch" },
+        { "type": "refactor", "release": "patch" },
+        { "type": "style", "release": "patch" },
+        { "type": "ci", "release": "patch" },
+        { "type": "chore", "release": "patch" }
+      ]
+    },
+        [
       "@semantic-release/exec",
       {
         "prepareCmd": "./update-versions.sh ${nextRelease.version}"
@@ -30,6 +43,60 @@
           }
         ],
         "addReleases": "bottom"
+      }
+    ],
+    [
+      "@semantic-release/release-notes-generator",
+      {
+        "parserOpts": {
+          "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"]
+        },
+        "preset": "conventionalcommits",
+        "header": "TownyPlus Changelog",
+        "presetConfig": {
+          "types": [
+            {
+              "type": "breaking",
+              "section": "❗ MAJOR ❗",
+              "hidden": false
+            },
+            { "type": "feat", "section": "✨ Feature ✨", "hidden": false },
+            { "type": "fix", "section": "🐛 Bugfix 🐛", "hidden": false },
+            { "type": "hotfix", "section": "🔥 Hotfix 🔥", "hidden": false },
+            {
+              "type": "BREAKING",
+              "section": "❗ MAJOR ❗",
+              "hidden": false
+            },
+            { "type": "docs", "section": "📝  Documentation", "hidden": false },
+            {
+              "type": "chore",
+              "section": "🔨  Misc.",
+              "hidden": false
+            },
+            {
+              "type": "ci",
+              "section": "📦️ Build and CI",
+              "hidden": false
+            },
+            {
+              "type": "refactor",
+              "section": "⚡️ Code Performance",
+              "hidden": false
+            },
+            {
+              "type": "test",
+              "section": "🧪 Code Test",
+              "hidden": false
+            },
+            {
+              "type": "style",
+              "section": "💄 Design",
+              "hidden": false
+            },
+            { "type": "HOTFIX", "section": "🔥 Hotfix 🔥", "hidden": false }
+          ]
+        }
       }
     ],
     [

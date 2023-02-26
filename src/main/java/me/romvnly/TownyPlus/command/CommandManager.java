@@ -11,24 +11,32 @@
 package me.romvnly.TownyPlus.command;
 
 import cloud.commandframework.Command;
+import cloud.commandframework.CommandTree;
 import cloud.commandframework.brigadier.CloudBrigadierManager;
+import cloud.commandframework.annotations.AnnotationParser;
+import cloud.commandframework.arguments.parser.ParserParameters;
+import cloud.commandframework.arguments.parser.StandardParameters;
 import cloud.commandframework.bukkit.BukkitCommandManager;
 import cloud.commandframework.bukkit.CloudBukkitCapabilities;
 import cloud.commandframework.exceptions.CommandExecutionException;
 import cloud.commandframework.meta.CommandMeta;
-import cloud.commandframework.minecraft.extras.AudienceProvider;
 import cloud.commandframework.minecraft.extras.MinecraftExceptionHandler;
+import cloud.commandframework.paper.PaperCommandManager;
 import me.romvnly.TownyPlus.command.commands.BypassCommand;
+import me.romvnly.TownyPlus.command.commands.ConfirmCommand;
+import me.romvnly.TownyPlus.command.commands.DumpCommand;
 import me.romvnly.TownyPlus.command.commands.ReloadCommand;
 import me.romvnly.TownyPlus.command.commands.VersionCommand;
 import me.romvnly.TownyPlus.configuration.Lang;
-import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import cloud.commandframework.execution.AsynchronousCommandExecutionCoordinator;
 import cloud.commandframework.execution.CommandExecutionCoordinator;
+import cloud.commandframework.extra.confirmation.CommandConfirmationManager;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
@@ -38,32 +46,73 @@ import me.romvnly.TownyPlus.command.commands.HelpCommand;
 import me.romvnly.TownyPlus.command.exception.CompletedSuccessfullyException;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
+
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class CommandManager extends BukkitCommandManager<CommandSender> {
+public class CommandManager extends PaperCommandManager<CommandSender> {
+    final static Function<CommandSender, CommandSender> mapperFunction = Function.identity();
+            //
+        // This is a function that will provide a command execution coordinator that parses and executes commands
+        // asynchronously
+        //
+        final static Function<CommandTree<CommandSender>, CommandExecutionCoordinator<CommandSender>> executionCoordinatorFunction =
+                AsynchronousCommandExecutionCoordinator.<CommandSender>builder().build();
+                public CommandConfirmationManager<CommandSender> confirmationManager;
+                public AnnotationParser<CommandSender> annotationParser;
     public CommandManager(final @NonNull TownyPlusMain plugin) throws Exception {
         super(
                 plugin,
-                CommandExecutionCoordinator.simpleCoordinator(),
-                UnaryOperator.identity(),
-                UnaryOperator.identity()
+                executionCoordinatorFunction,
+                mapperFunction,
+                mapperFunction
         );
-        if (this.queryCapability(CloudBukkitCapabilities.BRIGADIER)) {
+        if (this.hasCapability(CloudBukkitCapabilities.BRIGADIER)) {
             this.registerBrigadier();
             final CloudBrigadierManager<?, ?> brigManager = this.brigadierManager();
             if (brigManager != null) {
                 brigManager.setNativeNumberSuggestions(false);
             }
         }
+        if (this.hasCapability(CloudBukkitCapabilities.ASYNCHRONOUS_COMPLETION)) {
+            ((PaperCommandManager<CommandSender>) this).registerAsynchronousCompletions();
+        }
         this.registerExceptionHandlers(plugin);
+        this.confirmationManager = new CommandConfirmationManager<>(
+            /* Timeout */ 30L,
+            /* Timeout unit */ TimeUnit.SECONDS,
+            /* Action when confirmation is required */ context -> context.getCommandContext().getSender().sendMessage(
+            ChatColor.RED + "Confirmation required. Confirm by adding confirm to this command."),
+            /* Action when no confirmation is pending */ sender -> sender.sendMessage(
+            ChatColor.RED + "You don't have any pending commands.")
+    );
+        //
+        // Create the annotation parser. This allows you to define commands using methods annotated with
+        // @CommandMethod
+        //
+        final Function<ParserParameters, CommandMeta> commandMetaFunction = p ->
+                CommandMeta.simple()
+                        // This will allow you to decorate commands with descriptions
+                        .with(CommandMeta.DESCRIPTION, p.get(StandardParameters.DESCRIPTION, "No description"))
+                        .build();
+        this.annotationParser = new AnnotationParser<>(
+                /* Manager */ this,
+                /* Command sender type */ CommandSender.class,
+                /* Mapper for command meta instances */ commandMetaFunction
+        );
+    //
+    // Register the confirmation processor. This will enable confirmations for commands that require it
+    //
+    this.confirmationManager.registerConfirmationProcessor(this);
 
         ImmutableList.of(
                 new HelpCommand(plugin, this),
                 new BypassCommand(plugin, this),
                 new ReloadCommand(plugin, this),
-                new VersionCommand(plugin, this)
+                new VersionCommand(plugin, this),
+                new ConfirmCommand(plugin, this),
+                new DumpCommand(plugin, this)
 //                new TownyBypassCommand(plugin, this),
         ).forEach(BaseCommand::register);
 
@@ -98,6 +147,16 @@ public class CommandManager extends BukkitCommandManager<CommandSender> {
     private Command.@NonNull Builder<CommandSender> rootBuilder() {
         final List<String> MAIN_COMMAND_ALIASES = new ArrayList<>();
         MAIN_COMMAND_ALIASES.addAll(List.of("townyplus", "townplus"));
+                //
+        // Parse all @CommandMethod-annotated methods
+        //
+        this.annotationParser.parse(this);
+        // Parse all @CommandContainer-annotated classes
+        try {
+            this.annotationParser.parseContainers();
+        } catch (final Exception e) {
+            e.printStackTrace();
+        }
         return this.commandBuilder("townyplus", MAIN_COMMAND_ALIASES.toArray(String[]::new))
 
                 /* MinecraftHelp uses the MinecraftExtrasMetaKeys.DESCRIPTION meta, this is just so we give Bukkit a description

@@ -53,6 +53,7 @@ public final class ReloadCommand extends BaseCommand {
                     "<rainbow><pluginName> has successfully reloaded!</rainbow>",
                     Template.of("pluginName", plugin.getName())
             ));
+            this.plugin.chatHook.reload();
         } catch (Exception e) {
             sender.sendMessage(MiniMessage.get().parse(
                     "<red>Whilst attempting to reload the configuration, the plugin ran into errors. Check your console.</red>"

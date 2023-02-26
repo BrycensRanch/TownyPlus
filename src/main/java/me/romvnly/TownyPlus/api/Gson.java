@@ -60,7 +60,7 @@ public class Gson {
         con.setRequestMethod(method);
         con.setRequestProperty("Content-Type", "application/json");
         con.setRequestProperty("Accept", "application/json");
-        con.setRequestProperty("Authorization", TownyPlusMain.plugin.config.getString("externalapi.apiKey"));
+        con.setRequestProperty("Authorization", TownyPlusMain.plugin.config.getString("restapi.apiKey"));
         con.setDoOutput(true);
         OutputStream os = con.getOutputStream();
         byte[] input = body.getBytes("utf-8");

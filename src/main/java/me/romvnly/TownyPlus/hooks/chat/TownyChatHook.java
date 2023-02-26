@@ -13,6 +13,10 @@ package me.romvnly.TownyPlus.hooks.chat;
 import com.palmergames.bukkit.TownyChat.Chat;
 import com.palmergames.bukkit.TownyChat.channels.Channel;
 import com.palmergames.bukkit.TownyChat.events.AsyncChatHookEvent;
+import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Town;
+
 import me.romvnly.TownyPlus.TownyPlusMain;
 import github.scarsz.discordsrv.util.LangUtil;
 import github.scarsz.discordsrv.util.PlayerUtil;
@@ -45,7 +49,7 @@ public class TownyChatHook implements ChatHook {
 
         Chat instance = (Chat) Bukkit.getPluginManager().getPlugin("TownyChat");
         if (instance == null) {
-            TownyPlusMain.plugin.getLogger().info("Could not automatically hook TownyChat channels");
+            TownyPlusMain.plugin.getLogger().warning("Could not automatically hook TownyChat channels");
             return;
         }
 
@@ -59,6 +63,9 @@ public class TownyChatHook implements ChatHook {
             if (channel != null) {
                 channel.setHooked(true);
                 linkedChannels.add(channel.getName());
+            }
+            else {
+                TownyPlusMain.plugin.getLogger().info("It appears as the town and nation channels do not exist on TownyChat, not hooking anything.");
             }
         });
         for (Channel channel : instance.getChannelsHandler().getAllChannels().values()) {
@@ -75,14 +82,16 @@ public class TownyChatHook implements ChatHook {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onMessage(AsyncChatHookEvent event) {
         // make sure message isn't blank
+
         if (StringUtils.isBlank(event.getMessage())) {
             return;
         }
+        TownyPlusMain.plugin.getLogger().info("processing town msg");
         TownyPlusMain.plugin.processChatMessage(event.getPlayer(), event.getMessage(), event.getChannel().getName(), this);
     }
 
     @Override
-    public void broadcastMessageToChannel(String channel, Component message) {
+    public void broadcastMessageToChannel(String channel, Component message, Resident resident) {
         // get instance of TownyChat plugin
         Chat instance = (Chat) Bukkit.getPluginManager().getPlugin("TownyChat");
 
@@ -107,7 +116,18 @@ public class TownyChatHook implements ChatHook {
 
         for (Player player : PlayerUtil.getOnlinePlayers()) {
             if (destinationChannel.isPresent(player.getName())) {
-                player.sendMessage(plainMessage);
+                if (channel == "town") {
+                    Town residentTown = resident.getTownOrNull();
+                    if (residentTown != null && residentTown.hasResident(player.getUniqueId())) {
+                        player.sendMessage(plainMessage);
+                    }
+
+                } else if (channel == "nation") {
+                    Nation residentNation = resident.getNationOrNull();
+                    if (residentNation != null && residentNation.hasResident(player.getName().toString())) {
+                        player.sendMessage(plainMessage);
+                    }
+                }
             }
         }
 

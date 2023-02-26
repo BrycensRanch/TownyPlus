@@ -1,5 +1,8 @@
 //file:noinspection SpellCheckingInspection
 //file:noinspection GroovyAssignabilityCheck
+import com.github.spotbugs.snom.SpotBugsTask
+import java.text.SimpleDateFormat
+import org.gradle.crypto.checksum.Checksum
 buildscript {
     repositories {
         mavenCentral()
@@ -7,14 +10,19 @@ buildscript {
 }
 
 plugins {
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
-    id 'net.minecrell.plugin-yml.bukkit' version '0.5.1'
+    id 'com.github.johnrengelman.shadow' version '8.0.0'
+    id 'net.minecrell.plugin-yml.bukkit' version '0.5.3'
     id "org.cadixdev.licenser" version "0.6.1"
-    id 'xyz.jpenilla.run-paper' version '1.0.6'
-    id 'com.gorylenko.gradle-git-properties' version '2.3.2'
+    id 'xyz.jpenilla.run-paper' version '2.0.1'
+    id "com.github.spotbugs" version "5.0.13"
+    id 'com.gorylenko.gradle-git-properties' version '2.4.1'
+    id 'com.palantir.git-version' version '1.0.0'
+    id 'org.gradle.crypto.checksum' version '1.4.0'
     id 'java'
     id 'jacoco'
     id 'idea'
+    id 'checkstyle'
+    id 'signing'
 }
 
 // Thanks BanManager, but your log message is now my property
@@ -35,15 +43,64 @@ apply from: "$rootDir/gradle/publish.gradle"
 if (project.hasProperty("local_script")) {
     apply from: file(local_script + "/build.local.gradle")
 }
+static def getTime() {
+    SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd-HHmm")
+    sdf.setTimeZone(TimeZone.getTimeZone("UTC"))
+    return sdf.format(new Date()).toString()
+}
 
-sourceCompatibility = 11
-targetCompatibility = 11
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 ext {
     mcVersion = project.property("mcVersion")
 }
 
 group project.property("group")
+def details = versionDetails()
+println(details.branchName)
+
+if (version == null || version == "") {
+    version = getTime() + "-SNAPSHOT"
+} else if (details.branchName.contains("alpha") || details.branchName.contains("beta") || details.branchName.contains("rc")) {
+    version = version +"-"+ details.branchName + "-SNAPSHOT";
+} else {
+    version = version
+}
+task generateFiles {
+  // Generates some files.
+}
+
+task createChecksums(type: Checksum, dependsOn: 'generateFiles') {
+  inputFiles.setFrom(buildDir)
+  checksumAlgorithm.set(Checksum.Algorithm.SHA256)
+  checksumAlgorithm.set(Checksum.Algorithm.SHA512)
+  appendFileNameToChecksum.set(true)
+}
+checkstyle {
+    // toolVersion '10.6.0'
+    // maxWarnings = 0
+}
+
+
+tasks.withType(Checkstyle) {
+    reports {
+        xml.required = false
+        html.required = true
+    }
+}
+
+tasks.withType(SpotBugsTask) {
+    reports {
+        xml {
+            required.set(false)
+        }
+        html {
+            required.set(true)
+        }
+    }
+}
+
 
 bukkit {
 
@@ -59,8 +116,8 @@ bukkit {
     description = project.property("description")
     depend = ['Towny']
     softDepend = ['DiscordSRV', 'TownyChat', 'VentureChat', 'ProtocolLib']
-    defaultPermission = 'TRUE' // 'TRUE', 'FALSE', 'OP' or 'NOT_OP'
-    website = "https://github.com/Romvnly-Gaming/TownyPlus"
+    defaultPermission = 'NOT_OP' // 'TRUE', 'FALSE', 'OP' or 'NOT_OP'
+    website = "https://github.com/BrycensRanch/TownyPlus"
 //    commands {
 //        test {
 //            description = 'This is a test command!'
@@ -86,12 +143,11 @@ bukkit {
 }
 
 compileJava {
-    options.encoding = 'UTF-8'
-    options.compilerArgs += ["-parameters"]
     options.fork = true
-    options.forkOptions.executable = 'javac'
 }
-
+assemble {
+        dependsOn(shadowJar)
+}
 archivesBaseName = project.property("pluginName")
 
 repositories {
@@ -99,13 +155,15 @@ repositories {
     mavenCentral()
     maven { url = 'https://jitpack.io' }
     maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url 'https://repo.papermc.io/repository/maven-public/' }
     maven { url = 'https://hub.jeff-media.com/nexus/repository/jeff-media-public/' }
     maven { url = 'https://libraries.minecraft.net/' }
     maven { url = 'https://repo.dmulloy2.net/repository/public/' }
     maven { url = 'https://oss.sonatype.org/content/repositories/snapshots/' }
-//    maven { url = 'https://repo.spongepowered.org/maven/' }
+    maven { url = 'https://repo.spongepowered.org/maven/' }
     maven { url = 'https://nexus.scarsz.me/content/groups/public/' }
     maven { url = 'https://repo.glaremasters.me/repository/towny/'}
+    maven { url 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
 }
 
 dependencies {
@@ -115,24 +173,33 @@ dependencies {
 //    implementation "io.papermc.paper:paper-api:${mcVersion}-R0.1-SNAPSHOT"
 
     // Command Handling! https://commandframework.cloud
-    implementation 'cloud.commandframework:cloud-paper:1.6.1'
-    implementation 'cloud.commandframework:cloud-minecraft-extras:1.6.1'
+    implementation 'cloud.commandframework:cloud-core:1.8.1'
+    implementation 'cloud.commandframework:cloud-annotations:1.8.1'
+    annotationProcessor('cloud.commandframework:cloud-annotations:1.8.1')
+    library 'org.projectlombok:lombok:1.18.26';
+    library 'com.fasterxml.jackson.core:jackson-annotations:2.12.5'
+    library 'com.fasterxml.jackson.core:jackson-databind:2.12.5';
+    annotationProcessor('org.projectlombok:lombok:1.18.26')
+    annotationProcessor('com.fasterxml.jackson.core:jackson-annotations:2.12.5')
+    library 'com.fasterxml.jackson.dataformat:jackson-dataformat-properties:2.14.2'
+    implementation 'cloud.commandframework:cloud-paper:1.8.1'
+    implementation 'cloud.commandframework:cloud-minecraft-extras:1.8.1'
     // Dependency for our way of command handling
-    implementation 'me.lucko:commodore:1.11'
+    implementation 'me.lucko:commodore:2.2'
     // For handling multi platform configuration, simply amazing
-    library "org.spongepowered:configurate-yaml:4.1.2"
+    // library "org.spongepowered:configurate-yaml:4.1.2"
     // Spigot/GitHub Releases Update checker. Am I that lazy? Yes.
-    implementation 'com.jeff_media:SpigotUpdateChecker:2.2.0'
+    implementation 'com.jeff_media:SpigotUpdateChecker:3.0.2'
     // Towny
     compileOnly 'com.palmergames.bukkit.towny:towny:0.97.5.13'
     compileOnly 'com.palmergames.bukkit:TownyChat:0.45'
 
     // Stealing all your data lmfao
     compileOnly 'org.bstats:bstats-bukkit:3.0.0'
-    // HTTP server idk
-    library "com.sparkjava:spark-core:2.9.3"
+    // better http server than spark
+    library "io.javalin:javalin-bundle:5.3.2"
     // DiscordSRV, optional dependency
-    implementation 'com.discordsrv:discordsrv:1.24.0'
+    compileOnly 'com.discordsrv:discordsrv:1.24.0'
 //    // JDA for DiscordSRV
     implementation("net.dv8tion:JDA:5.0.0-alpha.4") {
         exclude module: 'opus-java'
@@ -141,6 +208,7 @@ dependencies {
     compileOnly "mineverse.aust1n46:venturechat:2.20.1"
     // ProtocolLib (required by venturechat)
     compileOnly "com.comphenix.protocol:ProtocolLib:4.5.0"
+    compileOnly 'com.github.spotbugs:spotbugs-annotations:4.7.3'
 
     // Adventure
     implementation "net.kyori:adventure-api:4.9.3"
@@ -148,14 +216,16 @@ dependencies {
     implementation "net.kyori:adventure-text-minimessage:4.1.0-SNAPSHOT"
 
     // Test dependencies
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
-    testImplementation 'org.mockito:mockito-core:4.3.1'
-    testImplementation 'com.github.seeseemelk:MockBukkit-v1.18:1.15.5'
-    testImplementation 'org.assertj:assertj-core:3.22.0'
+    spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.12.0'
+    testCompileOnly 'com.github.spotbugs:spotbugs-annotations:4.7.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+    testImplementation 'org.mockito:mockito-core:4.11.0'
+    testImplementation 'com.github.seeseemelk:MockBukkit-v1.19:2.29.0'
+    testImplementation 'org.assertj:assertj-core:3.24.1'
 }
 shadowJar {
-    archiveClassifier.set("")
-    dependencies {
+        archiveClassifier.set("")
+        dependencies {
         // These are sorted by internal dependencies to ones for compatability/functionatlity related to other plugins
         include(dependency('net.kyori::'))
         include(dependency('org.bstats::'))
@@ -177,6 +247,12 @@ shadowJar {
     relocate 'mineverse.aust1n46', "${packageName}.libs.aust1n46"
     relocate 'com.comphenix.protocol', "${packageName}.libs.protocol"
     relocate 'com.discordsrv', "${packageName}.libs.discordsrv"
+    // Exclude signatures, maven/ and proguard/ from META-INF
+    exclude("META-INF/*.SF")
+    exclude("META-INF/*.DSA")
+    exclude("META-INF/*.RSA")
+    exclude("META-INF/maven/**")
+    exclude("META-INF/proguard/**")
 }
 license {
     include '**/*.java'
@@ -188,11 +264,13 @@ license {
 
 gitProperties {
     failOnNoGitDirectory = false
+    customProperty 'git.mcVersion', { project.property("mcVersion") }
 }
 
 sourcesJar.enabled = false
 tasks.build.dependsOn(shadowJar)
-tasks.publish.dependsOn(shadowJar)
+// tasks.test.dependsOn(shadowJar)
+tasks.publish.dependsOn(shadowJar, createChecksums)
 
 runServer {
     // Configure the Minecraft version for our task.
@@ -206,11 +284,12 @@ test {
     testLogging {
         events "skipped", "failed"
     }
+    // md5: Honestly no one writes plugins with such a focus on testing/quality.
     ignoreFailures = true
 }
 
 processResources {
-    project.properties.put("version", this.version)
+    project.properties.put("version", version)
     expand project.properties
 }
 

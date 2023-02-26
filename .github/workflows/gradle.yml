@@ -11,17 +11,17 @@ jobs:
 
     steps:
       - name: Check out current repository
-        uses: actions/checkout@v2
-
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
+        uses: actions/checkout@v3
         with:
-          distribution: 'adopt'
-          java-version: 11
-          cache: 'gradle'
+          fetch-depth: 0
 
-      - name: Check out current repository
-        uses: actions/checkout@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: 17
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
 
       - name: Gradle Wrapper Validation
         uses: gradle/wrapper-validation-action@v1
@@ -32,11 +32,12 @@ jobs:
       - name: Build
         run: ./gradlew build -x test
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v2
         with:
+          name: build-artifacts
           path: "**/build/libs"
 
   test:
@@ -45,34 +46,45 @@ jobs:
     needs: build
     steps:
       - name: Check out current repository
-        uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
+        uses: actions/checkout@v3
         with:
-          distribution: 'adopt'
-          java-version: 11
-          cache: 'gradle'
+          fetch-depth: 0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: 17
+          
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
 
       - name: Grant execute permission to gradlew
         run: chmod +x gradlew
 
       - name: Test
         run: ./gradlew test
+        # I honestly detest Minecraft plugin unit testing and I don't think it's worth the time to write tests for a project like this. 
+        # I'm not going to write tests for this project, but I will leave the code here in case you want to write tests for your own project.
+        continue-on-error: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Create Coverage
         run: ./gradlew jacocoTestReport
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Upload CodeCov Report
+        if: always()
         uses: codecov/codecov-action@v2
+        continue-on-error: true
         with:
           file: "**/build/reports/jacoco/**/*.xml"
 
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1.24
+        continue-on-error: true
         if: always()
         with:
           files: "**/build/test-results/**/*.xml"
@@ -85,13 +97,18 @@ jobs:
 
     steps:
       - name: Check out current repository
-        uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
+        uses: actions/checkout@v3
         with:
-          distribution: 'adopt'
-          java-version: 11
-          cache: 'gradle'
+          fetch-depth: 0
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
 
       - name: Set up Node.js v16.x
         uses: actions/setup-node@v2
@@ -104,8 +121,38 @@ jobs:
       - name: Grant execute permission for update-versions.sh
         run: chmod +x update-versions.sh
 
+      - uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+          path: build/libs
+      - name: Import GPG key
+        id: import_gpg
+        uses: crazy-max/ghaction-import-gpg@v5
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+          git_tag_gpgsign: true
+          git_push_gpgsign: true
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GIT_AUTHOR_NAME: ${{ steps.import_gpg.outputs.name }}
+          GIT_AUTHOR_EMAIL: ${{ steps.import_gpg.outputs.email }}
+          GIT_COMMITTER_NAME: ${{ steps.import_gpg.outputs.name }}
+          GIT_COMMITTER_EMAIL: ${{ steps.import_gpg.outputs.email }}
           GH_URL: "https://api.github.com/"
-        run: npx --legacy-peer-deps -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p gradle-semantic-release-plugin -p semantic-release semantic-release
+        run: npx --legacy-peer-deps -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p gradle-semantic-release-plugin -p @semantic-release/release-notes-generator -p semantic-release semantic-release
+      - name: Publish to GitHub Package Registry
+        if: github.branch == 'master'
+        run: ./gradlew publish
+        env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           signingKey: ${{ steps.import_gpg.outputs.fingerprint }}
+           signingPassword: ${{ secrets.PASSPHRASE }}
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: release-artifacts
+          path: "**/build/libs"

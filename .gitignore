@@ -15,6 +15,39 @@ working/*
 **/debug/**/*
 !working/server.properties
 /.idea/
+bin/
+
+# Test server, only save plugins folder
+run/cache/
+run/libraries/
+run/logs/
+run/versions/
+run/plugins/LuckPerms/
+run/plugins/PlaceholderAPI/
+run/plugins/ProtocolLib/
+run/plugins/WorldEdit/
+run/plugins/WorldGuard/
+run/plugins/WorldGuardExtraFlags/
+run/plugins/WorldGuardPomaFlags/
+run/plugins/WorldGuardTweaks/
+run/plugins/WorldGuardTweaks/
+run/plugins/TownyPlus/
+run/plugins/TownyChat/
+run/plugins/Towny/settings/lang
+run/plugins/Towny/logs/
+run/plugins/Towny/data/
+run/plugins/Towny/backup/
+run/crash-reports/
+run/world/
+run/world_nether/
+run/world_the_end/
+
+# No uploading Discord bot tokens to GitHub, alright?!
+run/plugins/DiscordSRV/
+# Don't mess up bstats stuff 
+run/plugins/bStats/
+
+
 
 src/**/plugin.yml
 
@@ -71,7 +104,6 @@ out/
 
 # Run paper debug thingy
 debug/
-run/*
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
