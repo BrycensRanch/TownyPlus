@@ -6,17 +6,17 @@ jobs:
   hash:
     runs-on: ubuntu-latest
     steps:
-      - uses: MCJack123/ghaction-generate-release-hashes@v3
+      - uses: MCJack123/ghaction-generate-release-hashes@v4
         with:
           get-assets: true
           hash-type: sha256
           file-name: hashes-sha256.txt
-      - uses: MCJack123/ghaction-generate-release-hashes@v3
+      - uses: MCJack123/ghaction-generate-release-hashes@v4
         with:
           get-assets: true
           hash-type: sha512
           file-name: hashes-sha512.txt
-      - uses: MCJack123/ghaction-generate-release-hashes@v3
+      - uses: MCJack123/ghaction-generate-release-hashes@v4
         with:
           get-assets: true
           hash-type: md5
