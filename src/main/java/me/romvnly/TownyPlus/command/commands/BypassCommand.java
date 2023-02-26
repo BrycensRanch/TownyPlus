@@ -28,12 +28,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
-
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public final class BypassCommand extends BaseCommand {
@@ -99,11 +96,11 @@ public final class BypassCommand extends BaseCommand {
 
     @Override
     public void register() {
-        final var toggleArgument = StringArgument.<CommandSender>newBuilder("toggle")
+        final var toggleArgument = StringArgument.<CommandSender>builder("toggle")
                 .asOptional()
                 .withSuggestionsProvider((context, input) -> List.of("on", "off"))
                 .build();
-        final var timeArgument = StringArgument.<CommandSender>newBuilder("time")
+        final var timeArgument = StringArgument.<CommandSender>builder("time")
                 .asOptional()
                 .withSuggestionsProvider((context, input) -> {
                     if (context.get("toggle").toString().toLowerCase() == "off") {
@@ -178,12 +175,18 @@ public final class BypassCommand extends BaseCommand {
         if (toggled) {
             sender.sendMessage(MiniMessage.get().parse("<red>Everything you do is logged and will be posted to our Discord Server's logs.</red>"));
         }
+        
 //        else {
 //            target.getPlayer().sendMessage(MiniMessage.get().parse("<purple></purple>"));
 //        }
-        Bukkit.getScheduler().scheduleAsyncDelayedTask(plugin, new BukkitRunnable() {
-            public void run() {
-                Bukkit.broadcastMessage("This message is shown after a second...");
+        // Bukkit.getScheduler().scheduleAsyncDelayedTask(plugin, new BukkitRunnable() {
+        //     public void run() {
+        //         Bukkit.broadcastMessage("This message is shown after a second...");
+        //     }
+        // }, 20L); //20 Tick (1 Second) delay before run() is called
+        Bukkit.getScheduler().runTaskLater(this.plugin, () -> {
+            if (toggled) {
+                sender.sendMessage(MiniMessage.get().parse("<red>Your towny bypass mode has been disabled.</red>"));
             }
         }, 20L); //20 Tick (1 Second) delay before run() is called
         return;
