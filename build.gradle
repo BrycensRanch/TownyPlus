@@ -209,7 +209,7 @@ dependencies {
     // better http server than spark
     library "io.javalin:javalin-bundle:5.3.2"
     // DiscordSRV, optional dependency
-    compileOnly 'com.discordsrv:discordsrv:1.24.0'
+    compileOnly 'com.discordsrv:discordsrv:1.26.1'
 //    // JDA for DiscordSRV
     implementation("net.dv8tion:JDA:5.0.0-alpha.4") {
         exclude module: 'opus-java'
