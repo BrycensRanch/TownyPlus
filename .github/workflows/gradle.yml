@@ -29,8 +29,22 @@ jobs:
       - name: Grant execute permission to gradlew
         run: chmod +x gradlew
 
+      - name: SpotBugs 👀
+        run: ./gradlew spotBugsMain
+
+      - uses: jwgmeligmeyling/spotbugs-github-action@master
+        with:
+          path: 'build/reports/spotbugs/main.xml'
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkstyle 🧑‍🏫
+        run: ./gradlew checkstyleMain
+      - uses: jwgmeligmeyling/checkstyle-github-action@master
+        with:
+          path: 'build/reports/checkstyle/main.xml'
+
+
       - name: Build
-        run: ./gradlew build -x test -x signShadowJar
+        run: ./gradlew build -x test -x spotbugsMain -x spotbugsTest
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
@@ -63,7 +77,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Test
-        run: ./gradlew test
+        run: ./gradlew test -x spotbugsMain -x spotbugsTest
         # I honestly detest Minecraft plugin unit testing and I don't think it's worth the time to write tests for a project like this. 
         # I'm not going to write tests for this project, but I will leave the code here in case you want to write tests for your own project.
         continue-on-error: true
@@ -146,7 +160,7 @@ jobs:
         run: npx --legacy-peer-deps -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p gradle-semantic-release-plugin -p @semantic-release/release-notes-generator -p semantic-release semantic-release
       - name: Publish to GitHub Package Registry
         if: github.branch == 'master'
-        run: ./gradlew publish
+        run: ./gradlew publish -x test -x spotbugsMain -x spotbugsTest
         env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
            signingKey: ${{ steps.import_gpg.outputs.fingerprint }}

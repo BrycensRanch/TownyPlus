@@ -13,6 +13,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '8.0.0'
     id 'net.minecrell.plugin-yml.bukkit' version '0.5.3'
     id "org.cadixdev.licenser" version "0.6.1"
+//    id "com.github.sherter.google-java-format" version "0.9"
     id 'xyz.jpenilla.run-paper' version '2.0.1'
     id "com.github.spotbugs" version "5.0.13"
     id 'com.gorylenko.gradle-git-properties' version '2.4.1'
@@ -22,7 +23,7 @@ plugins {
     id 'jacoco'
     id 'idea'
     id 'checkstyle'
-    id 'signing'
+//    id 'signing'
 }
 
 // Thanks BanManager, but your log message is now my property
@@ -60,6 +61,14 @@ group project.property("group")
 def details = versionDetails()
 println(details.branchName)
 
+spotbugs {
+    ignoreFailures = false
+    showStackTraces = true
+    showProgress = true
+    effort = "max"
+    reportLevel = 'default'
+}
+
 if (version == null || version == "") {
     version = getTime() + "-SNAPSHOT"
 } else if (details.branchName.contains("alpha") || details.branchName.contains("beta") || details.branchName.contains("rc")) {
@@ -72,11 +81,12 @@ task generateFiles {
 }
 
 task createChecksums(type: Checksum, dependsOn: 'generateFiles') {
-  inputFiles.setFrom(buildDir)
-  checksumAlgorithm.set(Checksum.Algorithm.SHA256)
+    inputFiles.setFrom("$buildDir/libs")
+    checksumAlgorithm.set(Checksum.Algorithm.SHA256)
   checksumAlgorithm.set(Checksum.Algorithm.SHA512)
   appendFileNameToChecksum.set(true)
 }
+
 checkstyle {
     // toolVersion '10.6.0'
     // maxWarnings = 0
@@ -85,7 +95,7 @@ checkstyle {
 
 tasks.withType(Checkstyle) {
     reports {
-        xml.required = false
+        xml.required = true
         html.required = true
     }
 }
@@ -93,7 +103,7 @@ tasks.withType(Checkstyle) {
 tasks.withType(SpotBugsTask) {
     reports {
         xml {
-            required.set(false)
+            required.set(true)
         }
         html {
             required.set(true)
@@ -267,7 +277,7 @@ gitProperties {
     customProperty 'git.mcVersion', { project.property("mcVersion") }
 }
 
-sourcesJar.enabled = false
+sourcesJar.enabled = true;
 tasks.build.dependsOn(shadowJar)
 // tasks.test.dependsOn(shadowJar)
 tasks.publish.dependsOn(shadowJar, createChecksums)

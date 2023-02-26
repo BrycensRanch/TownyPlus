@@ -5,13 +5,13 @@ java {
     withSourcesJar()
 }
 
-signing {
-    def signingKey = System.getenv("signingKey")
-    def signingPassword = System.getenv("signingPassword")
-    useInMemoryPgpKeys(signingKey, signingPassword)
-    useGpgCmd()
-    sign shadowJar
-}
+//signing {
+//    def signingKey = System.getenv("signingKey")
+//    def signingPassword = System.getenv("signingPassword")
+//    useInMemoryPgpKeys(signingKey, signingPassword)
+//    useGpgCmd()
+//    sign shadowJar
+//}
 
 jar {
     manifest {

@@ -44,7 +44,7 @@ public class RestAPI {
 
     public void startServer(String host, Integer port) {
         server = Javalin.create(config -> {
-            // this is the best I can do jetty no longer allows programmatic disabling of their logging 🤷‍♂️
+            // this is the best I can do jetty no longer allows programmatic disabling of their logging
             JavalinLogger.enabled = false;
             config.requestLogger.http((ctx, ms) -> {
                 this.plugin.getLogger().info(String.format("API Request to %s (%s) from %s %sms %s", ctx.path(), ctx.method(), ctx.ip(), ms, ctx.statusCode()));
