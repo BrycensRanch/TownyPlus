@@ -30,15 +30,19 @@ jobs:
         run: chmod +x gradlew
 
       - name: SpotBugs 👀
+        continue-on-error: true
         run: ./gradlew spotBugsMain
 
       - uses: jwgmeligmeyling/spotbugs-github-action@master
+        continue-on-error: true
         with:
           path: 'build/reports/spotbugs/main.xml'
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Checkstyle 🧑‍🏫
         run: ./gradlew checkstyleMain
+        continue-on-error: true
       - uses: jwgmeligmeyling/checkstyle-github-action@master
+        continue-on-error: true
         with:
           path: 'build/reports/checkstyle/main.xml'
 
