@@ -2,7 +2,7 @@ name: Check that PRs are set to alpha
 
 on:
   pull_request_target:
-   types: [opened, edited]
+   types: [opened]
 
 jobs:
   build:
