@@ -22,7 +22,7 @@ import me.romvnly.TownyPlus.util.CommandUtil;
 import me.romvnly.TownyPlus.util.Constants;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.Template;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -113,7 +113,7 @@ public final class BypassCommand extends BaseCommand {
                 })
                 .build();
         this.commandManager.registerSubcommand(builder ->
-                builder.literal("bypass").meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.get().parse("Bypass towny's stupid protections!"))
+                builder.literal("bypass").meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.miniMessage().deserialize("Bypass towny's stupid protections!"))
                         .argument(toggleArgument, CommandUtil.description("On/off to force enable/disable"))
                         .argument(timeArgument, CommandUtil.description("Duration to bypass towny's protections on Towns"))
                         .argument(SinglePlayerSelectorArgument.optional("player"), CommandUtil.description("Defaults to the executing player if unspecified (console must specify a player)"))
@@ -133,51 +133,51 @@ public final class BypassCommand extends BaseCommand {
                 toggled = false;
                 break;
             default:
-                sender.sendMessage(MiniMessage.get().parse("Sorry, I didn't get that. Please enter on/off"));
+                sender.sendMessage(MiniMessage.miniMessage().deserialize("Sorry, I didn't get that. Please enter on/off"));
                 return;
         }
         Duration time;
         try {
             time = Duration.ofMillis(parseDuration(context.getOrDefault("time", "30s")));
         } catch (IllegalArgumentException e) {
-            sender.sendMessage(MiniMessage.get().parse("<dark_red>That's not a time duration!</dark_red>"));
+            sender.sendMessage(MiniMessage.miniMessage().deserialize("<dark_red>That's not a time duration!</dark_red>"));
             return;
         }
         if (!toggled) time = null;
         Player target = CommandUtil.resolvePlayer(context, plugin);
         if (toggled) {
-            sender.sendMessage(MiniMessage.get().parse(
+            sender.sendMessage(MiniMessage.miniMessage().deserialize(
                     "<green>Toggled <aqua><mode></aqua> <player> Towny bypass mode for</green> <yellow><duration> seconds</yellow><green>.</green>",
-                    Template.of("mode", toggled ? "on" : "off"),
-                    Template.of("player", target.getName() == context.getSender().getName() ? "your" : target.getName() + "'s"),
-                    Template.of("duration", String.valueOf(time.getSeconds()))
+                    Placeholder.unparsed("mode", toggled ? "on" : "off"),
+                    Placeholder.unparsed("player", target.getName() == context.getSender().getName() ? "your" : target.getName() + "'s"),
+                    Placeholder.unparsed("duration", String.valueOf(time.getSeconds()))
             ));
         } else {
-            sender.sendMessage(MiniMessage.get().parse(
+            sender.sendMessage(MiniMessage.miniMessage().deserialize(
                     "<green>Toggled <aqua><mode></aqua> <player> Towny bypass mode<green>.</green>",
-                    Template.of("mode", toggled ? "on" : "off"),
-                    Template.of("player", target.getName() == context.getSender().getName() ? "your" : target.getName() + "'s")
+                    Placeholder.unparsed("mode", toggled ? "on" : "off"),
+                    Placeholder.unparsed("player", target.getName() == context.getSender().getName() ? "your" : target.getName() + "'s")
             ));
         }
         if (target.getName() != context.getSender().getName() && toggled) {
-            sender.sendMessage(MiniMessage.get().parse(
+            sender.sendMessage(MiniMessage.miniMessage().deserialize(
                     "<green>Your towny bypass mode has been <mode> for <yellow><duration> seconds</yellow></green>",
-                    Template.of("mode", toggled ? "enabled" : "disabled"),
-                    Template.of("duration", String.valueOf(time.getSeconds()))
+                    Placeholder.unparsed("mode", toggled ? "enabled" : "disabled"),
+                    Placeholder.unparsed("duration", String.valueOf(time.getSeconds()))
             ));
         }
         if (target.getName() != context.getSender().getName() && !toggled) {
-            sender.sendMessage(MiniMessage.get().parse(
+            sender.sendMessage(MiniMessage.miniMessage().deserialize(
                     "<green>Your towny bypass mode has been <aqua><mode></aqua>, your logs will be uploaded to our Discord Server!</green>",
-                    Template.of("mode", toggled ? "enabled" : "disabled")
+                    Placeholder.unparsed("mode", toggled ? "enabled" : "disabled")
             ));
         }
         if (toggled) {
-            sender.sendMessage(MiniMessage.get().parse("<red>Everything you do is logged and will be posted to our Discord Server's logs.</red>"));
+            sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Everything you do is logged and will be posted to our Discord Server's logs.</red>"));
         }
         
 //        else {
-//            target.getPlayer().sendMessage(MiniMessage.get().parse("<purple></purple>"));
+//            target.getPlayer().sendMessage(MiniMessage.miniMessage().deserialize("<purple></purple>"));
 //        }
         // Bukkit.getScheduler().scheduleAsyncDelayedTask(plugin, new BukkitRunnable() {
         //     public void run() {
@@ -186,7 +186,7 @@ public final class BypassCommand extends BaseCommand {
         // }, 20L); //20 Tick (1 Second) delay before run() is called
         Bukkit.getScheduler().runTaskLater(this.plugin, () -> {
             if (toggled) {
-                sender.sendMessage(MiniMessage.get().parse("<red>Your towny bypass mode has been disabled.</red>"));
+                sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Your towny bypass mode has been disabled.</red>"));
             }
         }, 20L); //20 Tick (1 Second) delay before run() is called
         return;

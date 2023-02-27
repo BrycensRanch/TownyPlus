@@ -28,10 +28,10 @@ import me.romvnly.TownyPlus.util.CommandUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
- import net.kyori.adventure.text.minimessage.Template;
 
-import org.bukkit.command.CommandSender;
- import org.checkerframework.checker.nullness.qual.NonNull;
+ import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+ import org.bukkit.command.CommandSender;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import com.fasterxml.jackson.core.util.DefaultIndenter;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
@@ -62,7 +62,7 @@ import java.util.List;
         .asOptional()
         .build();
          this.commandManager.registerSubcommand(builder ->
-                 builder.literal("dump").meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.get().parse("Dump debug information to somewhere. Like Geyser Dump"))
+                 builder.literal("dump").meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.miniMessage().deserialize("Dump debug information to somewhere. Like Geyser Dump"))
                         .argument(typeOfDumpArgument, CommandUtil.description("Type of dump to perform"))
                         .argument(shouldItUploadServerLogsArgument, CommandUtil.description("Should it upload server logs?"))
                          .permission(Constants.DUMP_PERMISSION)
@@ -90,26 +90,26 @@ import java.util.List;
                 dumpData = MAPPER.writeValueAsString(new DumpInfo(shouldLog));
             }
         } catch (IOException e) {
-            sender.sendMessage(MiniMessage.get().parse("<red>An error occurred while dumping information. Please check the console for more information.</red>"));
+            sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>An error occurred while dumping information. Please check the console for more information.</red>"));
             this.plugin.getLogger().severe("An error occurred while dumping information");
             e.printStackTrace();
             return;
         }
         String uploadedDumpUrl = "";
         if (offlineDump) {
-            sender.sendMessage(MiniMessage.get().parse("<yellow>Dumping to JSON File..</yellow>"));
+            sender.sendMessage(MiniMessage.miniMessage().deserialize("<yellow>Dumping to JSON File..</yellow>"));
             String dumpFileName = String.format("dump-%s.json", date.getTime());
             Path dumpFile = plugin.getDataFolder().toPath().resolve(dumpFileName);
             try {
                 FileOutputStream outputStream = new FileOutputStream(dumpFile.toFile());
                 outputStream.write(dumpData.getBytes());
                 outputStream.close();
-                sender.sendMessage(MiniMessage.get().parse("<green>Dump <dump> outputted to the plugins config folder</green>", Template.of("dump", dumpFileName)));
+                sender.sendMessage(MiniMessage.miniMessage().deserialize("<green>Dump <dump> outputted to the plugins config folder</green>", Placeholder.unparsed("dump", dumpFileName)));
                 if (sender != plugin.adventure().console()) {
-                    plugin.adventure().console().sendMessage(MiniMessage.get().parse("<green>Dump <dump> outputted to the plugins config folder</green>", Template.of("dump", dumpFileName)));
+                    plugin.adventure().console().sendMessage(MiniMessage.miniMessage().deserialize("<green>Dump <dump> outputted to the plugins config folder</green>", Placeholder.unparsed("dump", dumpFileName)));
                 }
             } catch (IOException e) {
-                sender.sendMessage(MiniMessage.get().parse("<red>An error occurred while dumping information. Please check the console for more information.</red>"));
+                sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>An error occurred while dumping information. Please check the console for more information.</red>"));
                 this.plugin.getLogger().severe("An error occurred while dumping information");
                 e.printStackTrace();
                 return;
@@ -117,7 +117,7 @@ import java.util.List;
 
             uploadedDumpUrl = dumpFileName;
         } else {
-            sender.sendMessage(MiniMessage.get().parse("<yellow>Dumping to GeyserMC Dump..</yellow>"));
+            sender.sendMessage(MiniMessage.miniMessage().deserialize("<yellow>Dumping to GeyserMC Dump..</yellow>"));
 
             String response;
             JsonNode responseNode;
@@ -125,19 +125,19 @@ import java.util.List;
                 response = WebUtils.post(Constants.DUMP_URL + "bins", dumpData);
                 responseNode = MAPPER.readTree(response);
             } catch (IOException e) {
-                sender.sendMessage(MiniMessage.get().parse("<red>An error occurred while uploading the dump. Please check the console for more information.</red>"));
+                sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>An error occurred while uploading the dump. Please check the console for more information.</red>"));
                 this.plugin.getLogger().severe("An error occurred while dumping information");
                 e.printStackTrace();
                 return;
             }
 
             if (!responseNode.has("key")) {
-                sender.sendMessage(MiniMessage.get().parse("<red>The server rejected the dump: <errorMessage></red>", Template.of("errorMessage", responseNode.has("message") ? responseNode.get("message").asText() : response)));
+                sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>The server rejected the dump: <errorMessage></red>", Placeholder.unparsed("errorMessage", responseNode.has("message") ? responseNode.get("message").asText() : response)));
                 return;
             }
 
             uploadedDumpUrl = Constants.DUMP_URL + responseNode.get("key").asText();
-            Component successMessage = MiniMessage.get().parse("<green>Successfully uploaded dump to <url></green>", Template.of("url", uploadedDumpUrl)).clickEvent(ClickEvent.openUrl(uploadedDumpUrl));
+            Component successMessage = MiniMessage.miniMessage().deserialize("<green>Successfully uploaded dump to <url></green>", Placeholder.unparsed("url", uploadedDumpUrl)).clickEvent(ClickEvent.openUrl(uploadedDumpUrl));
 
             if (sender != plugin.adventure().console()) {
                 plugin.adventure().console().sendMessage(successMessage);
