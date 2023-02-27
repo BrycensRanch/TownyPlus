@@ -166,6 +166,8 @@ compileJava {
 publish {
     dependsOn 'clean'
     dependsOn 'build'
+    tasks.findByName('build').mustRunAfter 'clean'
+
 }
 assemble {
         dependsOn(shadowJar)
