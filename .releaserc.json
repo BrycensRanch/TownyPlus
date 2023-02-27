@@ -29,7 +29,10 @@
         { "type": "style", "release": "patch" },
         { "type": "ci", "release": "patch" },
         { "type": "chore", "release": "patch" }
-      ]
+      ],
+      "parserOpts": {
+        "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"]
+      }
     }
     ],
     [
@@ -38,8 +41,7 @@
         "prepareCmd": "./update-versions.sh ${nextRelease.version}"
       }
     ],
-    "@semantic-release/release-notes-generator",
-    "@semantic-release/changelog",
+    "semantic-release-github-milestones",
     "gradle-semantic-release-plugin",
     [
       "@semantic-release/github",
