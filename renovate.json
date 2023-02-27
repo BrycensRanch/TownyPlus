@@ -6,7 +6,6 @@
   ],
   "prCreation": "not-pending",
   "semanticCommits": "enabled",
-  "semanticCommitScope": "arg0",
   "automerge": true,
   "automergeSchedule": [
     "after 10pm every weekday",
