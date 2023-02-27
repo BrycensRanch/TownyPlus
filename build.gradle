@@ -201,7 +201,7 @@ dependencies {
     // Spigot/GitHub Releases Update checker. Am I that lazy? Yes.
     implementation 'com.jeff_media:SpigotUpdateChecker:3.0.2'
     // Towny
-    compileOnly 'com.palmergames.bukkit.towny:towny:0.97.5.13'
+    compileOnly 'com.palmergames.bukkit.towny:towny:0.98.6.8'
     compileOnly 'com.palmergames.bukkit:TownyChat:0.45'
 
     // Stealing all your data lmfao
@@ -209,7 +209,7 @@ dependencies {
     // better http server than spark
     library "io.javalin:javalin-bundle:5.3.2"
     // DiscordSRV, optional dependency
-    compileOnly 'com.discordsrv:discordsrv:1.24.0'
+    compileOnly 'com.discordsrv:discordsrv:1.26.1'
 //    // JDA for DiscordSRV
     implementation("net.dv8tion:JDA:5.0.0-alpha.4") {
         exclude module: 'opus-java'
@@ -217,7 +217,7 @@ dependencies {
     // VentureChat support for chat listening
     compileOnly "mineverse.aust1n46:venturechat:2.20.1"
     // ProtocolLib (required by venturechat)
-    compileOnly "com.comphenix.protocol:ProtocolLib:4.5.0"
+    compileOnly "com.comphenix.protocol:ProtocolLib:4.8.0"
     compileOnly 'com.github.spotbugs:spotbugs-annotations:4.7.3'
 
     // Adventure
@@ -229,9 +229,9 @@ dependencies {
     spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.12.0'
     testCompileOnly 'com.github.spotbugs:spotbugs-annotations:4.7.3'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
-    testImplementation 'org.mockito:mockito-core:4.11.0'
+    testImplementation 'org.mockito:mockito-core:5.1.1'
     testImplementation 'com.github.seeseemelk:MockBukkit-v1.19:2.29.0'
-    testImplementation 'org.assertj:assertj-core:3.24.1'
+    testImplementation 'org.assertj:assertj-core:3.24.2'
 }
 shadowJar {
         archiveClassifier.set("")
