@@ -122,7 +122,14 @@ jobs:
       - name: Check out current repository
         uses: actions/checkout@v3
         with:
+          persist-credentials: false
           fetch-depth: 0
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+      - name: Display structure of downloaded files
+        run: ls -R
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
@@ -144,10 +151,6 @@ jobs:
       - name: Grant execute permission for update-versions.sh
         run: chmod +x update-versions.sh
 
-      - uses: actions/download-artifact@v3
-        with:
-          name: build-artifacts
-          path: build/libs
       - name: Import GPG key
         id: import_gpg
         uses: crazy-max/ghaction-import-gpg@v5
@@ -156,8 +159,9 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           git_user_signingkey: true
           git_commit_gpgsign: true
-          git_tag_gpgsign: true
-          git_push_gpgsign: true
+          git_tag_gpgsign: false
+          # No, GitHub does not currently support GPG signed pushes, only signed commits.
+          git_push_gpgsign: false
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -166,7 +170,8 @@ jobs:
           GIT_COMMITTER_NAME: ${{ steps.import_gpg.outputs.name }}
           GIT_COMMITTER_EMAIL: ${{ steps.import_gpg.outputs.email }}
           GH_URL: "https://api.github.com/"
-        run: npx --legacy-peer-deps -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p gradle-semantic-release-plugin -p @semantic-release/release-notes-generator -p conventional-changelog-conventionalcommits -p semantic-release
+        run: npx --legacy-peer-deps -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p gradle-semantic-release-plugin -p @semantic-release/release-notes-generator -p conventional-changelog-conventionalcommits -p semantic-release semantic-release
+
       - name: 🔃 Merge master back into alpha
         if: ${{ github.ref == 'refs/heads/master' }}
         uses: everlytic/branch-merge@1.1.5
@@ -175,13 +180,13 @@ jobs:
           source_ref: 'master'
           target_branch: 'alpha'
           commit_message_template: 'Merge branch {source_ref} into {target_branch} [skip ci]'
-      - name: Publish to GitHub Package Registry
-        if: ${{ github.ref == 'refs/heads/master' }}
-        run: ./gradlew publish -x test -x spotbugsMain -x spotbugsTest
-        env:
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-           signingKey: ${{ steps.import_gpg.outputs.fingerprint }}
-           signingPassword: ${{ secrets.PASSPHRASE }}
+#      - name: Publish to GitHub Package Registry
+#        if: ${{ github.ref == 'refs/heads/master' }}
+#        run: ./gradlew publish -x test
+#        env:
+#           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+#           signingKey: ${{ steps.import_gpg.outputs.keyid }}
+#           signingPassword: ${{ secrets.PASSPHRASE }}
       - name: Upload release artifacts
         uses: actions/upload-artifact@v3
         with:

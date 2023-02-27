@@ -14,12 +14,13 @@
     },
     {
       "name": "rc",
-      "channel": "alpha",
+      "channel": "rc",
       "prerelease": true
     }
   ],
   "plugins": [
-    "@semantic-release/commit-analyzer",
+    [
+      "@semantic-release/commit-analyzer",
     {
       "preset": "conventionalcommits",
       "releaseRules": [
@@ -28,28 +29,13 @@
         { "type": "style", "release": "patch" },
         { "type": "ci", "release": "patch" },
         { "type": "chore", "release": "patch" }
-      ]
-    },
-        [
-      "@semantic-release/exec",
-      {
-        "prepareCmd": "./update-versions.sh ${nextRelease.version}"
+      ],
+      "parserOpts": {
+        "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"]
       }
+    }
     ],
-    "@semantic-release/release-notes-generator",
-    "@semantic-release/changelog",
     "gradle-semantic-release-plugin",
-    [
-      "@semantic-release/github",
-      {
-        "assets": [
-          {
-            "path": "**/build/libs/*.jar"
-          }
-        ],
-        "addReleases": "bottom"
-      }
-    ],
     [
       "@semantic-release/release-notes-generator",
       {
@@ -67,12 +53,6 @@
             },
             { "type": "feat", "section": "✨ Feature ✨", "hidden": false },
             { "type": "fix", "section": "🐛 Bugfix 🐛", "hidden": false },
-            { "type": "hotfix", "section": "🔥 Hotfix 🔥", "hidden": false },
-            {
-              "type": "BREAKING",
-              "section": "❗ MAJOR ❗",
-              "hidden": false
-            },
             { "type": "docs", "section": "📝  Documentation", "hidden": false },
             {
               "type": "chore",
@@ -111,6 +91,18 @@
           "gradle.properties",
           "CHANGELOG.md"
         ]
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "assets": [
+          {
+            "path": "**/build/libs/*.jar",
+            "label": "Built jar(s)"
+          }
+        ],
+        "addReleases": "bottom"
       }
     ]
   ]
