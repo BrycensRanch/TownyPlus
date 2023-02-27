@@ -41,7 +41,6 @@
         "prepareCmd": "./update-versions.sh ${nextRelease.version}"
       }
     ],
-    "semantic-release-github-milestones",
     "gradle-semantic-release-plugin",
     [
       "@semantic-release/github",
