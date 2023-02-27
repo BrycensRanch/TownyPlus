@@ -128,7 +128,6 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: build-artifacts
-          path: build/libs
       - name: Display structure of downloaded files
         run: ls -R
       - name: Set up JDK 17
@@ -152,10 +151,6 @@ jobs:
       - name: Grant execute permission for update-versions.sh
         run: chmod +x update-versions.sh
 
-      - uses: actions/download-artifact@v3
-        with:
-          name: build-artifacts
-          path: build/libs
       - name: Import GPG key
         id: import_gpg
         uses: crazy-max/ghaction-import-gpg@v5
