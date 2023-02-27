@@ -25,3 +25,9 @@ jobs:
         with:
           name: Asset Hashes
           path: hashes*.txt
+      - name: Upload hashes to release
+        uses: alexellis/upload-assets@0.4.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        with:
+          asset_paths: 'hashes*.txt'

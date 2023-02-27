@@ -84,6 +84,10 @@
         }
       }
     ],
+    ["@semantic-release/exec", {
+      "publishCmd": "node ./update-versions.js ${nextRelease.version}"
+    }
+    ],
     [
       "@semantic-release/git",
       {
@@ -98,8 +102,7 @@
       {
         "assets": [
           {
-            "path": "**/build/libs/*.jar",
-            "label": "Built jar(s)"
+            "path": "**/build/libs/*.jar"
           }
         ],
         "addReleases": "bottom"
