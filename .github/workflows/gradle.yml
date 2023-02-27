@@ -95,7 +95,7 @@ jobs:
 
       - name: Upload CodeCov Report
         if: always()
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         continue-on-error: true
         with:
           file: "**/build/reports/jacoco/**/*.xml"
