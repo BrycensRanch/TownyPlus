@@ -2,7 +2,7 @@
 //file:noinspection GroovyAssignabilityCheck
 //import com.github.spotbugs.snom.SpotBugsTask
 import java.text.SimpleDateFormat
-import org.gradle.crypto.checksum.Checksum
+//import org.gradle.crypto.checksum.Checksum
 buildscript {
     repositories {
         mavenCentral()
@@ -18,7 +18,7 @@ plugins {
 //    id "com.github.spotbugs" version "5.0.13"
     id 'com.gorylenko.gradle-git-properties' version '2.4.1'
     id 'com.palantir.git-version' version '1.0.0'
-    id 'org.gradle.crypto.checksum' version '1.4.0'
+//    id 'org.gradle.crypto.checksum' version '1.4.0'
     id 'java'
     id 'jacoco'
     id 'idea'
@@ -78,13 +78,6 @@ if (version == null || version == "") {
 }
 task generateFiles {
   // Generates some files.
-}
-
-task createChecksums(type: Checksum, dependsOn: 'generateFiles') {
-    inputFiles.setFrom("$buildDir/libs")
-    checksumAlgorithm.set(Checksum.Algorithm.SHA256)
-  checksumAlgorithm.set(Checksum.Algorithm.SHA512)
-  appendFileNameToChecksum.set(true)
 }
 
 checkstyle {
@@ -285,7 +278,6 @@ gitProperties {
 sourcesJar.enabled = true;
 tasks.build.dependsOn(shadowJar)
 // tasks.test.dependsOn(shadowJar)
-tasks.publish.dependsOn(shadowJar, createChecksums)
 
 runServer {
     // Configure the Minecraft version for our task.

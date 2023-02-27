@@ -1,5 +1,4 @@
 apply plugin: 'maven-publish'
-import java.util.*
 java {
     withJavadocJar()
     withSourcesJar()
