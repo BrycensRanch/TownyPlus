@@ -53,7 +53,7 @@ public final class VersionCommand extends BaseCommand {
             sender.sendMessage(MiniMessage.miniMessage().deserialize(
                             "<rainbow>This server is running <pluginName> version <pluginVersion> (git-<gitBranch>-<gitCommitShort>)</rainbow>",
                     Placeholder.unparsed("pluginName", plugin.getName()),
-                    Placeholder.unparsed("pluginVersion", gitProp.getProperty("git.build.version")),
+                    Placeholder.unparsed("pluginVersion", plugin.getDescription().getVersion()),
                     Placeholder.unparsed("gitBranch", gitProp.getProperty("git.branch")),
                     Placeholder.unparsed("gitCommitShort", gitProp.getProperty("git.commit.id.abbrev"))
                     ).clickEvent(ClickEvent.openUrl(gitProp.getProperty("git.remote.origin.url")))
