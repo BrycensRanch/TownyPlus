@@ -48,7 +48,7 @@ jobs:
 
 
       - name: Build
-        run: ./gradlew build -x test -x spotbugsMain -x spotbugsTest
+        run: ./gradlew build -x test
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
@@ -81,7 +81,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Test
-        run: ./gradlew test -x spotbugsMain -x spotbugsTest
+        run: ./gradlew test
         # I honestly detest Minecraft plugin unit testing and I don't think it's worth the time to write tests for a project like this. 
         # I'm not going to write tests for this project, but I will leave the code here in case you want to write tests for your own project.
         continue-on-error: true
@@ -109,7 +109,12 @@ jobs:
 
   release:
     needs: [ build, test ]
-    if: github.ref == 'master' || github.ref == 'beta' || github.ref == 'alpha' || github.ref == 'rc'
+    if: contains('
+      refs/heads/master
+      refs/heads/rc
+      refs/heads/alpha
+      refs/heads/beta
+      ', github.ref)
 
     runs-on: ubuntu-latest
 
@@ -128,10 +133,10 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
 
-      - name: Set up Node.js v16.x
-        uses: actions/setup-node@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: "16.x"
+          node-version-file: '.nvmrc'
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -161,9 +166,17 @@ jobs:
           GIT_COMMITTER_NAME: ${{ steps.import_gpg.outputs.name }}
           GIT_COMMITTER_EMAIL: ${{ steps.import_gpg.outputs.email }}
           GH_URL: "https://api.github.com/"
-        run: npx --legacy-peer-deps -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p gradle-semantic-release-plugin -p @semantic-release/release-notes-generator -p semantic-release semantic-release
+        run: npx --legacy-peer-deps -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p gradle-semantic-release-plugin -p @semantic-release/release-notes-generator -p conventional-changelog-conventionalcommits -p semantic-release
+      - name: 🔃 Merge master back into alpha
+        if: ${{ github.ref == 'refs/heads/master' }}
+        uses: everlytic/branch-merge@1.1.5
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          source_ref: 'master'
+          target_branch: 'alpha'
+          commit_message_template: 'Merge branch {source_ref} into {target_branch} [skip ci]'
       - name: Publish to GitHub Package Registry
-        if: github.branch == 'master'
+        if: ${{ github.ref == 'refs/heads/master' }}
         run: ./gradlew publish -x test -x spotbugsMain -x spotbugsTest
         env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

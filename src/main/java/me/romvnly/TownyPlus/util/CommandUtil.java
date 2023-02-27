@@ -17,7 +17,7 @@ import me.romvnly.TownyPlus.TownyPlusMain;
 import me.romvnly.TownyPlus.command.exception.CompletedSuccessfullyException;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.Template;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -36,20 +36,20 @@ public final class CommandUtil {
             if (rawSender instanceof Player) {
                 return (Player) rawSender;
             }
-            sender.sendMessage(MiniMessage.get().parse("<red>You must specify a target player when running this command from console"));
+            sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>You must specify a target player when running this command from console"));
             throw new CompletedSuccessfullyException();
         }
 
         final Player targetPlayer = selector.getPlayer();
         if (targetPlayer == null) {
-            sender.sendMessage(MiniMessage.get().parse("<red>No player found for input '<input>'", Template.of("input", selector.getSelector())));
+            sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>No player found for input '<input>'", Placeholder.unparsed("input", selector.getSelector())));
             throw new CompletedSuccessfullyException();
         }
 
         return targetPlayer;
     }
 
-    public static @NonNull RichDescription description(final @NonNull String miniMessage, @NonNull Template @NonNull ... placeholders) {
-        return RichDescription.of(MiniMessage.get().parse(miniMessage, placeholders));
+    public static @NonNull RichDescription description(final @NonNull String miniMessage) {
+        return RichDescription.of(MiniMessage.miniMessage().deserialize(miniMessage));
     }
 }

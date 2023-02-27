@@ -7,23 +7,23 @@ Following these guidelines helps to communicate that you respect the time of the
 open source project. In return, they should reciprocate that respect in addressing your issue, assessing changes, and
 helping you finalize your pull requests.
 
-This is an open source project and we love to receive contributions from our community — you! There are many ways to
+This is an open source project, and we love to receive contributions from our community — you! There are many ways to
 contribute, from writing tutorials or blog posts, improving the documentation, submitting bug reports and feature
 requests or writing code which can be incorporated into the plugin itself.
 
-Please, don't use the issue tracker
-for [requesting new plugins](https://www.spigotmc.org/threads/open-small-to-medium-plugin-development-pay-what-you-want-8-years-experience-high-quality.435578/)
-. Read the post on the Spigot board or send me a [email](mailto://romvnlybusiness@gmail.com).
+Please don't use issue tracker for support or requesting new plugins from me. 
+I accept requests on my [GitHub Profile's repo](https://github.com/BrycensRanch/BrycensRanch). 
+I will not accept any requests on this repo.
 
 # Ground Rules
 
-By contributing to this project you submit to following our [code of conduct](.github/CODE_OF_CONDUCT.md). Please read
+By contributing to this project you submit to following our [Code of Conduct](.github/CODE_OF_CONDUCT.md). Please read
 this next section carefully and check if your contribution meets all requirements in this checklist. This will save you
 and us a lot of time.
 
 ## Issues: Feature Requests & Bug Reports
 
-Please make sure you checked all of the following before submitting a new issue.
+Please make sure you checked all the following before submitting a new issue.
 
 * Before submitting a new issue, search the existing (including closed) issues for any duplicates.
 * If you found an existing issue - use the react feature to show you have the same problem or need the same feature.
@@ -31,13 +31,14 @@ Please make sure you checked all of the following before submitting a new issue.
 * Use the Bug & Feature Issue templates and provide all the required information.
 * Be as detailed as possible and include screenshots wherever possible. This will help reproducing your bug or
   understanding your feature request.
-* Use the WorldGuard `/wg report -p` command to provide detailed debug information and post the pastebin link in the
-  issue.
+* Use the  `/townyplus dump` command to provide detailed debug information and post the dump link in the
+  issue. 
+* However, keep in mind that this command may include your server's IP address and other potentially sensitive information such as your server's plugins, configuration, names of your players, the latest server log, etc... You can see an example [here](https://dump.geysermc.org/RIGcqNRwapkEJXSLT6EUsCJTVU9GzLGZ).
 
 ## Contributing Code
 
 Pull requests are the best way to propose changes to the codebase (we
-use [Github Flow](https://guides.github.com/introduction/flow/index.html)). We actively welcome your pull requests:
+use [GitHub Flow](https://docs.github.com/en/get-started/quickstart/github-flow)). We actively welcome your pull requests:
 
 * **Commit using the [conventional-commit](https://www.conventionalcommits.org/en/v1.0.0/) format!**
 * Create issues for any major changes and enhancements that you wish to make. Discuss things transparently and get
@@ -59,22 +60,23 @@ series, [How to Contribute to an Open Source Project on GitHub](https://egghead.
 At this point, you're ready to make your changes! Feel free to ask for help; everyone is a beginner at first :smile_cat:
 
 If a maintainer asks you to "rebase" your PR, they're saying that a lot of code has changed, and that you need to update
-your branch so it's easier to merge.
+your branch, so it's easier to merge.
 
 # Getting started
 
-1. Fork the repo and create your branch from `master`.
+1. Fork the repo and create your branch from `alpha`.
 2. If you've added code that should be tested, add tests.
 3. If you've changed APIs or added new features, update the documentation.
 4. Ensure the test suite passes.
 5. Test your changes on a server running the latest supported Minecraft version.
 6. Issue that pull request!
 
-> You can use the `Setup Server` gradle task to quickly get your test server setup. Then use the `deploy` task to compile and copy your plugin.jar to the server.
+> You can use the `runServer` gradle task to quickly get your test server setup.
+> It automatically moves the plugin jar to the plugins folder and starts the server.
 
 # Code review process
 
-The core team will look at your change as soon as possible and review it. However since this a project that is done in
+The core team will look at your change as soon as possible and review it. However, since this a project that is done in
 free time, reviewing might sometimes take some time.
 
 # Code, commit message and labeling conventions
@@ -82,7 +84,7 @@ free time, reviewing might sometimes take some time.
 We have very precise rules over how our git commit messages can be formatted. This leads to **more readable messages**
 that are easy to follow when looking through the **project history**.
 
-It is important to note that we use the git commit messages to **generate** the [CHANGELOG](CHANGELOG.md) document.
+It is important to note that we use the git commit messages to **generate** the [CHANGELOG](./CHANGELOG.md) document.
 Improperly formatted commit messages may result in your change not appearing in the CHANGELOG of the next release.
 
 ### <a name="commit-message-format"></a> Commit Message Format
@@ -116,7 +118,7 @@ Must be one of the following:
 
 ##### Scope
 
-The scope could be anything that helps specifying the scope (or feature) that is changing.
+The scope could be anything that helps to specify the scope (or feature) that is changing.
 
 Examples
 
@@ -160,7 +162,7 @@ feat(respawn): respawn player in bed after death
 
 * add test of player respawning in bed
 * add docs regarding how to set the bed respawn point
-* add command to reset bed spawnpoint
+* add command to reset bed spawn-point
 
 Fixes #11161 Fixes #3857
 ```
@@ -174,7 +176,7 @@ refactor(respawn): bed respawn event renamed
 
     ```java
     @EventHandler
-    public void onRepsawn(PlayerBedRespawn event) {
+    public void onRespawn(PlayerBedRespawn event) {
       ...
     }
     ```
@@ -183,7 +185,7 @@ refactor(respawn): bed respawn event renamed
 
     ```java
     @EventHandler
-    public void onRepsawn(PlayerRespawnInBed event) {
+    public void onRespawn(PlayerRespawnInBed event) {
       ...
     }
     ```
@@ -193,8 +195,8 @@ refactor(respawn): bed respawn event renamed
 
 ## Releasing a new version of the plugin
 
-One of the major benefits of this template is the fact that it will **automatically release a new version** on every
-push to `master` based on your commit messages. This makes sure your plugin is released following
+One of the major benefits of this approach is the fact that it will **automatically release a new version** on every
+successful push to either `master` or `alpha`  based on your commit messages. This makes sure your plugin is released following
 the [semantic versioning](https://semver.org/) guidelines. For this to work you have to follow a few simple rules:
 
 * Commit only working and tested code to the master branch. *Use Pull Requests to work on bigger features or bug fixes

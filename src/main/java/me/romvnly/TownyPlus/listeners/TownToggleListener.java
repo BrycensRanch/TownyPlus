@@ -10,13 +10,12 @@
 
 package me.romvnly.TownyPlus.listeners;
 
-import com.palmergames.bukkit.towny.event.town.TownMayorChangeEvent;
 import com.palmergames.bukkit.towny.event.town.toggle.TownTogglePVPEvent;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import me.romvnly.TownyPlus.TownyPlusMain;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.Template;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -34,14 +33,14 @@ public class TownToggleListener implements Listener {
     public void onTownPVPToggled(TownTogglePVPEvent event) {
         // Resident that called it
         Resident resident = event.getResident();
-        boolean oldState = event.getCurrentState();
+//        boolean oldState = event.getCurrentState();
         boolean newState = event.getFutureState();
         Town town = event.getTown();
-        TownyPlusMain.plugin.adventure().console().sendMessage(MiniMessage.get().parse(
+        TownyPlusMain.getInstance().adventure().console().sendMessage(MiniMessage.miniMessage().deserialize(
                 "<red><player> has toggled PVP for <town> <newState></red>",
-                Template.of("player", event.isAdminAction() ? "An Admin" : resident.getFormattedName()),
-                Template.of("newState", humanizeToggle(newState)),
-                Template.of("town", town.getFormattedName())
+                Placeholder.unparsed("player", event.isAdminAction() ? "An Admin" : resident.getFormattedName()),
+                Placeholder.unparsed("newState", humanizeToggle(newState)),
+                Placeholder.unparsed("town", town.getFormattedName())
         ));
     }
 }

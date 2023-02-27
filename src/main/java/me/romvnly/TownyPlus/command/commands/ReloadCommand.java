@@ -24,7 +24,7 @@ import me.romvnly.TownyPlus.util.CommandUtil;
 import me.romvnly.TownyPlus.util.Constants;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.Template;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.command.CommandSender;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -39,7 +39,7 @@ public final class ReloadCommand extends BaseCommand {
     @Override
     public void register() {
         this.commandManager.registerSubcommand(builder ->
-                builder.literal("reload").meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.get().parse("Reload the plugin's configuration"))
+                builder.literal("reload").meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.miniMessage().deserialize("Reload the plugin's configuration"))
                         .permission(Constants.RELOAD_PERMISSION)
                         .handler(this::execute));
     }
@@ -49,13 +49,13 @@ public final class ReloadCommand extends BaseCommand {
         try {
             Config.reload();
             Lang.reload();
-            sender.sendMessage(MiniMessage.get().parse(
+            sender.sendMessage(MiniMessage.miniMessage().deserialize(
                     "<rainbow><pluginName> has successfully reloaded!</rainbow>",
-                    Template.of("pluginName", plugin.getName())
+                    Placeholder.unparsed("pluginName", plugin.getName())
             ));
             this.plugin.chatHook.reload();
         } catch (Exception e) {
-            sender.sendMessage(MiniMessage.get().parse(
+            sender.sendMessage(MiniMessage.miniMessage().deserialize(
                     "<red>Whilst attempting to reload the configuration, the plugin ran into errors. Check your console.</red>"
             ));
         }

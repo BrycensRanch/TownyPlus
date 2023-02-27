@@ -16,7 +16,7 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import me.romvnly.TownyPlus.TownyPlusMain;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.Template;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -35,11 +35,11 @@ public class KickedFromTownListener implements Listener {
         // Gets whoever kicked the resident. Can either be an instance of Player or CommandSender.
         CommandSender kicker = (CommandSender) event.getKicker();
         Town town = event.getTown();
-        TownyPlusMain.plugin.adventure().console().sendMessage(MiniMessage.get().parse(
+        TownyPlusMain.plugin.adventure().console().sendMessage(MiniMessage.miniMessage().deserialize(
                 "<red><kicked> was kicked from <town> by <kicker>!</red>",
-                Template.of("kicked", kickedResident.getName()),
-                Template.of("town", town.getFormattedName()),
-                Template.of("kicker", kicker.getName())
+                Placeholder.unparsed("kicked", kickedResident.getName()),
+                Placeholder.unparsed("town", town.getFormattedName()),
+                Placeholder.unparsed("kicker", kicker.getName())
         ));
     }
 }

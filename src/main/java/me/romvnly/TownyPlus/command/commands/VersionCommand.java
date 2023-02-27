@@ -21,7 +21,7 @@ import me.romvnly.TownyPlus.util.Constants;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.Template;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.command.CommandSender;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -40,7 +40,7 @@ public final class VersionCommand extends BaseCommand {
     @Override
     public void register() {
         this.commandManager.registerSubcommand(builder ->
-                builder.literal("version").meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.get().parse("Check the plugin's version"))
+                builder.literal("version").meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.miniMessage().deserialize("Check the plugin's version"))
                         .permission(Constants.VERSION_PERMISSION)
                         .handler(this::execute));
     }
@@ -50,17 +50,17 @@ public final class VersionCommand extends BaseCommand {
         try (InputStream stream = getClass().getClassLoader().getResourceAsStream("git.properties")) {
             Properties gitProp = new Properties();
             gitProp.load(stream);
-            sender.sendMessage(MiniMessage.get().parse(
+            sender.sendMessage(MiniMessage.miniMessage().deserialize(
                             "<rainbow>This server is running <pluginName> version <pluginVersion> (git-<gitBranch>-<gitCommitShort>)</rainbow>",
-                            Template.of("pluginName", plugin.getName()),
-                            Template.of("pluginVersion", gitProp.getProperty("git.build.version")),
-                            Template.of("gitBranch", gitProp.getProperty("git.branch")),
-                            Template.of("gitCommitShort", gitProp.getProperty("git.commit.id.abbrev"))
+                    Placeholder.unparsed("pluginName", plugin.getName()),
+                    Placeholder.unparsed("pluginVersion", gitProp.getProperty("git.build.version")),
+                    Placeholder.unparsed("gitBranch", gitProp.getProperty("git.branch")),
+                    Placeholder.unparsed("gitCommitShort", gitProp.getProperty("git.commit.id.abbrev"))
                     ).clickEvent(ClickEvent.openUrl(gitProp.getProperty("git.remote.origin.url")))
             );
             plugin.updateChecker.checkNow(context.getSender());
         } catch (IOException | AssertionError | NumberFormatException | NullPointerException e) {
-            sender.sendMessage(MiniMessage.get().parse(
+            sender.sendMessage(MiniMessage.miniMessage().deserialize(
                     "<red>Could not check plugin version. Check your console.</red>"
             ));
             e.printStackTrace();

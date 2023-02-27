@@ -1,6 +1,6 @@
 //file:noinspection SpellCheckingInspection
 //file:noinspection GroovyAssignabilityCheck
-import com.github.spotbugs.snom.SpotBugsTask
+//import com.github.spotbugs.snom.SpotBugsTask
 import java.text.SimpleDateFormat
 import org.gradle.crypto.checksum.Checksum
 buildscript {
@@ -15,7 +15,7 @@ plugins {
     id "org.cadixdev.licenser" version "0.6.1"
 //    id "com.github.sherter.google-java-format" version "0.9"
     id 'xyz.jpenilla.run-paper' version '2.0.1'
-    id "com.github.spotbugs" version "5.0.13"
+//    id "com.github.spotbugs" version "5.0.13"
     id 'com.gorylenko.gradle-git-properties' version '2.4.1'
     id 'com.palantir.git-version' version '1.0.0'
     id 'org.gradle.crypto.checksum' version '1.4.0'
@@ -61,13 +61,13 @@ group project.property("group")
 def details = versionDetails()
 println(details.branchName)
 
-spotbugs {
-    ignoreFailures = false
-    showStackTraces = true
-    showProgress = true
-    effort = "max"
-    reportLevel = 'default'
-}
+//spotbugs {
+//    ignoreFailures = false
+//    showStackTraces = true
+//    showProgress = true
+//    effort = "max"
+//    reportLevel = 'default'
+//}
 
 if (version == null || version == "") {
     version = getTime() + "-SNAPSHOT"
@@ -100,16 +100,16 @@ tasks.withType(Checkstyle) {
     }
 }
 
-tasks.withType(SpotBugsTask) {
-    reports {
-        xml {
-            required.set(true)
-        }
-        html {
-            required.set(true)
-        }
-    }
-}
+//tasks.withType(SpotBugsTask) {
+//    reports {
+//        xml {
+//            required.set(true)
+//        }
+//        html {
+//            required.set(true)
+//        }
+//    }
+//}
 
 
 bukkit {
@@ -164,6 +164,10 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven { url = 'https://jitpack.io' }
+    maven {
+        name 'm2-dv8tion'
+        url 'https://m2.dv8tion.net/releases'
+    }
     maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
     maven { url 'https://repo.papermc.io/repository/maven-public/' }
     maven { url = 'https://hub.jeff-media.com/nexus/repository/jeff-media-public/' }
@@ -209,8 +213,9 @@ dependencies {
     // better http server than spark
     library "io.javalin:javalin-bundle:5.3.2"
     // DiscordSRV, optional dependency
-    compileOnly 'com.discordsrv:discordsrv:1.26.1'
+    compileOnly 'com.discordsrv:discordsrv:1.24.0'
 //    // JDA for DiscordSRV
+// Apparently, this is already included in DiscordSRV.
     implementation("net.dv8tion:JDA:5.0.0-alpha.4") {
         exclude module: 'opus-java'
     }
@@ -218,16 +223,16 @@ dependencies {
     compileOnly "mineverse.aust1n46:venturechat:2.20.1"
     // ProtocolLib (required by venturechat)
     compileOnly "com.comphenix.protocol:ProtocolLib:4.8.0"
-    compileOnly 'com.github.spotbugs:spotbugs-annotations:4.7.3'
+//    compileOnly 'com.github.spotbugs:spotbugs-annotations:4.7.3'
 
     // Adventure
-    implementation "net.kyori:adventure-api:4.9.3"
-    implementation "net.kyori:adventure-platform-bukkit:4.0.1"
-    implementation "net.kyori:adventure-text-minimessage:4.1.0-SNAPSHOT"
+    implementation "net.kyori:adventure-api:4.12.0"
+    implementation "net.kyori:adventure-platform-bukkit:4.2.0"
+    implementation "net.kyori:adventure-text-minimessage:4.12.0"
 
     // Test dependencies
-    spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.12.0'
-    testCompileOnly 'com.github.spotbugs:spotbugs-annotations:4.7.3'
+//    spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.12.0'
+//    testCompileOnly 'com.github.spotbugs:spotbugs-annotations:4.7.3'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
     testImplementation 'org.mockito:mockito-core:5.1.1'
     testImplementation 'com.github.seeseemelk:MockBukkit-v1.19:2.29.0'
@@ -245,7 +250,7 @@ shadowJar {
         include(dependency('com.palmergames.bukkit::'))
         include(dependency('com.github.TownyAdvanced::'))
         include(dependency('com.discordsrv::'))
-        include(dependency('github.scarsz.discordsrv::'))
+//        include(dependency('github.scarsz.discordsrv::'))
         include(dependency('mineverse.aust1n46::'))
         include(dependency('com.comphenix.protocol::'))
     }

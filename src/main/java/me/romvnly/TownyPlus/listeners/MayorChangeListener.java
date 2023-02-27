@@ -16,7 +16,7 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import me.romvnly.TownyPlus.TownyPlusMain;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.Template;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -29,14 +29,14 @@ public class MayorChangeListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onMayorChange(TownMayorChangeEvent event) {
-        Resident oldMayor = event.getOldMayor();
+//        Resident oldMayor = event.getOldMayor();
         Resident newMayor = event.getNewMayor();
         Town town = event.getTown();
-        TownyPlusMain.plugin.adventure().console().sendMessage(MiniMessage.get().parse(
+        TownyPlusMain.getInstance().adventure().console().sendMessage(MiniMessage.miniMessage().deserialize(
                 "<red><newMayor> now replaces <oldMayor> as mayor of <town></red>",
-                Template.of("newMayor", newMayor.getFormattedName()),
-                Template.of("oldMayor", newMayor.getFormattedName()),
-                Template.of("town", town.getFormattedName())
+                Placeholder.unparsed("newMayor", newMayor.getFormattedName()),
+                Placeholder.unparsed("oldMayor", newMayor.getFormattedName()),
+                Placeholder.unparsed("town", town.getFormattedName())
         ));
     }
 }

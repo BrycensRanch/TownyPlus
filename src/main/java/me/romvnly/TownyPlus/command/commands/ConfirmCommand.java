@@ -29,7 +29,7 @@
      @Override
      public void register() {
          this.commandManager.registerSubcommand(builder ->
-                 builder.literal("confirm").meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.get().parse("Confirm a pending command"))
+                 builder.literal("confirm").meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.miniMessage().deserialize("Confirm a pending command"))
                          .permission(Constants.CONFIRM_PERMISSION)
                          .handler(this.commandManager.confirmationManager.createConfirmationExecutionHandler())); 
                         }

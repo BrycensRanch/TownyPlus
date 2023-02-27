@@ -25,7 +25,7 @@ import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.Template;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.command.CommandSender;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -69,7 +69,7 @@ public final class HelpCommand extends BaseCommand {
 
         this.commandManager.registerSubcommand(builder ->
                 builder.literal("help")
-                        .meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.get().parse("Get help for <pluginName> commands", Template.of("pluginName", plugin.getName())))
+                        .meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.miniMessage().deserialize("Get help for <pluginName> commands", Placeholder.unparsed("pluginName", plugin.getName())))
                         .argument(helpQueryArgument, CommandUtil.description("Help Query"))
                         .permission(Constants.HELP_PERMISSION)
                         .handler(this::executeHelp));

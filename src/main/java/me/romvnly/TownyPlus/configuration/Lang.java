@@ -24,7 +24,6 @@ import me.romvnly.TownyPlus.TownyPlusMain;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.Template;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -212,21 +211,12 @@ public final class Lang {
     }
 
     public static @NonNull Component parse(final @NonNull String miniMessage) {
-        return MiniMessage.get().parse(miniMessage);
-    }
-
-    public static @NonNull Component parse(final @NonNull String miniMessage, final @NonNull Template @NonNull ... placeholders) {
-        return MiniMessage.get().parse(miniMessage, placeholders);
-    }
-
-    public static void send(final @NonNull Audience recipient, final @NonNull String miniMessage, final @NonNull Template @NonNull ... placeholders) {
-        recipient.sendMessage(parse(miniMessage, placeholders));
+        return MiniMessage.miniMessage().deserialize(miniMessage);
     }
 
     public static void send(final @NonNull Audience recipient, final @NonNull String miniMessage) {
-        recipient.sendMessage(parse(miniMessage));
+        recipient.sendMessage(MiniMessage.miniMessage().deserialize(miniMessage));
     }
-
     @Target(ElementType.FIELD)
     @Retention(RetentionPolicy.RUNTIME)
     private @interface LangKey {
