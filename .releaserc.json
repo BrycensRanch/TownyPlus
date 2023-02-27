@@ -14,7 +14,7 @@
     },
     {
       "name": "rc",
-      "channel": "alpha",
+      "channel": "rc",
       "prerelease": true
     }
   ],
@@ -35,24 +35,7 @@
       }
     }
     ],
-    [
-      "@semantic-release/exec",
-      {
-        "prepareCmd": "./update-versions.sh ${nextRelease.version}"
-      }
-    ],
     "gradle-semantic-release-plugin",
-    [
-      "@semantic-release/github",
-      {
-        "assets": [
-          {
-            "path": "**/build/libs/*.jar"
-          }
-        ],
-        "addReleases": "bottom"
-      }
-    ],
     [
       "@semantic-release/release-notes-generator",
       {
@@ -108,6 +91,18 @@
           "gradle.properties",
           "CHANGELOG.md"
         ]
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "assets": [
+          {
+            "path": "**/build/libs/*.jar",
+            "label": "Built jar(s)"
+          }
+        ],
+        "addReleases": "bottom"
       }
     ]
   ]
