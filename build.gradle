@@ -17,7 +17,9 @@ plugins {
     id 'xyz.jpenilla.run-paper' version '2.0.1'
 //    id "com.github.spotbugs" version "5.0.13"
     id 'com.gorylenko.gradle-git-properties' version '2.4.1'
-    id 'com.palantir.git-version' version '1.0.0'
+//    id 'com.palantir.git-version' version '1.0.0'
+    id "com.moonlitdoor.git-version" version "0.1.0"
+
     id "be.vbgn.ci-detect" version "0.1.0"
 
 //    id 'org.gradle.crypto.checksum' version '1.4.0'
@@ -60,8 +62,7 @@ ext {
 }
 
 group project.property("group")
-def details = versionDetails()
-println(details.branchName)
+//def details = versionDetails()
 
 //spotbugs {
 //    ignoreFailures = false
@@ -77,12 +78,19 @@ println(details.branchName)
 if (!ci.isCi()) {
     if (version == null || version == "") {
         version = getTime() + "-SNAPSHOT"
-    } else if (details.branchName.contains("alpha") || details.branchName.contains("beta") || details.branchName.contains("rc")) {
-        version = version + "-" + details.branchName + "-SNAPSHOT";
+    } else if (gitBranchName.contains("alpha") || gitBranchName.contains("beta") || gitBranchName.contains("rc")) {
+        version = version + "-" + gitBranchName + "-SNAPSHOT";
     } else {
             version = version
     }
 }
+println("Version: " + version)
+// The current version based on the most recent tag on the current git branch.
+println("Git Version: " + gitVersion)
+println("Branch: " + gitBranchName)
+println("Is CI detected? " + ci.isCi())
+println("If so, is this a PR? " + ci.isPullRequest())
+
 task generateFiles {
   // Generates some files.
 }
