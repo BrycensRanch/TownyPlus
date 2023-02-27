@@ -109,7 +109,12 @@ jobs:
 
   release:
     needs: [ build, test ]
-    if: github.ref == 'master' || github.ref == 'beta' || github.ref == 'alpha' || github.ref == 'rc'
+    if: contains('
+      refs/heads/master
+      refs/heads/rc
+      refs/heads/alpha
+      refs/heads/beta
+      ', github.ref)
 
     runs-on: ubuntu-latest
 
