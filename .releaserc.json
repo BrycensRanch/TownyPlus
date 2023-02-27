@@ -19,7 +19,8 @@
     }
   ],
   "plugins": [
-    "@semantic-release/commit-analyzer",
+    [
+      "@semantic-release/commit-analyzer",
     {
       "preset": "conventionalcommits",
       "releaseRules": [
@@ -29,8 +30,9 @@
         { "type": "ci", "release": "patch" },
         { "type": "chore", "release": "patch" }
       ]
-    },
-        [
+    }
+    ],
+    [
       "@semantic-release/exec",
       {
         "prepareCmd": "./update-versions.sh ${nextRelease.version}"
@@ -67,12 +69,6 @@
             },
             { "type": "feat", "section": "✨ Feature ✨", "hidden": false },
             { "type": "fix", "section": "🐛 Bugfix 🐛", "hidden": false },
-            { "type": "hotfix", "section": "🔥 Hotfix 🔥", "hidden": false },
-            {
-              "type": "BREAKING",
-              "section": "❗ MAJOR ❗",
-              "hidden": false
-            },
             { "type": "docs", "section": "📝  Documentation", "hidden": false },
             {
               "type": "chore",
