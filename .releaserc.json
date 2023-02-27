@@ -32,7 +32,7 @@
       }
     }
     ],
-    "gradle-semantic-release-plugin",
+    "harshs-dyte/gradle-semantic-release-plugin#hs/gradle-maven-publish-plugin",
     [
       "@semantic-release/release-notes-generator",
       {
