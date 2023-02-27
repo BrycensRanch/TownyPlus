@@ -24,9 +24,6 @@
     {
       "preset": "conventionalcommits",
       "releaseRules": [
-        { "type": "docs", "release": "patch" },
-        { "type": "refactor", "release": "patch" },
-        { "type": "style", "release": "patch" },
         { "type": "ci", "release": "patch" },
         { "type": "chore", "release": "patch" }
       ],
@@ -35,7 +32,7 @@
       }
     }
     ],
-    "gradle-semantic-release-plugin",
+    "@romvnly/gradle-semantic-release-plugin",
     [
       "@semantic-release/release-notes-generator",
       {

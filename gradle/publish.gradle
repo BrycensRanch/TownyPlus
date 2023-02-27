@@ -1,16 +1,18 @@
 apply plugin: 'maven-publish'
 java {
+    shadowJar
     withJavadocJar()
     withSourcesJar()
 }
 
-//signing {
-//    def signingKey = System.getenv("signingKey")
-//    def signingPassword = System.getenv("signingPassword")
-//    useInMemoryPgpKeys(signingKey, signingPassword)
-//    useGpgCmd()
-//    sign shadowJar
-//}
+signing {
+    def signingKeyId = System.getenv("signingKeyId")
+    def signingKey = System.getenv("signingKey")
+    def signingPassword = System.getenv("signingPassword")
+    useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+    useGpgCmd()
+    sign publishing.publications
+}
 
 jar {
     manifest {
@@ -30,7 +32,6 @@ jar {
 publishing {
     publications {
         shadow(MavenPublication) { publication ->
-            project.shadow.component(publication)
             artifactId = project.getName().toLowerCase()
             groupId = ((String)project.getGroup()).toLowerCase()
         }

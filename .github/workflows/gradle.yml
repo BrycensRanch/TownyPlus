@@ -1,8 +1,35 @@
 name: Build
 on: [ push ]
 jobs:
+  # JOB to run change detection
+  changes:
+    runs-on: ubuntu-latest
+    # Required permissions
+    permissions:
+      pull-requests: read
+    # Set job outputs to values from filter step
+    outputs:
+      ci: ${{ steps.filter.outputs.ci }}
+      src: ${{ steps.filter.outputs.src }}
+      gradle: ${{ steps.filter.outputs.gradle }}
+    steps:
+      - name: Check out current repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            ci:
+              - '.github/**'
+            src:
+              - '/**'
+              - '!.github/**'
+            gradle:
+              - '*gradle*'
   build:
-
+    needs: changes
     runs-on: ubuntu-latest
     # We want to run on external PRs, but not on our own internal PRs as they'll be run
     # by the push to the branch.
@@ -24,6 +51,7 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Gradle Wrapper Validation
+        if: ${{ needs.changes.outputs.gradle == 'true' }}
         uses: gradle/wrapper-validation-action@v1
 
       - name: Grant execute permission to gradlew
@@ -41,6 +69,7 @@ jobs:
       - name: Checkstyle 🧑‍🏫
         run: ./gradlew checkstyleMain
         continue-on-error: true
+
       - uses: jwgmeligmeyling/checkstyle-github-action@master
         continue-on-error: true
         with:
@@ -82,6 +111,7 @@ jobs:
 
       - name: Test
         run: ./gradlew test
+
         # I honestly detest Minecraft plugin unit testing and I don't think it's worth the time to write tests for a project like this. 
         # I'm not going to write tests for this project, but I will leave the code here in case you want to write tests for your own project.
         continue-on-error: true
@@ -94,7 +124,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Upload CodeCov Report
-        if: always()
         uses: codecov/codecov-action@v2
         continue-on-error: true
         with:
@@ -103,19 +132,17 @@ jobs:
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1.40
         continue-on-error: true
-        if: always()
         with:
           files: "**/build/test-results/**/*.xml"
 
   release:
-    needs: [ build, test ]
     if: contains('
       refs/heads/master
       refs/heads/rc
       refs/heads/alpha
       refs/heads/beta
       ', github.ref)
-
+    needs: [build, test]
     runs-on: ubuntu-latest
 
     steps:
@@ -126,6 +153,7 @@ jobs:
           fetch-depth: 0
 
       - uses: actions/download-artifact@v3
+        ## I'm definitely too far gone at this point
         with:
           name: build-artifacts
       - name: Display structure of downloaded files
@@ -139,6 +167,9 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
+      - name: Gradle Wrapper Validation
+        if: ${{ needs.changes.outputs.gradle == 'true' }}
+        uses: gradle/wrapper-validation-action@v1
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -169,8 +200,11 @@ jobs:
           GIT_AUTHOR_EMAIL: ${{ steps.import_gpg.outputs.email }}
           GIT_COMMITTER_NAME: ${{ steps.import_gpg.outputs.name }}
           GIT_COMMITTER_EMAIL: ${{ steps.import_gpg.outputs.email }}
+          signingKeyId: ${{ steps.import_gpg.outputs.keyid }}
+          signingKey: ${{ secrets.GPG_PRIVATE_KEY }}
+          signingPassword: ${{ secrets.PASSPHRASE }}
           GH_URL: "https://api.github.com/"
-        run: npx --legacy-peer-deps -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p gradle-semantic-release-plugin -p @semantic-release/release-notes-generator -p conventional-changelog-conventionalcommits -p semantic-release semantic-release
+        run: npx --legacy-peer-deps -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p @romvnly/gradle-semantic-release-plugin -p @semantic-release/release-notes-generator -p conventional-changelog-conventionalcommits -p semantic-release semantic-release
 
       - name: 🔃 Merge master back into alpha
         if: ${{ github.ref == 'refs/heads/master' }}
