@@ -142,8 +142,7 @@ jobs:
       refs/heads/alpha
       refs/heads/beta
       ', github.ref)
-# there is no skipped - but this matches skipped
-
+    needs: [build, test]
     runs-on: ubuntu-latest
 
     steps:
