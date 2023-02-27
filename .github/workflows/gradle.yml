@@ -170,6 +170,8 @@ jobs:
           fetch-depth: 0
 
       - uses: actions/download-artifact@v3
+        ## I'm definitely too far gone at this point
+        if: ${{ needs.changes.outputs.src == 'true' }}
         with:
           name: build-artifacts
       - name: Display structure of downloaded files
