@@ -48,7 +48,7 @@ jobs:
 
 
       - name: Build
-        run: ./gradlew build -x test -x spotbugsMain -x spotbugsTest
+        run: ./gradlew build -x test
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
