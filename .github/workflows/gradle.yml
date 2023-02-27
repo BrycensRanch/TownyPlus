@@ -166,7 +166,7 @@ jobs:
           GIT_COMMITTER_NAME: ${{ steps.import_gpg.outputs.name }}
           GIT_COMMITTER_EMAIL: ${{ steps.import_gpg.outputs.email }}
           GH_URL: "https://api.github.com/"
-        run: npx --legacy-peer-deps -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p gradle-semantic-release-plugin -p @semantic-release/release-notes-generator -p semantic-release semantic-release
+        run: npx --legacy-peer-deps -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p gradle-semantic-release-plugin -p @semantic-release/release-notes-generator -p semantic-release conventional-changelog-conventionalcommits semantic-release
       - name: 🔃 Merge master back into alpha
         if: ${{ github.ref == 'refs/heads/master' }}
         uses: everlytic/branch-merge@1.1.5
