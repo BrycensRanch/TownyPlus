@@ -26,8 +26,9 @@ jobs:
           name: Asset Hashes
           path: hashes*.txt
       - name: Upload hashes to release
-        uses: alexellis/upload-assets@0.4.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        # I don't exactly trust this random action I found on the internet, but it seems to work.
+        # However, along as we use this specific commit, it should be fine.
+        uses: AButler/upload-release-assets@c94805dc72e4b20745f543da0f62eaee7722df7a
         with:
-          asset_paths: 'hashes*.txt'
+          repo-token: ${{ secrets.GH_TOKEN }}
+          files: 'hashes*.txt'
