@@ -159,7 +159,7 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           git_user_signingkey: true
           git_commit_gpgsign: true
-          git_tag_gpgsign: true
+          git_tag_gpgsign: false
           # No, GitHub does not currently support GPG signed pushes, only signed commits.
           git_push_gpgsign: false
       - name: Release
