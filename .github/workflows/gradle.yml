@@ -180,13 +180,13 @@ jobs:
           source_ref: 'master'
           target_branch: 'alpha'
           commit_message_template: 'Merge branch {source_ref} into {target_branch} [skip ci]'
-      - name: Publish to GitHub Package Registry
-        if: ${{ github.ref == 'refs/heads/master' }}
-        run: ./gradlew publish -x test
-        env:
-           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-           signingKey: ${{ steps.import_gpg.outputs.keyid }}
-           signingPassword: ${{ secrets.PASSPHRASE }}
+#      - name: Publish to GitHub Package Registry
+#        if: ${{ github.ref == 'refs/heads/master' }}
+#        run: ./gradlew publish -x test
+#        env:
+#           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+#           signingKey: ${{ steps.import_gpg.outputs.keyid }}
+#           signingPassword: ${{ secrets.PASSPHRASE }}
       - name: Upload release artifacts
         uses: actions/upload-artifact@v3
         with:
