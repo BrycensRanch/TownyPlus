@@ -75,7 +75,7 @@ group project.property("group")
 
 // CI channels will clash if you change the version within build.gradle, this is only for local builds
 
-if (ci.buildId != "null" && ci.buildId != null && ci.buildId != "") {
+if (System.getenv("CI") == null) {
     if (version == null || version == "") {
         version = getTime() + "-SNAPSHOT"
     } else if (gitBranchName.contains("alpha") || gitBranchName.contains("beta") || gitBranchName.contains("rc")) {
@@ -88,8 +88,7 @@ println("Version: " + version)
 // The current version based on the most recent tag on the current git branch.
 println("Git Version: " + gitVersion)
 println("Branch: " + gitBranchName)
-println("Is CI detected? " + ci.buildId != "null" && ci.buildId != null && ci.buildId != "")
-println("If so, what's the CI build ID? " + ci.buildId)
+println("Is CI detected? " + System.getenv("CI"))
 
 task generateFiles {
   // Generates some files.
