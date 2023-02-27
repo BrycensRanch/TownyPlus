@@ -16,7 +16,8 @@
   "prHourlyLimit": 0,
   "branchConcurrentLimit": 20,
   "branchPrefix": "dep/",
-  "branchPrefixOld": "renovate/"
+  "branchPrefixOld": "renovate/",
+  "timezone": "America/New_York"
 
 
 
