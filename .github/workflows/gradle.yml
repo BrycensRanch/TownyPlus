@@ -204,7 +204,7 @@ jobs:
           signingKey: ${{ secrets.GPG_PRIVATE_KEY }}
           signingPassword: ${{ secrets.PASSPHRASE }}
           GH_URL: "https://api.github.com/"
-        run: npx --legacy-peer-deps -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p @romvnly/gradle-semantic-release-plugin -p @semantic-release/release-notes-generator -p conventional-changelog-conventionalcommits -p @romvnly/semantic-release @romvnly/semantic-release
+        run: npx --legacy-peer-deps -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p @romvnly/gradle-semantic-release-plugin -p @semantic-release/release-notes-generator -p conventional-changelog-conventionalcommits -p @romvnly/semantic-release -p semantic-release @romvnly/semantic-release
 
       - name: 🔃 Merge master back into alpha
         uses: peter-evans/rebase@v2
