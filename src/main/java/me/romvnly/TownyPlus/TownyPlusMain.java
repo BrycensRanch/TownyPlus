@@ -168,8 +168,10 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
             this.adventure = null;
         }
         plugin = null;
-        this.updateChecker.stop();
-        this.restAPI.stopServer();
+        if (this.updateChecker != null) {
+            this.updateChecker.stop();
+        }
+        if (this.restAPI != null) { this.restAPI.stopServer(); }
         if (config.getBoolean("discordsrv.enabled")) {
             DiscordSRV.api.unsubscribe(discordSRVListener);
         }
@@ -213,9 +215,8 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
                 else {
                     apiURL = getConfig().getString("restapi.externalURL");
                 }
-                if (externalAPIURL == null || externalAPIURL.isBlank())
-                    throw new IOException("You didn't provide a VALID URL in your configuration file");
-                    Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
+                if (externalAPIURL == null || externalAPIURL.isBlank()) throw new IOException("You didn't provide a VALID URL in your configuration file");
+                Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
 
                 try {
                     gson.http(apiURL + String.format("/channels/%s/new/message", channel), "{\"username\": \"" + player.getName() + "\", \"uuid\": \"" + player.getUniqueId() + "\", \"message\": \"" + message + "\", \"channel\": \"" + channelName + "\"}");
