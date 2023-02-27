@@ -163,6 +163,9 @@ bukkit {
 compileJava {
     options.fork = true
 }
+publish {
+    dependsOn(build)
+}
 assemble {
         dependsOn(shadowJar)
 }
