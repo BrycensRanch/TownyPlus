@@ -144,6 +144,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
+          cache: 'npm'
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -173,7 +174,7 @@ jobs:
           signingKey: ${{ secrets.GPG_PRIVATE_KEY }}
           signingPassword: ${{ secrets.PASSPHRASE }}
           GH_URL: "https://api.github.com/"
-        run: npx --legacy-peer-deps -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p harshs-dyte/gradle-semantic-release-plugin -p @semantic-release/release-notes-generator -p conventional-changelog-conventionalcommits -p semantic-release semantic-release
+        run: npx --legacy-peer-deps -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p @romvnly/gradle-semantic-release-plugin -p @semantic-release/release-notes-generator -p conventional-changelog-conventionalcommits -p semantic-release semantic-release
 
       - name: 🔃 Merge master back into alpha
         if: ${{ github.ref == 'refs/heads/master' }}
