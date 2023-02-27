@@ -20,7 +20,7 @@ plugins {
 //    id 'com.palantir.git-version' version '1.0.0'
     id "com.moonlitdoor.git-version" version "0.1.0"
 
-    id "be.vbgn.ci-detect" version "0.1.0"
+    id 'name.remal.common-ci' version '1.5.0'
 
 //    id 'org.gradle.crypto.checksum' version '1.4.0'
     id 'java'
@@ -75,7 +75,7 @@ group project.property("group")
 
 // CI channels will clash if you change the version within build.gradle, this is only for local builds
 
-if (!ci.isCi()) {
+if (ci.buildId != "null" && ci.buildId != null && ci.buildId != "") {
     if (version == null || version == "") {
         version = getTime() + "-SNAPSHOT"
     } else if (gitBranchName.contains("alpha") || gitBranchName.contains("beta") || gitBranchName.contains("rc")) {
@@ -88,8 +88,8 @@ println("Version: " + version)
 // The current version based on the most recent tag on the current git branch.
 println("Git Version: " + gitVersion)
 println("Branch: " + gitBranchName)
-println("Is CI detected? " + ci.isCi())
-println("If so, is this a PR? " + ci.isPullRequest())
+println("Is CI detected? " + ci.buildId != "null" && ci.buildId != null && ci.buildId != "")
+println("If so, what's the CI build ID? " + ci.buildId)
 
 task generateFiles {
   // Generates some files.
