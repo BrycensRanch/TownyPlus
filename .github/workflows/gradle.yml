@@ -1,8 +1,31 @@
 name: Build
 on: [ push ]
 jobs:
+  # JOB to run change detection
+  changes:
+    runs-on: ubuntu-latest
+    # Required permissions
+    permissions:
+      pull-requests: read
+    # Set job outputs to values from filter step
+    outputs:
+      ci: ${{ steps.filter.outputs.ci }}
+      src: ${{ steps.filter.outputs.src }}
+      gradle: ${{ steps.filter.outputs.gradle }}
+    steps:
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            ci:
+              - '.github/**'
+            src:
+              - '/**'
+              - '!.github/**'
+            gradle:
+              - '*gradle*'
   build:
-
+    needs: changes
     runs-on: ubuntu-latest
     # We want to run on external PRs, but not on our own internal PRs as they'll be run
     # by the push to the branch.
@@ -21,38 +44,48 @@ jobs:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: 17
       - name: Setup Gradle
+        if: ${{ needs.changes.outputs.src == 'true' }}
         uses: gradle/gradle-build-action@v2
 
       - name: Gradle Wrapper Validation
+        if: ${{ needs.changes.outputs.gradle == 'true' }}
         uses: gradle/wrapper-validation-action@v1
 
       - name: Grant execute permission to gradlew
+        if: ${{ needs.changes.outputs.src == 'true' }}
         run: chmod +x gradlew
 
       - name: SpotBugs 👀
+        if: ${{ needs.changes.outputs.src == 'true' }}
         continue-on-error: true
         run: ./gradlew spotBugsMain
 
       - uses: jwgmeligmeyling/spotbugs-github-action@master
+        if: ${{ needs.changes.outputs.src == 'true' }}
         continue-on-error: true
         with:
           path: 'build/reports/spotbugs/main.xml'
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Checkstyle 🧑‍🏫
         run: ./gradlew checkstyleMain
+        if: ${{ needs.changes.outputs.src == 'true' }}
         continue-on-error: true
+
       - uses: jwgmeligmeyling/checkstyle-github-action@master
+        if: ${{ needs.changes.outputs.src == 'true' }}
         continue-on-error: true
         with:
           path: 'build/reports/checkstyle/main.xml'
 
 
       - name: Build
+        if: ${{ needs.changes.outputs.src == 'true' }}
         run: ./gradlew build -x test
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Upload build artifacts
+        if: ${{ needs.changes.outputs.src == 'true' }}
         uses: actions/upload-artifact@v3
         with:
           name: build-artifacts
@@ -64,24 +97,30 @@ jobs:
     needs: build
     steps:
       - name: Check out current repository
+        if: ${{ needs.changes.outputs.src == 'true' }}
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: Set up JDK 17
+        if: ${{ needs.changes.outputs.src == 'true' }}
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: 17
           
       - name: Setup Gradle
+        if: ${{ needs.changes.outputs.src == 'true' }}
         uses: gradle/gradle-build-action@v2
 
       - name: Grant execute permission to gradlew
+        if: ${{ needs.changes.outputs.src == 'true' }}
         run: chmod +x gradlew
 
       - name: Test
         run: ./gradlew test
+        if: ${{ needs.changes.outputs.src == 'true' }}
+
         # I honestly detest Minecraft plugin unit testing and I don't think it's worth the time to write tests for a project like this. 
         # I'm not going to write tests for this project, but I will leave the code here in case you want to write tests for your own project.
         continue-on-error: true
@@ -90,31 +129,32 @@ jobs:
 
       - name: Create Coverage
         run: ./gradlew jacocoTestReport
+        if: ${{ needs.changes.outputs.src == 'true' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Upload CodeCov Report
-        if: always()
+        if: ${{ needs.changes.outputs.src == 'true' && always() }}
         uses: codecov/codecov-action@v2
         continue-on-error: true
         with:
           file: "**/build/reports/jacoco/**/*.xml"
 
       - name: Publish Unit Test Results
+        if: ${{ needs.changes.outputs.src == 'true' && always() }}
         uses: EnricoMi/publish-unit-test-result-action@v1.40
         continue-on-error: true
-        if: always()
         with:
           files: "**/build/test-results/**/*.xml"
 
   release:
-    needs: [ build, test ]
     if: contains('
       refs/heads/master
       refs/heads/rc
       refs/heads/alpha
       refs/heads/beta
       ', github.ref)
+# there is no skipped - but this matches skipped
 
     runs-on: ubuntu-latest
 
@@ -139,6 +179,9 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
+      - name: Gradle Wrapper Validation
+        if: ${{ needs.changes.outputs.gradle == 'true' }}
+        uses: gradle/wrapper-validation-action@v1
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
