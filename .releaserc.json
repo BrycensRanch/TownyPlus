@@ -24,10 +24,6 @@
       "@semantic-release/commit-analyzer",
     {
       "preset": "conventionalcommits",
-      "releaseRules": [
-        { "type": "ci", "release": "patch" },
-        { "type": "chore", "release": "patch" }
-      ],
       "parserOpts": {
         "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"]
       }
