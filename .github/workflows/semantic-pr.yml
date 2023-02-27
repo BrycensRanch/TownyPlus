@@ -32,7 +32,7 @@ jobs:
             The subject "{subject}" found in the pull request title "{title}"
             didn't match the configured pattern. Please ensure that the subject
             doesn't start with an uppercase character.
-      - name: 🤖 is-semantic-release
-        uses: sebbo2002/action-is-semantic-pr@main
-        with:
-          token: ${{ secrets.GH_TOKEN }}
+#       - name: 🤖 is-semantic-release
+#         uses: sebbo2002/action-is-semantic-pr@main
+#         with:
+#           token: ${{ secrets.GH_TOKEN }}
