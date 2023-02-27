@@ -182,8 +182,8 @@ jobs:
         if: ${{ github.ref == 'refs/heads/master' }}
         run: ./gradlew publish -x test
         env:
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-           signingKey: ${{ steps.import_gpg.outputs.fingerprint }}
+           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+           signingKey: ${{ steps.import_gpg.outputs.keyid }}
            signingPassword: ${{ secrets.PASSPHRASE }}
       - name: Upload release artifacts
         uses: actions/upload-artifact@v3
