@@ -164,7 +164,8 @@ compileJava {
     options.fork = true
 }
 publish {
-    dependsOn(build)
+    dependsOn 'clean'
+    dependsOn 'build'
 }
 assemble {
         dependsOn(shadowJar)
