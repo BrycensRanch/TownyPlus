@@ -18,6 +18,8 @@ plugins {
 //    id "com.github.spotbugs" version "5.0.13"
     id 'com.gorylenko.gradle-git-properties' version '2.4.1'
     id 'com.palantir.git-version' version '1.0.0'
+    id "be.vbgn.ci-detect" version "0.1.0"
+
 //    id 'org.gradle.crypto.checksum' version '1.4.0'
     id 'java'
     id 'jacoco'
@@ -69,12 +71,17 @@ println(details.branchName)
 //    reportLevel = 'default'
 //}
 
-if (version == null || version == "") {
-    version = getTime() + "-SNAPSHOT"
-} else if (details.branchName.contains("alpha") || details.branchName.contains("beta") || details.branchName.contains("rc")) {
-    version = version +"-"+ details.branchName + "-SNAPSHOT";
-} else {
-    version = version
+
+// CI channels will clash if you change the version within build.gradle, this is only for local builds
+
+if (!ci.isCi()) {
+    if (version == null || version == "") {
+        version = getTime() + "-SNAPSHOT"
+    } else if (details.branchName.contains("alpha") || details.branchName.contains("beta") || details.branchName.contains("rc")) {
+        version = version + "-" + details.branchName + "-SNAPSHOT";
+    } else {
+            version = version
+    }
 }
 task generateFiles {
   // Generates some files.
