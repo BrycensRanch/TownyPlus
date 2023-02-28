@@ -226,7 +226,7 @@ jobs:
       - name: Publish to Polymart
         uses: BrycensRanch/plugin-publish@bfd63d76b40412e0d362c9f4847bb9b1e95b8735
         with: 
-          polymart-id: '2057'
+          polymart-id: 2057
           polymart-token: ${{ secrets.POLYMART_TOKEN }}
           loaders: |
             bukkit
