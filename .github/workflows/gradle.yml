@@ -259,7 +259,8 @@ jobs:
 #           signingKey: ${{ steps.import_gpg.outputs.keyid }}
 #           signingPassword: ${{ secrets.PASSPHRASE }}
       - name: Upload release artifacts
+        if: always()
         uses: actions/upload-artifact@v3
         with:
           name: release-artifacts
-          path: "**/build/libs"
+          path: build/libs
