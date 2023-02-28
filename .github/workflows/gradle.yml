@@ -207,7 +207,7 @@ jobs:
         run: npx --legacy-peer-deps -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p @romvnly/gradle-semantic-release-plugin -p @semantic-release/release-notes-generator -p conventional-changelog-conventionalcommits -p @romvnly/semantic-release -p semantic-release semantic-release
 
       - name: Run snapshot action
-        uses: mikepenz/gradle-dependency-submission@{latest}
+        uses: mikepenz/gradle-dependency-submission@v0.8.4
 
       - name: 🔃 Merge master back into alpha
         if: ${{ github.ref == 'refs/heads/master' }}
