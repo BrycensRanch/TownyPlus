@@ -81,6 +81,7 @@
       "publishCmd": "node ./update-versions.js ${nextRelease.version}"
     }
     ],
+    "@semantic-release/changelog",
     [
       "@semantic-release/git",
       {
