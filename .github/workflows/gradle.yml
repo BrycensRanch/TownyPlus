@@ -221,6 +221,7 @@ jobs:
             1.18.2
             1.19
           java: 17
+          version-type: ${{ github.head_ref || github.ref_name }}
       - name: 🔃 Merge master back into alpha
         if: ${{ github.ref == 'refs/heads/master' }}
         uses: peter-evans/rebase@v2
