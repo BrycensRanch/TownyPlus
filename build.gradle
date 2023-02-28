@@ -218,7 +218,7 @@ dependencies {
     // Spigot/GitHub Releases Update checker. Am I that lazy? Yes.
     implementation 'com.jeff_media:SpigotUpdateChecker:3.0.2'
     // Towny
-    compileOnly 'com.palmergames.bukkit.towny:towny:0.98.6.8'
+    compileOnly 'com.palmergames.bukkit.towny:towny:0.98.6.9'
     compileOnly 'com.palmergames.bukkit:TownyChat:0.45'
 
     // Stealing all your data lmfao
