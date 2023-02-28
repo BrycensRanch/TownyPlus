@@ -248,7 +248,7 @@ dependencies {
 //    testCompileOnly 'com.github.spotbugs:spotbugs-annotations:4.7.3'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
     testImplementation 'org.mockito:mockito-core:5.1.1'
-    testImplementation 'com.github.seeseemelk:MockBukkit-v1.19:2.29.0'
+    testImplementation 'com.github.seeseemelk:MockBukkit-v1.19:2.145.0'
     testImplementation 'org.assertj:assertj-core:3.24.2'
 }
 shadowJar {
