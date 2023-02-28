@@ -222,7 +222,7 @@ dependencies {
     compileOnly 'com.palmergames.bukkit:TownyChat:0.45'
 
     // Stealing all your data lmfao
-    compileOnly 'org.bstats:bstats-bukkit:3.0.0'
+    compileOnly 'org.bstats:bstats-bukkit:3.0.1'
     // better http server than spark
     library "io.javalin:javalin-bundle:5.3.2"
     // DiscordSRV, optional dependency
