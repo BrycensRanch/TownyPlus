@@ -213,9 +213,14 @@ jobs:
         with: 
           modrinth-id: jVlopSkZ
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          loaders: |
+            spigot
+            paper
+            purpur
           game-versions: |
             1.18.2
             1.19
+          java: 17
       - name: 🔃 Merge master back into alpha
         if: ${{ github.ref == 'refs/heads/master' }}
         uses: peter-evans/rebase@v2
