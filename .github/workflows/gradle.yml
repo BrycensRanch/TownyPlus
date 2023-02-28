@@ -208,7 +208,14 @@ jobs:
 
       - name: Run snapshot action
         uses: mikepenz/gradle-dependency-submission@v0.8.4
-
+      - name: Publish to Modrinth
+        uses: BrycensRanch/plugin-publish@b9dca03182c9be8e48120b043d317db7f3f7b6a2
+        with: 
+          modrinth-id: jVlopSkZ
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          game-versions: |
+            1.18.2
+            1.19
       - name: 🔃 Merge master back into alpha
         if: ${{ github.ref == 'refs/heads/master' }}
         uses: peter-evans/rebase@v2
