@@ -58,6 +58,5 @@ public abstract class TestBase {
     @AfterEach
     public void tearDown() {
         MockBukkit.unmock();
-        Bukkit.getScheduler().cancelTasks(plugin);
     }
 }
