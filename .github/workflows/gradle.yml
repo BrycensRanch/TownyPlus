@@ -209,7 +209,7 @@ jobs:
       - name: Run snapshot action
         uses: mikepenz/gradle-dependency-submission@v0.8.4
       - name: Publish to Modrinth
-        uses: BrycensRanch/plugin-publish@fe934588a0e89f7978849c51d36d6884361509fa
+        uses: BrycensRanch/plugin-publish@bfd63d76b40412e0d362c9f4847bb9b1e95b8735
         with: 
           modrinth-id: jVlopSkZ
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
@@ -224,9 +224,9 @@ jobs:
           java: 17
           version-type: ${{ github.head_ref || github.ref_name }}
       - name: Publish to Polymart
-        uses: BrycensRanch/plugin-publish@fe934588a0e89f7978849c51d36d6884361509fa
+        uses: BrycensRanch/plugin-publish@bfd63d76b40412e0d362c9f4847bb9b1e95b8735
         with: 
-          polymart-id: 2057
+          polymart-id: '2057'
           polymart-token: ${{ secrets.POLYMART_TOKEN }}
           loaders: |
             bukkit
