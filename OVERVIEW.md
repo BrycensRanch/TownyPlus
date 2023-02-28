@@ -2,21 +2,23 @@
 
 [![Build Status](https://img.shields.io/github/workflow/status/BrycensRanch/TownyPlus/Build/master?style=for-the-badge)](../../actions?query=workflow%3ABuild)
 [![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/BrycensRanch/TownyPlus?include_prereleases&label=release&style=for-the-badge)](../../releases)
-![Modrinth Game Versions](https://img.shields.io/modrinth/game-versions/aeinfinitybooster?style=for-the-badge)
-![Modrinth Downloads](https://img.shields.io/modrinth/dt/aeinfinitybooster?color=GREEN&label=MODRINTH%20DOWNLOADS&style=for-the-badge)
+![Modrinth Game Versions](https://img.shields.io/modrinth/game-versions/townyplus?style=for-the-badge)
+![Modrinth Downloads](https://img.shields.io/modrinth/dt/townyplus?color=GREEN&label=MODRINTH%20DOWNLOADS&style=for-the-badge)
 
 [![bstats Servers](https://img.shields.io/bstats/servers/14161?style=for-the-badge)](https://bstats.org/plugin/bukkit/TownyPlus/14161)
 ![Polymart Downloads](https://img.shields.io/polymart/downloads/2057?color=GREEN&label=POLYMART%20DOWNLOADS&style=for-the-badge)
 ![Polymart Version](https://img.shields.io/polymart/version/2057?style=for-the-badge)
 ![Polymart Rating](https://img.shields.io/polymart/rating/2057?label=POLYMART%20RATINGS&style=for-the-badge)
-[![Spiget Downloads](https://img.shields.io/spiget/downloads/79903?style=for-the-badge)](https://www.spigotmc.org/resources/splugintemplate.79903/)
-[![Spiget Rating](https://img.shields.io/spiget/rating/79903?style=for-the-badge)](https://www.spigotmc.org/resources/splugintemplate.79903/)
+
+[//]: # ([![Spiget Downloads]&#40;https://img.shields.io/spiget/downloads/79903?style=for-the-badge&#41;]&#40;https://www.spigotmc.org/resources/splugintemplate.79903/&#41;)
+
+[//]: # ([![Spiget Rating]&#40;https://img.shields.io/spiget/rating/79903?style=for-the-badge&#41;]&#40;https://www.spigotmc.org/resources/splugintemplate.79903/&#41;)
 [![codecov](https://img.shields.io/codecov/c/github/BrycensRanch/TownyPlus?style=for-the-badge)](https://codecov.io/gh/BrycensRanch/TownyPlus)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=for-the-badge)](https://commitizen.github.io/cz-cli/)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=for-the-badge)](https://github.com/semantic-release/semantic-release)
-[![Support Server](https://img.shields.io/discord/816686637849378857?logo=Easy%20SMP&style=for-the-badge)](https://2v1.me/discord)
+[![Support Server](https://img.shields.io/discord/816686637849378857?logo=Easy%20SMP&style=for-the-badge)](https://discord.gg/cX89RdaF32)
 
-> View the plugin on [SpigotMC](https://github.com/Silthus/minecraft-server-template), [PolymartMC](), [Bukkit]()
+[//]: # (> View the plugin on [SpigotMC]&#40;https://github.com/Silthus/minecraft-server-template&#41;, [PolymartMC]&#40;&#41;, [Bukkit]&#40;&#41;)
 
 ## Features
 
@@ -49,7 +51,7 @@ This plugin utilizes bstats plugin metrics system. the following information is 
 
 ## Dump 
 This plugin has a dump command that will generate a dump with all the information needed to help you with your issue.
-So you don't run into issues like this: 
+To use this command, simply run `/townyplus dump` and it will generate a file in the `plugins/TownyPlus/dumps` folder. Uploading the dump online currently isn't supported, yet.
 
 ## Support
 
