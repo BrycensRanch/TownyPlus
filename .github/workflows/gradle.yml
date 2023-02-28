@@ -214,6 +214,22 @@ jobs:
           modrinth-id: jVlopSkZ
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           loaders: |
+            bukkit
+            spigot
+            paper
+            purpur
+          game-versions: |
+            1.18.2
+            1.19
+          java: 17
+          version-type: ${{ github.head_ref || github.ref_name }}
+      - name: Publish to Polymart
+        uses: BrycensRanch/plugin-publish@b9dca03182c9be8e48120b043d317db7f3f7b6a2
+        with: 
+          polymart-id: 2057
+          polymart-token: ${{ secrets.POLYMART_TOKEN }}
+          loaders: |
+            bukkit
             spigot
             paper
             purpur
