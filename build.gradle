@@ -10,7 +10,7 @@ buildscript {
 }
 
 plugins {
-    id 'com.github.johnrengelman.shadow' version '8.0.0'
+    id 'com.github.johnrengelman.shadow' version '8.1.0'
     id 'net.minecrell.plugin-yml.bukkit' version '0.5.3'
     id "org.cadixdev.licenser" version "0.6.1"
 //    id "com.github.sherter.google-java-format" version "0.9"
@@ -18,7 +18,7 @@ plugins {
 //    id "com.github.spotbugs" version "5.0.13"
     id 'com.gorylenko.gradle-git-properties' version '2.4.1'
 //    id 'com.palantir.git-version' version '1.0.0'
-    id "com.moonlitdoor.git-version" version "0.1.0"
+    id "com.moonlitdoor.git-version" version "0.1.1"
 
     id 'name.remal.common-ci' version '1.5.0'
 
@@ -204,10 +204,10 @@ dependencies {
     implementation 'cloud.commandframework:cloud-annotations:1.8.1'
     annotationProcessor('cloud.commandframework:cloud-annotations:1.8.1')
     library 'org.projectlombok:lombok:1.18.26';
-    library 'com.fasterxml.jackson.core:jackson-annotations:2.12.5'
+    library 'com.fasterxml.jackson.core:jackson-annotations:2.14.2'
     library 'com.fasterxml.jackson.core:jackson-databind:2.14.2';
     annotationProcessor('org.projectlombok:lombok:1.18.26')
-    annotationProcessor('com.fasterxml.jackson.core:jackson-annotations:2.12.5')
+    annotationProcessor('com.fasterxml.jackson.core:jackson-annotations:2.14.2')
     library 'com.fasterxml.jackson.dataformat:jackson-dataformat-properties:2.14.2'
     implementation 'cloud.commandframework:cloud-paper:1.8.1'
     implementation 'cloud.commandframework:cloud-minecraft-extras:1.8.1'
@@ -222,18 +222,18 @@ dependencies {
     compileOnly 'com.palmergames.bukkit:TownyChat:0.45'
 
     // Stealing all your data lmfao
-    compileOnly 'org.bstats:bstats-bukkit:3.0.0'
+    compileOnly 'org.bstats:bstats-bukkit:3.0.1'
     // better http server than spark
     library "io.javalin:javalin-bundle:5.3.2"
     // DiscordSRV, optional dependency
     compileOnly 'com.discordsrv:discordsrv:1.24.0'
 //    // JDA for DiscordSRV
 // Apparently, this is already included in DiscordSRV.
-    implementation("net.dv8tion:JDA:5.0.0-alpha.4") {
+    implementation("net.dv8tion:JDA:5.0.0-beta.4") {
         exclude module: 'opus-java'
     }
     // VentureChat support for chat listening
-    compileOnly "mineverse.aust1n46:venturechat:2.20.1"
+    compileOnly "mineverse.aust1n46:venturechat:3.5.0"
     // ProtocolLib (required by venturechat)
     compileOnly "com.comphenix.protocol:ProtocolLib:4.8.0"
 //    compileOnly 'com.github.spotbugs:spotbugs-annotations:4.7.3'
@@ -248,7 +248,7 @@ dependencies {
 //    testCompileOnly 'com.github.spotbugs:spotbugs-annotations:4.7.3'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
     testImplementation 'org.mockito:mockito-core:5.1.1'
-    testImplementation 'com.github.seeseemelk:MockBukkit-v1.19:2.29.0'
+    testImplementation 'com.github.seeseemelk:MockBukkit-v1.19:2.145.0'
     testImplementation 'org.assertj:assertj-core:3.24.2'
 }
 shadowJar {
