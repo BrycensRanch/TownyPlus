@@ -208,11 +208,17 @@ jobs:
 
       - name: Run snapshot action
         uses: mikepenz/gradle-dependency-submission@v0.8.4
+
+      - name: Parse Changelog
+        id: changelog
+        uses: ocavue/changelog-parser-action@v1
+
       - name: Publish to Modrinth
         uses: BrycensRanch/plugin-publish@bfd63d76b40412e0d362c9f4847bb9b1e95b8735
         with: 
           modrinth-id: jVlopSkZ
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          changelog: ${{ steps.changelog.outputs.latestBody }}
           loaders: |
             bukkit
             spigot
@@ -228,16 +234,24 @@ jobs:
         with:
           curseforge-id: 832361
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          changelog: ${{ steps.changelog.outputs.latestBody }}
+          loaders: |
+            bukkit
+            spigot
+            paper
+            purpur
           game-versions: |
             1.17
             1.19.3
           java: 17
           version-type: ${{ github.head_ref || github.ref_name }}
+          fail-mode: warn
       - name: Publish to Polymart
         uses: BrycensRanch/plugin-publish@bfd63d76b40412e0d362c9f4847bb9b1e95b8735
         with: 
           polymart-id: 2057
           polymart-token: ${{ secrets.POLYMART_TOKEN }}
+          changelog: ${{ steps.changelog.outputs.latestBody }}
           java: 17
           version-type: ${{ github.head_ref || github.ref_name }}
           fail-mode: warn
