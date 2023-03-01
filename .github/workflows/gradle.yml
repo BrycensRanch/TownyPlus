@@ -223,21 +223,29 @@ jobs:
             1.19
           java: 17
           version-type: ${{ github.head_ref || github.ref_name }}
-      - name: Publish to Polymart
+      - name: Publish to CurseForge (Bukkit)
         uses: BrycensRanch/plugin-publish@bfd63d76b40412e0d362c9f4847bb9b1e95b8735
-        with: 
-          polymart-id: 2057
-          polymart-token: ${{ secrets.POLYMART_TOKEN }}
+        with:
+          curseforge-id: 832361
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           loaders: |
             bukkit
             spigot
             paper
             purpur
           game-versions: |
-            1.18.2
-            1.19
+            1.17
+            1.19.3
           java: 17
           version-type: ${{ github.head_ref || github.ref_name }}
+      - name: Publish to Polymart
+        uses: BrycensRanch/plugin-publish@bfd63d76b40412e0d362c9f4847bb9b1e95b8735
+        with: 
+          polymart-id: 2057
+          polymart-token: ${{ secrets.POLYMART_TOKEN }}
+          java: 17
+          version-type: ${{ github.head_ref || github.ref_name }}
+          fail-mode: warn
       - name: 🔃 Merge master back into alpha
         if: ${{ github.ref == 'refs/heads/master' }}
         uses: peter-evans/rebase@v2
