@@ -1,3 +1,33 @@
+## [1.0.11-alpha.2](https://github.com/BrycensRanch/TownyPlus/compare/v1.0.11-alpha.1...v1.0.11-alpha.2) (2023-03-01)
+
+
+### 📝  Documentation
+
+* **refactor:** redo badges ([9d619d0](https://github.com/BrycensRanch/TownyPlus/commit/9d619d00cb9a90ed8b1fd2523cd1bb7ba0f93a45))
+
+
+### 📦️ Build and CI
+
+* **fix:** do not upload loaders to cf ([d67f543](https://github.com/BrycensRanch/TownyPlus/commit/d67f54378edf453732f4923657b224e8ecfcded5))
+* **publish:** do not remove changelog markdown  ([46b6c1f](https://github.com/BrycensRanch/TownyPlus/commit/46b6c1f714eb959718ed9a312fa4b6618fa22600))
+* **publish:** publish with parsed changelog  ([cb16bc4](https://github.com/BrycensRanch/TownyPlus/commit/cb16bc4d51a76973e29e3431a5cca0df627da6c7))
+* **renovate:** automatically base off of alpha ([6a7ce91](https://github.com/BrycensRanch/TownyPlus/commit/6a7ce91dc13368680c32adc7b2411ca864b4ae7c))
+* upload to curseforge automatically ([c664cee](https://github.com/BrycensRanch/TownyPlus/commit/c664cee88f1b115d6bad803a5c9541d99f3efa45))
+
+
+### 🐛 Bugfix 🐛
+
+* **deps:** update dependency cloud.commandframework:cloud-annotations to v1.8.2 ([#43](https://github.com/BrycensRanch/TownyPlus/issues/43)) [skip ci] ([146b015](https://github.com/BrycensRanch/TownyPlus/commit/146b015bfd5415da9745f0f4731ad89fd5c26488))
+* **deps:** update dependency cloud.commandframework:cloud-core to v1.8.2 ([#46](https://github.com/BrycensRanch/TownyPlus/issues/46)) ([8899e98](https://github.com/BrycensRanch/TownyPlus/commit/8899e983cd0c1523d2964c45f9e97a3aeab926a4))
+* **deps:** update dependency cloud.commandframework:cloud-minecraft-extras to v1.8.2 ([#44](https://github.com/BrycensRanch/TownyPlus/issues/44)) [skip ci] ([396402a](https://github.com/BrycensRanch/TownyPlus/commit/396402ac3ae978ce0847fe6b67428c1db99debd4))
+* **deps:** update dependency cloud.commandframework:cloud-paper to v1.8.2 ([#45](https://github.com/BrycensRanch/TownyPlus/issues/45)) [skip ci] ([f57a9ed](https://github.com/BrycensRanch/TownyPlus/commit/f57a9ed4d417e4c77fd2340ac7385e3f6fdd62fd))
+* **renovate:** syntax error [skip ci] ([55685e5](https://github.com/BrycensRanch/TownyPlus/commit/55685e52d2267dcabaafc41084f224629b906856))
+
+
+### 🔨  Misc.
+
+* **deps:** update brycensranch/plugin-publish digest to fc86191 ([#48](https://github.com/BrycensRanch/TownyPlus/issues/48)) ([e5c8680](https://github.com/BrycensRanch/TownyPlus/commit/e5c8680f3264f93d7d3980d988cbc1f622a69d00))
+
 ## [1.0.11-alpha.1](https://github.com/BrycensRanch/TownyPlus/compare/v1.0.10...v1.0.11-alpha.1) (2023-02-28)
 
 
