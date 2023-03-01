@@ -16,6 +16,7 @@
   "prHourlyLimit": 0,
   "baseBranches": ["alpha"],
   "branchConcurrentLimit": 20,
+  "baseBranches": ["alpha"]
   "branchPrefix": "dep/",
   "branchPrefixOld": "renovate/",
   "timezone": "America/New_York"
