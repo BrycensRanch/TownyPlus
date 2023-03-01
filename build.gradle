@@ -209,7 +209,7 @@ dependencies {
     annotationProcessor('org.projectlombok:lombok:1.18.26')
     annotationProcessor('com.fasterxml.jackson.core:jackson-annotations:2.14.2')
     library 'com.fasterxml.jackson.dataformat:jackson-dataformat-properties:2.14.2'
-    implementation 'cloud.commandframework:cloud-paper:1.8.1'
+    implementation 'cloud.commandframework:cloud-paper:1.8.2'
     implementation 'cloud.commandframework:cloud-minecraft-extras:1.8.1'
     // Dependency for our way of command handling
     implementation 'me.lucko:commodore:2.2'
