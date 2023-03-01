@@ -200,7 +200,7 @@ dependencies {
 //    implementation "io.papermc.paper:paper-api:${mcVersion}-R0.1-SNAPSHOT"
 
     // Command Handling! https://commandframework.cloud
-    implementation 'cloud.commandframework:cloud-core:1.8.1'
+    implementation 'cloud.commandframework:cloud-core:1.8.2'
     implementation 'cloud.commandframework:cloud-annotations:1.8.1'
     annotationProcessor('cloud.commandframework:cloud-annotations:1.8.1')
     library 'org.projectlombok:lombok:1.18.26';
