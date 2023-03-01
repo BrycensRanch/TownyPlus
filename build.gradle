@@ -201,8 +201,8 @@ dependencies {
 
     // Command Handling! https://commandframework.cloud
     implementation 'cloud.commandframework:cloud-core:1.8.2'
-    implementation 'cloud.commandframework:cloud-annotations:1.8.1'
-    annotationProcessor('cloud.commandframework:cloud-annotations:1.8.1')
+    implementation 'cloud.commandframework:cloud-annotations:1.8.2'
+    annotationProcessor('cloud.commandframework:cloud-annotations:1.8.2')
     library 'org.projectlombok:lombok:1.18.26';
     library 'com.fasterxml.jackson.core:jackson-annotations:2.14.2'
     library 'com.fasterxml.jackson.core:jackson-databind:2.14.2';
