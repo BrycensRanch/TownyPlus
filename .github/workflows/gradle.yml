@@ -228,11 +228,6 @@ jobs:
         with:
           curseforge-id: 832361
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-          loaders: |
-            bukkit
-            spigot
-            paper
-            purpur
           game-versions: |
             1.17
             1.19.3
