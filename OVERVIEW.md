@@ -1,22 +1,21 @@
-# TownyPlus
 
-[![Build Status](https://img.shields.io/github/workflow/status/BrycensRanch/TownyPlus/Build/master?style=for-the-badge)](../../actions?query=workflow%3ABuild)
-[![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/BrycensRanch/TownyPlus?include_prereleases&label=release&style=for-the-badge)](../../releases)
-![Modrinth Game Versions](https://img.shields.io/modrinth/game-versions/townyplus?style=for-the-badge)
-![Modrinth Downloads](https://img.shields.io/modrinth/dt/townyplus?color=GREEN&label=MODRINTH%20DOWNLOADS&style=for-the-badge)
+<h1 id="townyplus">TownyPlus</h1>
+<p align="center"><a href="https://github.com/BrycensRanch/TownyPlus/actions/workflows/gradle.yml?query=workflow%3ABuild"><img src="https://img.shields.io/github/actions/workflow/status/BrycensRanch/TownyPlus/gradle.yml?event=push&amp;style=for-the-badge" alt="Build Status"></a>
+<a href="https://github.com/BrycensRanch/TownyPlus/releases/latest"><img src="https://img.shields.io/github/v/release/BrycensRanch/TownyPlus?include_prereleases&amp;label=release&amp;style=for-the-badge" alt="GitHub release (latest SemVer including pre-releases)"></a>
+<img src="https://img.shields.io/modrinth/game-versions/townyplus?style=for-the-badge" alt="Modrinth Game Versions">
+<img src="https://img.shields.io/modrinth/dt/townyplus?color=GREEN&amp;label=MODRINTH%20DOWNLOADS&amp;style=for-the-badge" alt="Modrinth Downloads"></p>
+<p align="center"><a href="https://bstats.org/plugin/bukkit/TownyPlus/14161"><img src="https://img.shields.io/bstats/servers/14161?style=for-the-badge" alt="bstats Servers"></a>
+<img src="https://img.shields.io/polymart/downloads/2057?color=GREEN&amp;label=POLYMART%20DOWNLOADS&amp;style=for-the-badge" alt="Polymart Downloads">
+<img src="https://img.shields.io/polymart/version/2057?style=for-the-badge" alt="Polymart Version">
+<img src="https://img.shields.io/polymart/rating/2057?label=POLYMART%20RATINGS&amp;style=for-the-badge" alt="Polymart Rating">
+<a href="https://beta.curseforge.com/minecraft/bukkit-plugins/townyoverloaded"><img src="https://cf.way2muchnoise.eu/title/832361.svg?badge_style=for_the_badge" alt="CurseForge Project"></a>
+<a href="https://beta.curseforge.com/minecraft/bukkit-plugins/townyoverloaded"><img src="https://cf.way2muchnoise.eu/832361.svg?badge_style=for_the_badge" alt="CurseForge Downloads"></a></p>
+<p align="center"><a href="https://www.spigotmc.org/resources/townyplus.108295/"><img src="https://img.shields.io/spiget/downloads/108295?style=for-the-badge&amp;label=Spigot+Downloads" alt="Spiget Downloads"></a><a href="https://www.spigotmc.org/resources/townyplus.108295/"><img src="https://img.shields.io/spiget/rating/108295?style=for-the-badge&amp;label=Spigot+Rating" alt="Spiget Rating"></a>
+<a href="https://codecov.io/gh/BrycensRanch/TownyPlus"><img src="https://img.shields.io/codecov/c/github/BrycensRanch/TownyPlus?style=for-the-badge" alt="codecov"></a>
+<a href="https://commitizen.github.io/cz-cli/"><img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=for-the-badge" alt="Commitizen friendly"></a>
+<a href="https://github.com/semantic-release/semantic-release"><img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=for-the-badge" alt="semantic-release"></a>
+<a href="https://discord.gg/cX89RdaF32"><img src="https://img.shields.io/discord/557529166644510731?logo=discord&amp;style=for-the-badge" alt="Support Server"></a></p>
 
-[![bstats Servers](https://img.shields.io/bstats/servers/14161?style=for-the-badge)](https://bstats.org/plugin/bukkit/TownyPlus/14161)
-![Polymart Downloads](https://img.shields.io/polymart/downloads/2057?color=GREEN&label=POLYMART%20DOWNLOADS&style=for-the-badge)
-![Polymart Version](https://img.shields.io/polymart/version/2057?style=for-the-badge)
-![Polymart Rating](https://img.shields.io/polymart/rating/2057?label=POLYMART%20RATINGS&style=for-the-badge)
-
-[//]: # ([![Spiget Downloads]&#40;https://img.shields.io/spiget/downloads/79903?style=for-the-badge&#41;]&#40;https://www.spigotmc.org/resources/splugintemplate.79903/&#41;)
-
-[//]: # ([![Spiget Rating]&#40;https://img.shields.io/spiget/rating/79903?style=for-the-badge&#41;]&#40;https://www.spigotmc.org/resources/splugintemplate.79903/&#41;)
-[![codecov](https://img.shields.io/codecov/c/github/BrycensRanch/TownyPlus?style=for-the-badge)](https://codecov.io/gh/BrycensRanch/TownyPlus)
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=for-the-badge)](https://commitizen.github.io/cz-cli/)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=for-the-badge)](https://github.com/semantic-release/semantic-release)
-[![Support Server](https://img.shields.io/discord/816686637849378857?logo=Easy%20SMP&style=for-the-badge)](https://discord.gg/cX89RdaF32)
 
 [//]: # (> View the plugin on [SpigotMC]&#40;https://github.com/Silthus/minecraft-server-template&#41;, [PolymartMC]&#40;&#41;, [Bukkit]&#40;&#41;)
 
@@ -47,7 +46,6 @@ This plugin utilizes bstats plugin metrics system. the following information is 
 - core count for the CPU
 - number of players online
 - Metrics version
-- Which Chat, Economy, and Permission hook is in use.
 
 ## Dump 
 This plugin has a dump command that will generate a dump with all the information needed to help you with your issue.
