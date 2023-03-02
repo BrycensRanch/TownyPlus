@@ -212,11 +212,11 @@ jobs:
       - name: Parse Changelog
         id: changelog
         uses: ocavue/changelog-parser-action@v1
-        with: 
+        with:
           removeMarkdown: false
 
       - name: Publish to Modrinth
-        uses: BrycensRanch/plugin-publish@fc861911f56c6ea9c28e3caa4360c4e4cba6369c
+        uses: BrycensRanch/plugin-publish@bfd63d76b40412e0d362c9f4847bb9b1e95b8735
         with: 
           modrinth-id: jVlopSkZ
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
@@ -232,11 +232,13 @@ jobs:
           java: 17
           version-type: ${{ github.head_ref || github.ref_name }}
       - name: Publish to CurseForge (Bukkit)
-        uses: BrycensRanch/plugin-publish@fc861911f56c6ea9c28e3caa4360c4e4cba6369c
+        uses: BrycensRanch/plugin-publish@bfd63d76b40412e0d362c9f4847bb9b1e95b8735
         with:
           curseforge-id: 832361
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           changelog: ${{ steps.changelog.outputs.latestBody }}
+          dependencies: |
+            Towny | depends | *
           loaders: |
             bukkit
             spigot
@@ -244,12 +246,14 @@ jobs:
             purpur
           game-versions: |
             1.17
-            1.19.3
+            1.18
+            1.19
           java: 17
+          version-resolver: latest
           version-type: ${{ github.head_ref || github.ref_name }}
           fail-mode: warn
       - name: Publish to Polymart
-        uses: BrycensRanch/plugin-publish@fc861911f56c6ea9c28e3caa4360c4e4cba6369c
+        uses: BrycensRanch/plugin-publish@bfd63d76b40412e0d362c9f4847bb9b1e95b8735
         with: 
           polymart-id: 2057
           polymart-token: ${{ secrets.POLYMART_TOKEN }}
