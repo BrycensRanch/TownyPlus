@@ -129,11 +129,11 @@ jobs:
         with:
           file: "**/build/reports/jacoco/**/*.xml"
 
-      - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1.40
-        continue-on-error: true
-        with:
-          files: "**/build/test-results/**/*.xml"
+#       - name: Publish Unit Test Results
+#         uses: EnricoMi/publish-unit-test-result-action@v1.40
+#         continue-on-error: true
+#         with:
+#           files: "**/build/test-results/**/*.xml"
 
   release:
     if: contains('
