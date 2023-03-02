@@ -24,24 +24,36 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 // I do not claim ownership of this file, it rightfully belongs to DiscordSRV, which is licensed under GPL v3, just like our plugin.
 // View their license here. https://github.com/DiscordSRV/DiscordSRV/blob/master/LICENSE
 public interface ChatHook extends PluginHook {
-    @Deprecated
-    default void broadcastMessageToChannel(String channel, String message) {
-        throw new UnsupportedOperationException(getClass().getName() + " has no implementation for broadcastMessageToChannel");
-    }
+  @Deprecated
+  default void broadcastMessageToChannel(String channel, String message) {
+    throw new UnsupportedOperationException(
+      getClass().getName() +
+      " has no implementation for broadcastMessageToChannel"
+    );
+  }
 
-    default void broadcastMessageToChannel(String channel, Component message) {
-        broadcastMessageToChannel(channel, LegacyComponentSerializer
-                .legacySection()
-                .serialize(message));
-    }
+  default void broadcastMessageToChannel(String channel, Component message) {
+    broadcastMessageToChannel(
+      channel,
+      LegacyComponentSerializer.legacySection().serialize(message)
+    );
+  }
 
-    default void broadcastMessageToChannel(String channel, Component message, Resident resident) {
-        broadcastMessageToChannel(channel, LegacyComponentSerializer
-                .legacySection()
-                .serialize(message));
-    }
+  default void broadcastMessageToChannel(
+    String channel,
+    Component message,
+    Resident resident
+  ) {
+    broadcastMessageToChannel(
+      channel,
+      LegacyComponentSerializer.legacySection().serialize(message)
+    );
+  }
 
-    default void reload() {
-        throw new UnsupportedOperationException(getClass().getName() + " has no implementation for broadcastMessageToChannel");
-    }
+  default void reload() {
+    throw new UnsupportedOperationException(
+      getClass().getName() +
+      " has no implementation for broadcastMessageToChannel"
+    );
+  }
 }

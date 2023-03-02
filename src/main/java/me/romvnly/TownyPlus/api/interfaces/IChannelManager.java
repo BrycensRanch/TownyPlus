@@ -10,21 +10,19 @@
 
 package me.romvnly.TownyPlus.api.interfaces;
 
+import java.util.Collection;
 import me.romvnly.TownyPlus.api.entities.Channel;
 
-import java.util.Collection;
-
 public interface IChannelManager {
-    void addChannel(Channel channel);
+  void addChannel(Channel channel);
 
-    Collection<Channel> getChannels();
+  Collection<Channel> getChannels();
 
-    Channel getChannel(String id);
+  Channel getChannel(String id);
 
-    Channel editChannel(Channel channel)
-            throws Exception;
+  Channel editChannel(Channel channel) throws Exception;
 
-    void deleteChannel(String id);
+  void deleteChannel(String id);
 
-    boolean channelExist(String id);
+  boolean channelExist(String id);
 }

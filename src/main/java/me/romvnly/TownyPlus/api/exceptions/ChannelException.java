@@ -12,12 +12,11 @@ package me.romvnly.TownyPlus.api.exceptions;
 
 public class ChannelException extends Exception {
 
-    public ChannelException() {
-        super();
-    }
+  public ChannelException() {
+    super();
+  }
 
-    public ChannelException(String message) {
-        super(message);
-    }
-
+  public ChannelException(String message) {
+    super(message);
+  }
 }

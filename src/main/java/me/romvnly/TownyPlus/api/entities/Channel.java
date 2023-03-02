@@ -13,43 +13,44 @@ package me.romvnly.TownyPlus.api.entities;
 import com.palmergames.bukkit.towny.object.Town;
 
 public class Channel {
-    public String id;
-    public String name;
-    public Town town;
 
-    public Channel(String id, String name, Town town) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.town = town;
-    }
+  public String id;
+  public String name;
+  public Town town;
 
-    public String getId() {
-        return id;
-    }
+  public Channel(String id, String name, Town town) {
+    super();
+    this.id = id;
+    this.name = name;
+    this.town = town;
+  }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public Town getTown() {
-        return town;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setTown(Town town) {
-        this.town = town;
-    }
+  public Town getTown() {
+    return town;
+  }
 
-    @Override
-    public String toString() {
-        return String.valueOf(getTown());
-    }
+  public void setTown(Town town) {
+    this.town = town;
+  }
+
+  @Override
+  public String toString() {
+    return String.valueOf(getTown());
+  }
 }

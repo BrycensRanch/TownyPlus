@@ -14,10 +14,9 @@ import com.google.gson.Gson;
 
 public class JsonTransformer {
 
-    private Gson gson = new Gson();
+  private Gson gson = new Gson();
 
-    public String render(Object model) {
-        return gson.toJson(model);
-    }
-
+  public String render(Object model) {
+    return gson.toJson(model);
+  }
 }
