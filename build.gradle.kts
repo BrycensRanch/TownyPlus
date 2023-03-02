@@ -2,6 +2,7 @@
 //file:noinspection GroovyAssignabilityCheck
 //import com.github.spotbugs.snom.SpotBugsTask
 import java.text.SimpleDateFormat
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 //import org.gradle.crypto.checksum.Checksum
 buildscript {
     repositories {
@@ -45,35 +46,33 @@ logger.lifecycle("""
 *******************************************
 """)
 
-apply from: "$rootDir/gradle/jacoco.gradle"
-apply from: "$rootDir/gradle/publish.gradle"
+apply("$rootDir/gradle/jacoco.gradle")
+apply("$rootDir/gradle/publish.gradle")
 
-if (project.hasProperty("local_script")) {
-    apply from: file(local_script + "/build.local.gradle")
-}
-static def getTime() {
-    SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd-HHmm")
-    sdf.setTimeZone(TimeZone.getTimeZone("UTC"))
-    return sdf.format(new Date()).toString()
-}
+val targetJavaVersion = "17"
+val mcVersion = project.property("mcVersion") as String
 
-tasks.withType(JavaCompile) {
+//if (project.hasProperty("local_script")) {
+//    apply(local_script + "/build.local.gradle")
+//}
+
+tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
-    sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = targetJavaVersion
+targetCompatibility = targetJavaVersion
 }
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = targetJavaVersion
     }
 }
 
-ext {
-    mcVersion = project.property("mcVersion") as String
+tasks.ext {
+    mcVersion = mcVersion
 }
 
-group project.property("group") as String
+group = project.property("group") as String
 //def details = versionDetails()
 
 //spotbugs {
@@ -87,12 +86,12 @@ group project.property("group") as String
 
 // CI channels will clash if you change the version within build.gradle, this is only for local builds
 
-val version: String? by project
+var version: String? by project
 val packageName: String by project
 
 if (System.getenv("CI") == null) {
     if (version == null || version == "") {
-        version = getTime() + "-SNAPSHOT"
+        version = "SNAPSHOT"
     } else if (gitBranchName.contains("alpha") || gitBranchName.contains("beta") || gitBranchName.contains("rc")) {
         version = version + "-" + gitBranchName + "-SNAPSHOT";
     } else {
@@ -111,7 +110,7 @@ println("Is CI detected? " + System.getenv("CI"))
 // }
 
 
-tasks.withType(Checkstyle) {
+tasks.withType<Checkstyle> {
     reports {
         xml.required = true
         html.required = true
@@ -174,9 +173,9 @@ tasks.compileJava {
     options.fork = true
 }
 tasks.publish {
-    dependsOn "clean"
-    dependsOn "build"
-    tasks.findByName("build").mustRunAfter "clean"
+    dependsOn("clean")
+    dependsOn("build")
+    tasks.findByName("build").mustRunAfter("clean")
 
 }
 assemble {
@@ -238,7 +237,7 @@ dependencies {
     compileOnly("com.discordsrv:discordsrv:1.24.0")
 //    // JDA for DiscordSRV
     implementation("net.dv8tion:JDA:5.0.0-beta.5") {
-        exclude module: "opus-java"
+        exclude(module = "opus-java")
     }
     // VentureChat support for chat listening
     compileOnly("mineverse.aust1n46:venturechat:3.5.0")
@@ -258,9 +257,16 @@ dependencies {
     testImplementation("org.mockito:mockito-core:5.1.1")
     testImplementation("com.github.seeseemelk:MockBukkit-v1.19:2.145.0")
     testImplementation("org.assertj:assertj-core:3.24.2")
+    testImplementation(kotlin("test-junit5"))
+    testImplementation(kotlin("reflect"))
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.2")
+    testImplementation("org.mockito:mockito-inline:4.6.1")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
 }
+artifacts.archives(tasks.shadowJar)
 tasks.shadowJar {
-        archivesBaseName.set(project.property("pluginName") as)
+        archivesBaseName.set(project.property("pluginName") as String)
         archiveClassifier.set("")
         dependencies {
         // These are sorted by internal dependencies to ones for compatability/functionatlity related to other plugins
@@ -305,12 +311,10 @@ tasks.license {
 
 configure<com.gorylenko.GitPropertiesPluginExtension> {
     failOnNoGitDirectory = false
-    customProperty "git.mcVersion", { project.property("mcVersion") as String }
+    customProperty("git.mcVersion", mcVersion)
 }
 
-tasks.sourcesJar {
-    enabled = true
-}
+tasks.jar { enabled = false }
 tasks.build {
     dependsOn(tasks.shadowJar)
 }
@@ -326,7 +330,7 @@ tasks.runServer {
 tasks.test {
     useJUnitPlatform()
     testLogging {
-        events "skipped", "failed"
+        events("skipped", "failed")
     }
     // md5: Honestly no one writes plugins with such a focus on testing/quality.
     ignoreFailures = true
