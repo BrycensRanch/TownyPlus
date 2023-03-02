@@ -1,3 +1,18 @@
+## [1.0.11-alpha.3](https://github.com/BrycensRanch/TownyPlus/compare/v1.0.11-alpha.2...v1.0.11-alpha.3) (2023-03-02)
+
+
+### 🐛 Bugfix 🐛
+
+* **deps:** update dependency net.dv8tion:jda to v5.0.0-beta.5 ([#49](https://github.com/BrycensRanch/TownyPlus/issues/49)) ([7ede86d](https://github.com/BrycensRanch/TownyPlus/commit/7ede86dedd7156045bf5a1107c45c16164a1d1f7))
+
+
+### 📦️ Build and CI
+
+* **publish:** attempt to fix curseforge auto upload ([9464f86](https://github.com/BrycensRanch/TownyPlus/commit/9464f86b848785e608f3502aae2cfe507c538ae8))
+* **publish:** should allow for polymart publish ([f1b1990](https://github.com/BrycensRanch/TownyPlus/commit/f1b1990febe91005a13b97c34091ad85c21a2ab4))
+* **test:** do not upload failing unit tests ([c4e0b70](https://github.com/BrycensRanch/TownyPlus/commit/c4e0b70de00c12300fae58439c0f9d9c4ed38d63))
+* use actually fixed version of plugin publish ([39d702f](https://github.com/BrycensRanch/TownyPlus/commit/39d702fb34f255bb4bc0ddb616f8abf999b9012a))
+
 ## [1.0.11-alpha.2](https://github.com/BrycensRanch/TownyPlus/compare/v1.0.11-alpha.1...v1.0.11-alpha.2) (2023-03-01)
 
 
