@@ -1,5 +1,5 @@
 
-<h1 id="townyplus">TownyPlus</h1>
+<h1 id="townyplus" align="center">TownyPlus</h1>
 <p align="center"><a href="https://github.com/BrycensRanch/TownyPlus/actions/workflows/gradle.yml?query=workflow%3ABuild"><img src="https://img.shields.io/github/actions/workflow/status/BrycensRanch/TownyPlus/gradle.yml?event=push&amp;style=for-the-badge" alt="Build Status"></a>
 <a href="https://github.com/BrycensRanch/TownyPlus/releases/latest"><img src="https://img.shields.io/github/v/release/BrycensRanch/TownyPlus?include_prereleases&amp;label=release&amp;style=for-the-badge" alt="GitHub release (latest SemVer including pre-releases)"></a>
 <img src="https://img.shields.io/modrinth/game-versions/townyplus?style=for-the-badge" alt="Modrinth Game Versions">
