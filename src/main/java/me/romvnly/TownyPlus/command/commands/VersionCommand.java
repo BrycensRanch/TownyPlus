@@ -51,11 +51,11 @@ public final class VersionCommand extends BaseCommand {
             Properties gitProp = new Properties();
             gitProp.load(stream);
             sender.sendMessage(MiniMessage.miniMessage().deserialize(
-                            "<rainbow>This server is running <pluginName> version <pluginVersion> (git-<gitBranch>-<gitCommitShort>)</rainbow>",
-                    Placeholder.unparsed("pluginName", plugin.getName()),
-                    Placeholder.unparsed("pluginVersion", plugin.getDescription().getVersion()),
-                    Placeholder.unparsed("gitBranch", gitProp.getProperty("git.branch")),
-                    Placeholder.unparsed("gitCommitShort", gitProp.getProperty("git.commit.id.abbrev"))
+                            "<rainbow>This server is running <plugin> version <version> (git-<branch>-<commit>)</rainbow>",
+                    Placeholder.unparsed("plugin", plugin.getName()),
+                    Placeholder.unparsed("version", plugin.getDescription().getVersion()),
+                    Placeholder.unparsed("branch", gitProp.getProperty("git.branch")),
+                    Placeholder.unparsed("commit", gitProp.getProperty("git.commit.id.abbrev"))
                     ).clickEvent(ClickEvent.openUrl(gitProp.getProperty("git.remote.origin.url")))
             );
             plugin.updateChecker.checkNow(context.getSender());

@@ -11,11 +11,6 @@
       "name": "alpha",
       "channel": "alpha",
       "prerelease": true
-    },
-    {
-      "name": "rc",
-      "channel": "rc",
-      "prerelease": true
     }
   ],
   "plugins": [

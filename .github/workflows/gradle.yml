@@ -138,7 +138,6 @@ jobs:
   release:
     if: contains('
       refs/heads/master
-      refs/heads/rc
       refs/heads/alpha
       refs/heads/beta
       ', github.ref)
@@ -168,7 +167,7 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Gradle Wrapper Validation
-        if: ${{ needs.changes.outputs.gradle == 'true' }}
+        if: needs.changes.outputs.gradle == 'true'
         uses: gradle/wrapper-validation-action@v1
 
       - name: Set up Node.js
@@ -253,7 +252,7 @@ jobs:
           version-type: ${{ github.head_ref || github.ref_name }}
           fail-mode: warn
       - name: Publish to Polymart
-        uses: BrycensRanch/plugin-publish@fc861911f56c6ea9c28e3caa4360c4e4cba6369c
+        uses: BrycensRanch/plugin-publish@728fda9059fd392d44213414e2f79d1bc2e980eb
         with: 
           polymart-id: 2057
           polymart-token: ${{ secrets.POLYMART_TOKEN }}
