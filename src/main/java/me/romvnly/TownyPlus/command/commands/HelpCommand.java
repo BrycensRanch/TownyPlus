@@ -69,7 +69,7 @@ public final class HelpCommand extends BaseCommand {
 
         this.commandManager.registerSubcommand(builder ->
                 builder.literal("help")
-                        .meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.miniMessage().deserialize("Get help for <pluginName> commands", Placeholder.unparsed("pluginName", plugin.getName())))
+                        .meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.miniMessage().deserialize("Get help for <plugin> commands", Placeholder.unparsed("plugin", plugin.getName())))
                         .argument(helpQueryArgument, CommandUtil.description("Help Query"))
                         .permission(Constants.HELP_PERMISSION)
                         .handler(this::executeHelp));

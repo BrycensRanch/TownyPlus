@@ -84,7 +84,7 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
     public ChatHook chatHook;
     public UpdateChecker updateChecker;
     public RestAPI restAPI;
-    public DiscordSRVListener discordSRVListener = new DiscordSRVListener(this, this.commandManager);    
+    public DiscordSRVListener discordSRVListener;    
     public @NonNull
     BukkitAudiences adventure() {
         if (this.adventure == null) {
@@ -114,7 +114,7 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
         this.adventure = BukkitAudiences.create(this);
         if (!unitTest) {
             new Metrics(this, metricsId);
-            this.updateChecker = new UpdateChecker(this, UpdateCheckSource.GITHUB_RELEASE_TAG, "Romvnly-Gaming/TownyPlus")
+            this.updateChecker = new UpdateChecker(this, UpdateCheckSource.GITHUB_RELEASE_TAG, "BrycensRanch/TownyPlus")
             .setChangelogLink("https://github.com/BrycensRanch/TownyPlus/blob/master/CHANGELOG.md")
             .setDonationLink("https://paypal.me/romvnly")
             .setDownloadLink("https://github.com/BrycensRanch/TownyPlus/releases")
@@ -127,20 +127,21 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
         try {
          this.commandManager = new CommandManager(this);
         } catch (Exception e) {
-            this.getLogger().log(Level.SEVERE, "Failed to initialize command manager", e);
+            this.getLogger().log(Level.SEVERE, "Failed to initialize command manager", e); 
             this.setEnabled(false);
             return;
         }
+        this.discordSRVListener = new DiscordSRVListener(this, this.commandManager);
 
         if (!getDataFolder().exists()) {
             //noinspection ResultOfMethodCallIgnored
             getDataFolder().mkdirs();
         }
+        PluginManager pluginManager = getServer().getPluginManager();
         if (!unitTest) {
-        if (config.getBoolean("discordsrv.enabled")) {
+        if (config.getBoolean("discordsrv.enabled") && pluginManager.getPlugin("DiscordSRV") != null && pluginManager.isPluginEnabled("DiscordSRV")) {
             DiscordSRV.api.subscribe(discordSRVListener);
         }
-        PluginManager pluginManager = getServer().getPluginManager();
        if (pluginManager.getPlugin("TownyChat") != null && pluginManager.isPluginEnabled("TownyChat")) {
         chatHook = new TownyChatHook();
                 pluginManager.registerEvents(chatHook, this);
@@ -172,7 +173,7 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
             this.updateChecker.stop();
         }
         if (this.restAPI != null) { this.restAPI.stopServer(); }
-        if (config.getBoolean("discordsrv.enabled")) {
+        if (discordSRVListener != null) {
             DiscordSRV.api.unsubscribe(discordSRVListener);
         }
         getLogger().info("TownyPlus has been Disabled!");

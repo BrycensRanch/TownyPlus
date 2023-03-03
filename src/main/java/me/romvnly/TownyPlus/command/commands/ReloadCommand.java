@@ -50,8 +50,8 @@ public final class ReloadCommand extends BaseCommand {
             Config.reload();
             Lang.reload();
             sender.sendMessage(MiniMessage.miniMessage().deserialize(
-                    "<rainbow><pluginName> has successfully reloaded!</rainbow>",
-                    Placeholder.unparsed("pluginName", plugin.getName())
+                    "<rainbow><plugin> has successfully reloaded!</rainbow>",
+                    Placeholder.unparsed("plugin", plugin.getName())
             ));
             this.plugin.chatHook.reload();
         } catch (Exception e) {
