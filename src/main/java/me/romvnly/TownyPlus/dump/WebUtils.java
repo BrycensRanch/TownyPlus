@@ -25,6 +25,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import javax.naming.directory.InitialDirContext;
 
@@ -83,39 +84,20 @@ public class WebUtils {
         URL url = new URL(reqURL);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");
-        con.setRequestProperty("Content-Type", "application/json; utf-8");
+        con.setRequestProperty("Content-Type", "application/json");
         con.setRequestProperty("Accept", "application/json");
-        con.setDoOutput(true);
         con.setDoInput(true);
-        con.setChunkedStreamingMode(0);
+        con.setChunkedStreamingMode(-1);
+        con.setDoOutput(true);
 
 
-
-            // Writes the JSON parsed as string to the connection
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.write(postContent.toString().getBytes());
-            Integer responseCode = con.getResponseCode();
-
-            BufferedReader bufferedReader;
-
-            // Creates a reader buffer
-            if (responseCode > 199 && responseCode < 300) {
-                bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            } else {
-                bufferedReader = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-            }
-
-            // To receive the response
-            StringBuilder content = new StringBuilder();
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                content.append(line).append("\n");
-            }
-            bufferedReader.close();
-
-            // Prints the response
-            TownyPlusMain.plugin.getLogger().info(content.toString());
-        
+        try(OutputStream os = con.getOutputStream()) {
+            byte[] input = postContent.getBytes(StandardCharsets.UTF_8);
+            os.write(input, 0, input.length);
+        }
+        catch (Exception e) {
+            TownyPlusMain.getInstance().getLogger().info("Error while attempting to post: " + e.getMessage());
+        }
         // Check if the connection is successful
 
 

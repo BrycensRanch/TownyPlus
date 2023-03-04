@@ -17,6 +17,7 @@
 import cloud.commandframework.arguments.standard.StringArgument;
  import cloud.commandframework.context.CommandContext;
  import cloud.commandframework.minecraft.extras.MinecraftExtrasMetaKeys;
+ import lombok.SneakyThrows;
  import me.romvnly.TownyPlus.TownyPlusMain;
  import me.romvnly.TownyPlus.command.BaseCommand;
  import me.romvnly.TownyPlus.command.CommandManager;
@@ -40,7 +41,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Path;
+ import java.net.URL;
+ import java.nio.file.Path;
 import java.util.Date;
 import java.util.List;
  
@@ -55,10 +57,10 @@ import java.util.List;
      @Override
      public void register() {
         final var typeOfDumpArgument = StringArgument.<CommandSender>builder("type")
-        .asOptionalWithDefault("normal")
+        .asOptionalWithDefault("full")
         .withSuggestionsProvider((context, input) -> List.of("full", "offline"))
         .build();
-        final var shouldItUploadServerLogsArgument = BooleanArgument.<CommandSender>builder("logs")
+        final var shouldItUploadServerLogsArgument = BooleanArgument.<CommandSender>builder("shouldUploadServerLogs")
         .asOptional()
         .build();
          this.commandManager.registerSubcommand(builder ->
@@ -69,25 +71,32 @@ import java.util.List;
                          .handler(this::execute));
      }
  
+     @SneakyThrows
      private void execute(final @NonNull CommandContext<CommandSender> context) {
          Audience sender = plugin.adventure().sender(context.getSender());
          String typeOfDump = context.getOrDefault("type", "full");
-         Boolean shouldLog = context.getOrDefault("logs", true);
+         Boolean shouldDumpLatestLog = context.getOrDefault("shouldUploadServerLogs", true);
 
-         boolean offlineDump = false;
+         boolean offlineDump;
          switch (typeOfDump) {
-            case "offline" -> offlineDump = true;
-        }
+             case "offline" -> offlineDump = true;
+             case "full" -> offlineDump = false;
+                default -> {
+                    sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>Invalid dump type. Please use <dump> or <dump></red>", Placeholder.unparsed("dump", "full"), Placeholder.unparsed("dump", "offline")));
+                    return;
+                }
+         }
+
         String dumpData;
         Date date = new Date();
         try {
+            DefaultPrettyPrinter prettyPrinter = new DefaultPrettyPrinter();
+            // Make arrays easier to read
+            prettyPrinter.indentArraysWith(new DefaultIndenter("    ", "\n"));
             if (offlineDump) {
-                DefaultPrettyPrinter prettyPrinter = new DefaultPrettyPrinter();
-                // Make arrays easier to read
-                prettyPrinter.indentArraysWith(new DefaultIndenter("    ", "\n"));
-                dumpData = MAPPER.writer(prettyPrinter).writeValueAsString(new DumpInfo(shouldLog));
+                dumpData = MAPPER.writer(prettyPrinter).writeValueAsString(new DumpInfo(shouldDumpLatestLog));
             } else {
-                dumpData = MAPPER.writeValueAsString(new DumpInfo(shouldLog));
+                dumpData = MAPPER.writer(prettyPrinter).writeValueAsString(new DumpInfo(shouldDumpLatestLog));
             }
         } catch (IOException e) {
             sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>An error occurred while dumping information. Please check the console for more information.</red>"));
@@ -112,17 +121,16 @@ import java.util.List;
                 sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>An error occurred while dumping information. Please check the console for more information.</red>"));
                 this.plugin.getLogger().severe("An error occurred while dumping information");
                 e.printStackTrace();
-                return;
             }
 
-            uploadedDumpUrl = dumpFileName;
         } else {
-            sender.sendMessage(MiniMessage.miniMessage().deserialize("<yellow>Dumping to GeyserMC Dump..</yellow>"));
+            sender.sendMessage(MiniMessage.miniMessage().deserialize("<yellow>Dumping to Sourcebin...</yellow>"));
 
             String response;
             JsonNode responseNode;
             try {
-                response = WebUtils.post(Constants.DUMP_URL + "bins", dumpData);
+                String postBody = MAPPER.writeValueAsString(MAPPER.createObjectNode().put("title", plugin.getName() + " Debug Dump").put("description", "Kudos to GeyserMC for their dump impl").set("files", MAPPER.createArrayNode().add(MAPPER.createObjectNode().put("name", "dump-" + date.getTime() + ".json").put("content", dumpData))));
+                response = WebUtils.post(Constants.DUMP_URL + "bins", postBody);
                 responseNode = MAPPER.readTree(response);
             } catch (IOException e) {
                 sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>An error occurred while uploading the dump. Please check the console for more information.</red>"));
@@ -130,13 +138,13 @@ import java.util.List;
                 e.printStackTrace();
                 return;
             }
-
             if (!responseNode.has("key")) {
-                sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>The server rejected the dump: <errorMessage></red>", Placeholder.unparsed("errorMessage", responseNode.has("message") ? responseNode.get("message").asText() : response)));
+                sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>The dump service rejected the dump: <error></red>", Placeholder.unparsed("error", responseNode.has("message") ? responseNode.get("message").asText() : response)));
                 return;
             }
 
-            uploadedDumpUrl = Constants.DUMP_URL + responseNode.get("key").asText();
+            URL hostURL = new URL(Constants.DUMP_URL);
+            uploadedDumpUrl = hostURL.getProtocol() + "://" + hostURL.getHost() + "/" + responseNode.get("key").asText();
             Component successMessage = MiniMessage.miniMessage().deserialize("<green>Successfully uploaded dump to <url></green>", Placeholder.unparsed("url", uploadedDumpUrl)).clickEvent(ClickEvent.openUrl(uploadedDumpUrl));
 
             if (sender != plugin.adventure().console()) {

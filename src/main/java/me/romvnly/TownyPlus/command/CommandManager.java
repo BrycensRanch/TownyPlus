@@ -22,11 +22,7 @@ import cloud.commandframework.exceptions.CommandExecutionException;
 import cloud.commandframework.meta.CommandMeta;
 import cloud.commandframework.minecraft.extras.MinecraftExceptionHandler;
 import cloud.commandframework.paper.PaperCommandManager;
-import me.romvnly.TownyPlus.command.commands.BypassCommand;
-import me.romvnly.TownyPlus.command.commands.ConfirmCommand;
-import me.romvnly.TownyPlus.command.commands.DumpCommand;
-import me.romvnly.TownyPlus.command.commands.ReloadCommand;
-import me.romvnly.TownyPlus.command.commands.VersionCommand;
+import me.romvnly.TownyPlus.command.commands.*;
 import me.romvnly.TownyPlus.configuration.Lang;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import cloud.commandframework.execution.AsynchronousCommandExecutionCoordinator;
@@ -42,7 +38,6 @@ import java.util.function.UnaryOperator;
 
 import com.google.common.collect.ImmutableList;
 import me.romvnly.TownyPlus.TownyPlusMain;
-import me.romvnly.TownyPlus.command.commands.HelpCommand;
 import me.romvnly.TownyPlus.command.exception.CompletedSuccessfullyException;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
@@ -76,7 +71,7 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
             }
         }
         if (this.hasCapability(CloudBukkitCapabilities.ASYNCHRONOUS_COMPLETION)) {
-            ((PaperCommandManager<CommandSender>) this).registerAsynchronousCompletions();
+            this.registerAsynchronousCompletions();
         }
         this.registerExceptionHandlers(plugin);
         this.confirmationManager = new CommandConfirmationManager<>(
@@ -112,7 +107,8 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
                 new ReloadCommand(plugin, this),
                 new VersionCommand(plugin, this),
                 new ConfirmCommand(plugin, this),
-                new DumpCommand(plugin, this)
+                new DumpCommand(plugin, this),
+                new DiscordCommand(plugin, this)
 //                new TownyBypassCommand(plugin, this),
         ).forEach(BaseCommand::register);
 
