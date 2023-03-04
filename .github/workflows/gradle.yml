@@ -215,7 +215,7 @@ jobs:
           removeMarkdown: false
 
       - name: Publish to Modrinth
-        uses: BrycensRanch/plugin-publish@3f409877a4b641aac2bd71a7607d792e7f91328b
+        uses: BrycensRanch/plugin-publish@e05c1775fc218fe4d24eb51543cd305f84b3342e
         with: 
           modrinth-id: jVlopSkZ
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
@@ -231,7 +231,7 @@ jobs:
           java: 17
           version-type: ${{ github.head_ref || github.ref_name }}
       - name: Publish to CurseForge (Bukkit)
-        uses: BrycensRanch/plugin-publish@3f409877a4b641aac2bd71a7607d792e7f91328b
+        uses: BrycensRanch/plugin-publish@e05c1775fc218fe4d24eb51543cd305f84b3342e
         with:
           curseforge-id: 832361
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
@@ -252,7 +252,7 @@ jobs:
           version-type: ${{ github.head_ref || github.ref_name }}
           fail-mode: warn
       - name: Publish to Polymart
-        uses: BrycensRanch/plugin-publish@3f409877a4b641aac2bd71a7607d792e7f91328b
+        uses: BrycensRanch/plugin-publish@e05c1775fc218fe4d24eb51543cd305f84b3342e
         with: 
           polymart-id: 2057
           polymart-token: ${{ secrets.POLYMART_TOKEN }}
