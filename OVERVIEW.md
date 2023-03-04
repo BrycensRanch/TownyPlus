@@ -32,8 +32,7 @@ TownyPlus was built to be new and modern. All these features here are meant to s
 * [Update checker](https://github.com/JEFF-Media-GbR/Spigot-UpdateChecker) that is beautiful
 * Lot of this plugin is WIP, but, I need to get it out there so I can get feedback and help from the community!
 * Metrics so you can track how many other amazing people are using this plugin
-* Automatic updates to Bukkit via GitHub Actions, never miss an update again
-* Automatic updates to Polymart via GitHub Actions, never miss an update again
+* Automatic updates to Modrinth, CurseForge, and Polymart via GitHub Actions, never miss an update again!
 
 This plugin utilizes bstats plugin metrics system. the following information is collected and sent to bstats.org unless opted out:
 
