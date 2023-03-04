@@ -5,6 +5,9 @@
 maxtime: 10m # MF set this to something low or 0 to have it forever!!
 coreprotect: true # TODO allow this to generate some kind of pastebin placeholder that can be used in the discordsrv embed
 # TODO make this shit use discordsrv channels along with configurable messages
+
+# I'm pretty sure our plugin will get delisted if this is true by default
+autoupdate: false
 discordsrv:
   enabled: true
 restapi:

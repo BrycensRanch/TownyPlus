@@ -28,6 +28,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.Properties;
 
 // This whole implementation is inspired from https://github.com/GeyserMC/Geyser/blob/master/core/src/main/java/org/geysermc/geyser/command/defaults/VersionCommand.java
@@ -52,7 +53,9 @@ public final class VersionCommand extends BaseCommand {
             gitProp.load(stream);
             sender.sendMessage(MiniMessage.miniMessage().deserialize(
                             "<rainbow>This server is running <plugin> version <version> (git-<branch>-<commit>)</rainbow>",
-                    Placeholder.unparsed("plugin", plugin.getName()),
+                    // The plugin.yml is considered the source of truth for the plugin name and version, regardless of what gitProperties says.
+                    // This should prevent issues when gitProperties is not present (e.g. when building from source with no .git folder).
+                    Placeholder.unparsed("plugin", plugin.getDescription().getName()),
                     Placeholder.unparsed("version", plugin.getDescription().getVersion()),
                     Placeholder.unparsed("branch", gitProp.getProperty("git.branch")),
                     Placeholder.unparsed("commit", gitProp.getProperty("git.commit.id.abbrev"))

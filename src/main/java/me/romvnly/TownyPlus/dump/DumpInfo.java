@@ -20,27 +20,32 @@ import com.google.common.io.ByteSource;
 import com.google.common.io.Files;
 import com.google.gson.Gson;
 
+import com.palmergames.bukkit.towny.object.Town;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.romvnly.TownyPlus.TownyPlusMain;
 import me.romvnly.TownyPlus.hooks.chat.ChatHook;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.management.ManagementFactory;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import java.net.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.jar.Attributes;
+import java.util.jar.JarFile;
+import java.util.jar.JarInputStream;
+import java.util.jar.Manifest;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+
+import javax.annotation.Nullable;
 
 @Getter
 public class DumpInfo {
@@ -53,12 +58,38 @@ public class DumpInfo {
     private final Locale systemLocale;
     private final String systemEncoding;
     private final JsonNode gitInfo;
+    private JsonNode jarManifestInfo = null;
     private final HashInfo hashInfo;
     private final RamInfo ramInfo;
     private LogsInfo logsInfo;
     private final FlagsInfo flagsInfo;
+    private final RESTAPIInfo restAPIInfo;
+    private final ChatHookInfo chatHookInfo;
     private BukkitInfo bukkitInfo;
-
+    public static String getManifestInfo() {
+        Enumeration resEnum;
+        try {
+            URLClassLoader cl = (URLClassLoader) DumpInfo.class.getClassLoader();
+            resEnum = cl.getResources(JarFile.MANIFEST_NAME);
+            while (resEnum.hasMoreElements()) {
+                try {
+                    URL url = (URL)resEnum.nextElement();
+                    InputStream is = url.openStream();
+                    if (is != null) {
+                        Manifest manifest = new Manifest(is);
+                        String json = TownyPlusMain.getInstance().JSONMapper.writeValueAsString(manifest.getMainAttributes().entrySet());
+                        return json;
+                    }
+                }
+                catch (Exception e) {
+                    // Silently ignore wrong manifests on classpath?
+                }
+            }
+        } catch (IOException e1) {
+            // Silently ignore wrong manifests on classpath?
+        }
+        return null;
+    }
     public DumpInfo(boolean addLog) {
         this.versionInfo = new VersionInfo();
 
@@ -66,6 +97,14 @@ public class DumpInfo {
         this.cpuName = CpuUtils.tryGetProcessorName();
         this.systemLocale = Locale.getDefault();
         this.systemEncoding = System.getProperty("file.encoding");
+        try {
+            this.jarManifestInfo = TownyPlusMain.JSONMapper.readTree(getManifestInfo());
+        }
+        catch(Exception e ) {
+            e.printStackTrace();
+            TownyPlusMain.getInstance().getLogger().warning("Unable to get manifest of JAR file");
+        }
+
         try (InputStream stream = getClass().getClassLoader().getResourceAsStream("git.properties")) {
             Properties gitProp = new Properties();
             gitProp.load(stream);
@@ -98,7 +137,8 @@ public class DumpInfo {
         if (addLog) {
             this.logsInfo = new LogsInfo();
         }
-
+        this.chatHookInfo = new ChatHookInfo();
+        this.restAPIInfo = new RESTAPIInfo();
         this.flagsInfo = new FlagsInfo();
         this.bukkitInfo = new BukkitInfo();
     }
@@ -123,7 +163,7 @@ public class DumpInfo {
             this.plugins = new ArrayList<>();
     
             for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
-                this.plugins.add(new PluginInfo(plugin.isEnabled(), plugin.getName(), plugin.getDescription().getVersion(), plugin.getDescription().getMain(), plugin.getDescription().getAuthors()));
+                this.plugins.add(new PluginInfo(plugin.isEnabled(), plugin.getName(), plugin.getDescription().getVersion(), plugin.getDescription().getMain(), plugin.getDescription().getAuthors(), plugin.getDescription().getDescription(), plugin.getDescription().getWebsite()));
             }
         }
     }
@@ -135,6 +175,8 @@ public class DumpInfo {
         public String version;
         public String main;
         public List<String> authors;
+        public String description;
+        public String website;
     }
     @Getter
     public static class VersionInfo {
@@ -183,7 +225,6 @@ public class DumpInfo {
         private final String sha256Hash;
         private final String sha512Hash;
     }
-    @AllArgsConstructor
     @Getter
     public static class RESTAPIInfo {
         private final boolean active;
@@ -191,12 +232,11 @@ public class DumpInfo {
             active = TownyPlusMain.plugin.restAPI.active;
         }
     }
-    @AllArgsConstructor
     @Getter
     public static class ChatHookInfo {
-        private final ChatHook chatHook;
+        private final Boolean chatHook;
         ChatHookInfo() {
-            chatHook = TownyPlusMain.plugin.chatHook;
+            chatHook = TownyPlusMain.plugin.chatHook != null;
         }
     }
 
@@ -223,6 +263,11 @@ public class DumpInfo {
         FlagsInfo() {
             this.flags = ManagementFactory.getRuntimeMXBean().getInputArguments();
         }
+    }
+    @Getter
+    @AllArgsConstructor
+    public static class JarManifestInfo {
+        private final JsonNode jarManifestInfo;
     }
     @Getter
     @AllArgsConstructor

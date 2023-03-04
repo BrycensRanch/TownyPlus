@@ -13,6 +13,7 @@ package me.romvnly.TownyPlus;
 import com.jeff_media.updatechecker.UpdateChecker;
 import com.jeff_media.updatechecker.UserAgentBuilder;
 import com.palmergames.bukkit.metrics.bukkit.Metrics;
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
@@ -32,6 +33,7 @@ import me.romvnly.TownyPlus.listeners.TownToggleListener;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -56,12 +58,10 @@ import static me.romvnly.TownyPlus.util.Constants.UPDATENOTIFICATIONS_PERMISSION
 
 public final class TownyPlusMain extends JavaPlugin implements Listener {
     private final boolean unitTest;
-
     public TownyPlusMain() {
         super();
         unitTest = false;
     }
-
     protected TownyPlusMain(
             JavaPluginLoader loader,
             PluginDescriptionFile description,
@@ -79,12 +79,12 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
     .enable(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES)
     .enable(JsonParser.Feature.ALLOW_SINGLE_QUOTES);
     final int metricsId = 14161;
-    public FileConfiguration config = getConfig();
+    public FileConfiguration config;
     public CommandManager commandManager;
     public ChatHook chatHook;
     public UpdateChecker updateChecker;
     public RestAPI restAPI;
-    public DiscordSRVListener discordSRVListener;    
+    public DiscordSRVListener discordSRVListener;
     public @NonNull
     BukkitAudiences adventure() {
         if (this.adventure == null) {
@@ -101,61 +101,85 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
     }
 
     public void onEnable() {
+        PluginManager pluginManager = null;
+        if (!pluginManager.isPluginEnabled("Towny")) {
+            getLogger().severe("Towny is not enabled. TownyPlus will now disable.");
+            getLogger().severe("See you next time! :)");
+            this.setEnabled(false);
+            return;
+        }
+        config = getConfig();
+        if (!unitTest) {
             Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
                 try {
-                this.restAPI = new RestAPI(this);
-                this.restAPI.startServer(config.getString("restapi.host"), config.getInt("restapi.port"));
-                }
-                catch (Exception e) {
+                    this.restAPI = new RestAPI(this);
+                    this.restAPI.startServer(config.getString("restapi.host"), config.getInt("restapi.port"));
+                } catch (Exception e) {
                     getLogger().warning("The plugin's Rest API failed to load. :(");
                     e.printStackTrace();
                 }
             });
+        }
         this.adventure = BukkitAudiences.create(this);
         if (!unitTest) {
             new Metrics(this, metricsId);
             this.updateChecker = new UpdateChecker(this, UpdateCheckSource.GITHUB_RELEASE_TAG, "BrycensRanch/TownyPlus")
-            .setChangelogLink("https://github.com/BrycensRanch/TownyPlus/blob/master/CHANGELOG.md")
-            .setDonationLink("https://paypal.me/romvnly")
-            .setDownloadLink("https://github.com/BrycensRanch/TownyPlus/releases")
-            .setUserAgent(new UserAgentBuilder().addPluginNameAndVersion())
-            .setNotifyByPermissionOnJoin(UPDATENOTIFICATIONS_PERMISSION)
-            .checkEveryXHours(24)
-            .checkNow();
+                    .setChangelogLink("https://github.com/BrycensRanch/TownyPlus/blob/master/CHANGELOG.md")
+                    .setDonationLink("https://paypal.me/romvnly")
+                    .setDownloadLink("https://github.com/BrycensRanch/TownyPlus/releases")
+                    .setUserAgent(new UserAgentBuilder().addPluginNameAndVersion())
+                    .setNotifyByPermissionOnJoin(UPDATENOTIFICATIONS_PERMISSION)
+                    .checkEveryXHours(12)
+                    .checkNow();
         }
         plugin = this;
         try {
-         this.commandManager = new CommandManager(this);
+            this.commandManager = new CommandManager(this);
         } catch (Exception e) {
-            this.getLogger().log(Level.SEVERE, "Failed to initialize command manager", e); 
+            this.getLogger().log(Level.SEVERE, "Failed to initialize command manager", e);
             this.setEnabled(false);
             return;
         }
-        this.discordSRVListener = new DiscordSRVListener(this, this.commandManager);
 
         if (!getDataFolder().exists()) {
             //noinspection ResultOfMethodCallIgnored
             getDataFolder().mkdirs();
         }
-        PluginManager pluginManager = getServer().getPluginManager();
+        pluginManager = getServer().getPluginManager();
         if (!unitTest) {
-        if (config.getBoolean("discordsrv.enabled") && pluginManager.getPlugin("DiscordSRV") != null && pluginManager.isPluginEnabled("DiscordSRV")) {
-            DiscordSRV.api.subscribe(discordSRVListener);
-        }
-       if (pluginManager.getPlugin("TownyChat") != null && pluginManager.isPluginEnabled("TownyChat")) {
-        chatHook = new TownyChatHook();
+            if (config.getBoolean("discordsrv.enabled") && pluginManager.getPlugin("DiscordSRV") != null && pluginManager.isPluginEnabled("DiscordSRV")) {
+                discordSRVListener = new DiscordSRVListener(this, this.commandManager);
+                DiscordSRV.api.subscribe(discordSRVListener);
+            } else if (config.getBoolean("discordsrv.enabled")) {
+                getLogger().info("DiscordSRV is not enabled or not installed. Disabling DiscordSRV features.");
+            }
+            if (pluginManager.getPlugin("TownyChat") != null && pluginManager.isPluginEnabled("TownyChat")) {
+                chatHook = new TownyChatHook();
                 pluginManager.registerEvents(chatHook, this);
+            }
+       else {
+           getLogger().info("TownyChat is not enabled or not installed. Disabling TownyChat features.");
        }
-       if (pluginManager.getPlugin("VentureChat") != null && pluginManager.isPluginEnabled("VentureChat")) {
-           chatHook = new VentureChatHook();
-           // VentureChat overwrites TownyChat or something
-           pluginManager.registerEvents(chatHook, this);
+            if (pluginManager.getPlugin("VentureChat") != null && pluginManager.isPluginEnabled("VentureChat")) {
+                chatHook = new VentureChatHook();
+                // VentureChat overwrites TownyChat or something
+                pluginManager.registerEvents(chatHook, this);
+            }
+         else {
+           getLogger().info("VentureChat is not enabled or not installed. Disabling VentureChat features.");
        }
-        new KickedFromTownListener();
-        new MayorChangeListener();
-        new TownToggleListener();
-    }
-        getLogger().info("TownyPlus has been Enabled!");
+            new KickedFromTownListener();
+            new MayorChangeListener();
+            new TownToggleListener();
+        }
+        getLogger().info("----------------------------------------");
+        getLogger().info(getDescription().getName() + " Enabled!");
+        getLogger().info("Version: " + getDescription().getVersion());
+        getLogger().info("Author: " + getDescription().getAuthors());
+        getLogger().info("GitHub: " + getDescription().getWebsite());
+        getLogger().info("Any issues or suggestions? Report them here: " + getDescription().getWebsite() + "/issues");
+        if (config.getBoolean("restapi.enabled")) getLogger().warning("Any messages related to Jetty are normal. They are not errors. They are just letting you know that the Rest API is running. If you want to disable them, you'll have to disable the Rest API in the config. I can't do anything about the logs. Sorry.");
+        getLogger().info("----------------------------------------");
     }
 
     @EventHandler
