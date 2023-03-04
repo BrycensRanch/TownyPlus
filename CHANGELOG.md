@@ -1,3 +1,29 @@
+## [1.0.11-alpha.4](https://github.com/BrycensRanch/TownyPlus/compare/v1.0.11-alpha.3...v1.0.11-alpha.4) (2023-03-04)
+
+
+### 📝  Documentation
+
+* align plugin name in overview ([59f6f6e](https://github.com/BrycensRanch/TownyPlus/commit/59f6f6effc9b1220f581a3ddf4cf49fc61069547))
+
+
+### ⚡️ Code Performance
+
+* wip ([ae52dc9](https://github.com/BrycensRanch/TownyPlus/commit/ae52dc90562c1ad952ea3daf950c3bfc76aa4d33))
+
+
+### 🔨  Misc.
+
+* **deps:** bump plugin-publish ([96b4752](https://github.com/BrycensRanch/TownyPlus/commit/96b47524603590a09cd6bb338679dd84d1092cdd))
+* **deps:** bump plugin-publish ([36676a9](https://github.com/BrycensRanch/TownyPlus/commit/36676a99faa754cd331ec6a95c4d65b79fa495f1))
+* **deps:** update brycensranch/plugin-publish digest to fc86191 ([#51](https://github.com/BrycensRanch/TownyPlus/issues/51)) ([373b5ae](https://github.com/BrycensRanch/TownyPlus/commit/373b5ae123ed887f545a2b23794ee5e0affe42dd))
+* **deps:** update dependency gradle to v8.0.2 ([#52](https://github.com/BrycensRanch/TownyPlus/issues/52)) ([1470423](https://github.com/BrycensRanch/TownyPlus/commit/14704233cd7965d7219b7fd70149bff366415f74))
+* remove testing and update deps to 8.0.2 gradle ([1866b6f](https://github.com/BrycensRanch/TownyPlus/commit/1866b6f326c404fb7a9697f1fed3d7d8feb35350))
+
+
+### 🐛 Bugfix 🐛
+
+* **deps:** update dependency com.palmergames.bukkit.towny:towny to v0.98.6.10 ([79c85a4](https://github.com/BrycensRanch/TownyPlus/commit/79c85a48e194e703b52b6d58636978018b070be3))
+
 ## [1.0.11-alpha.3](https://github.com/BrycensRanch/TownyPlus/compare/v1.0.11-alpha.2...v1.0.11-alpha.3) (2023-03-02)
 
 
