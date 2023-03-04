@@ -1,3 +1,10 @@
+## [1.0.11-alpha.5](https://github.com/BrycensRanch/TownyPlus/compare/v1.0.11-alpha.4...v1.0.11-alpha.5) (2023-03-04)
+
+
+### 🐛 Bugfix 🐛
+
+* **deps:** update dependency io.leangen.geantyref:geantyref to v1.3.14 ([c07b461](https://github.com/BrycensRanch/TownyPlus/commit/c07b461b88c38ac0ca931d2405a07dad4f6aa6ff))
+
 ## [1.0.11-alpha.4](https://github.com/BrycensRanch/TownyPlus/compare/v1.0.11-alpha.3...v1.0.11-alpha.4) (2023-03-04)
 
 
