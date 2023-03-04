@@ -61,5 +61,8 @@ project. However, The fastest way to get support is through my Discord server. Y
 
 ### Extra Information
 
+If the platform doesn't support reviews or feedback, ignore this section. 
+TownyPlus uses the same `OVERVIEW.md` on every platform.
+
 Please do not use a review to leave bug reports or errors. I am not able to help you through a review. If you need help
-please use the contact methods provided above. I know that won't stop some of you though.
+please use the contact methods provided above. I know that won't stop some of you though. 
