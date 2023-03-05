@@ -77,7 +77,7 @@ jobs:
 
 
       - name: Build
-        run: ./gradlew build -x test
+        run: ./gradlew build -x test -x checkLicenseMain
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
@@ -110,7 +110,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Test
-        run: ./gradlew test
+        run: ./gradlew test -x checkLicenseMain
 
         # I honestly detest Minecraft plugin unit testing and I don't think it's worth the time to write tests for a project like this. 
         # I'm not going to write tests for this project, but I will leave the code here in case you want to write tests for your own project.
@@ -192,6 +192,8 @@ jobs:
           git_tag_gpgsign: false
           # No, GitHub does not currently support GPG signed pushes, only signed commits.
           git_push_gpgsign: false
+      - name: Update license headers if necessary
+        run: ./gradlew licenseFormat
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
