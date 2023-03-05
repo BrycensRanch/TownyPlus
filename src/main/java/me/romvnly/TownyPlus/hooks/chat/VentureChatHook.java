@@ -35,7 +35,16 @@ import java.util.stream.Collectors;
 // https://github.com/DiscordSRV/DiscordSRV/blob/master/src/main/java/github/scarsz/discordsrv/hooks/chat/VentureChatHook.java
 // I do not claim ownership of this file, it rightfully belongs to DiscordSRV, which is licensed under GPL v3, just like our plugin.
 // View their license here. https://github.com/DiscordSRV/DiscordSRV/blob/master/LICENSE
+// TODO: Look into supporting the 'ally' channel
 public class VentureChatHook implements ChatHook {
+    public VentureChatHook() {
+
+    }
+
+    public void reload() {
+        TownyPlusMain.plugin.logger.info("Reloaded VentureChatHook");
+        // TODO: Reload the VentureChatHook
+    }
     @EventHandler(priority = EventPriority.MONITOR)
     public void onVentureChat(VentureChatEvent event) {
 
@@ -56,9 +65,10 @@ public class VentureChatHook implements ChatHook {
     }
 
     @Override
-    public void broadcastMessageToChannel(String channel, Component component, Resident resident) {
+    public void broadcastMessageToChannel(String channel, Component component, Town town) {
         ChatChannel chatChannel = ChatChannel.getChannel(channel); // case in-sensitive
         if (chatChannel == null) {
+            TownyPlusMain.plugin.logger.debug("Tried to broadcast message to channel " + channel + " but it doesn't exist");
             return;
         }
         String legacy = LegacyComponentSerializer
@@ -68,11 +78,10 @@ public class VentureChatHook implements ChatHook {
                 .filter(p -> p.getListening().contains(chatChannel.getName()))
                 .filter(p -> {
                     if (channel == "town") {
-                        Town town = resident.getTownOrNull();
-                        return town != null && resident.getTownOrNull().hasResident(p.getUUID());
+                        return town.hasResident(p.getUUID().toString());
                     } else if (channel == "nation") {
-                        Nation nation = resident.getNationOrNull();
-                        return nation != null && resident.getNationOrNull().hasResident(p.getUUID().toString());
+                        Nation nation = town.getNationOrNull();
+                        return nation != null && nation.hasResident(p.getUUID().toString());
                     }
                     return true;
                 })
@@ -84,10 +93,13 @@ public class VentureChatHook implements ChatHook {
             // escape quotes, https://github.com/DiscordSRV/DiscordSRV/issues/754
             playerMessage = playerMessage.replace("\"", "\\\"");
             String json = Format.convertPlainTextToJson(playerMessage, true);
-            int hash = (playerMessage.replaceAll("(§([a-z0-9]))", "")).hashCode();
-            String finalJSON = Format.formatModerationGUI(json, player.getPlayer(), "Discord", chatChannel.getName(), hash);
-            PacketContainer packet = Format.createPacketPlayOutChat(finalJSON);
-            Format.sendPacketPlayOutChat(player.getPlayer(), packet);
+//            int hash = (playerMessage.replaceAll("(§([a-z0-9]))", "")).hashCode();
+//            String finalJSON = Format.formatModerationGUI(json, player.getPlayer(), "Discord", chatChannel.getName(), hash);
+//            PacketContainer packet = Format.createPacketPlayOutChat(finalJSON);
+//            Format.sendPacketPlayOutChat(player.getPlayer(), packet);
+            TownyPlusMain.plugin.adventure().player(player.getPlayer()).sendMessage(LegacyComponentSerializer
+                    .legacySection()
+                    .deserialize(playerMessage));
         }
 
         PlayerUtil.notifyPlayersOfMentions(player ->

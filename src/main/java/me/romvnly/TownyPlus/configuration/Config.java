@@ -12,6 +12,7 @@ package me.romvnly.TownyPlus.configuration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("unused")
 public class Config extends BaseConfig {
@@ -33,59 +34,81 @@ public class Config extends BaseConfig {
 
     public static String LANGUAGE_FILE = "lang-en.yml";
     public static boolean DEBUG_MODE = false;
-    public static String WEB_ADDRESS = "http://localhost:8080";
+    public static boolean AUTO_UPDATE_PLUGIN = false;
+
+    public static boolean CHECK_FOR_UPDATES = true;
+    public static boolean METRICS_ENABLED = true;
+
+    public static String githubPAT = null;
+
 
     private static void baseSettings() {
         LANGUAGE_FILE = config.getString("settings.language-file", LANGUAGE_FILE);
         DEBUG_MODE = config.getBoolean("settings.debug-mode", DEBUG_MODE);
-        WEB_ADDRESS = config.getString("settings.web-address", WEB_ADDRESS);
-    }
-
-    public static String WEB_DIR = "web";
-    public static boolean UPDATE_WEB_DIR = true;
-
-    private static void webDirSettings() {
-        WEB_DIR = config.getString("settings.web-directory.path", WEB_DIR);
-        UPDATE_WEB_DIR = config.getBoolean("settings.web-directory.auto-update", UPDATE_WEB_DIR);
-    }
-
-    public static boolean COMPRESS_IMAGES = false;
-    public static float COMPRESSION_RATIO = 0.0F;
-
-    private static void imageQualitySettings() {
-        COMPRESS_IMAGES = config.getBoolean("settings.image-quality.compress-images", COMPRESS_IMAGES);
-        COMPRESSION_RATIO = (float) config.getDouble("settings.image-quality.compress-images", COMPRESSION_RATIO);
+        AUTO_UPDATE_PLUGIN = config.getBoolean("settings.auto-update", AUTO_UPDATE_PLUGIN);
+        METRICS_ENABLED = config.getBoolean("settings.metrics", METRICS_ENABLED);
+        CHECK_FOR_UPDATES = config.getBoolean("settings.update-checker", CHECK_FOR_UPDATES);
+        githubPAT = config.getString("settings.github-pat", githubPAT);
     }
 
     public static boolean HTTPD_ENABLED = true;
-    public static String HTTPD_BIND = "0.0.0.0";
+    public static String HTTPD_BIND = "127.0.0.1";
     public static int HTTPD_PORT = 8080;
+
+    public static String externalAPIToUse = "none";
 
     private static void internalWebServerSettings() {
         HTTPD_ENABLED = config.getBoolean("settings.internal-webserver.enabled", HTTPD_ENABLED);
         HTTPD_BIND = config.getString("settings.internal-webserver.bind", HTTPD_BIND);
         HTTPD_PORT = config.getInt("settings.internal-webserver.port", HTTPD_PORT);
+        externalAPIToUse = config.getString("settings.internal-webserver.external-api", externalAPIToUse);
+    }
+    public static boolean DISCORDSRV_ENABLED = true;
+    public static String DISCORDSRV_LOG_CHANNEL = "towny-logs";
+    public static String DISCORDSRV_WEBHOOK = "https://discord.com/api/webhooks/1234567890/abcdefghijklmnopqrstuvwxyz";
+    public static boolean DISCORDSRV_WEBHOOK_ENABLED = false;
+
+    private static void discordSRVIntegrationSettings() {
+        DISCORDSRV_ENABLED = config.getBoolean("settings.discordsrv-integration.enabled", DISCORDSRV_ENABLED);
+        DISCORDSRV_LOG_CHANNEL = config.getString("settings.discordsrv-integration.log-channel", DISCORDSRV_LOG_CHANNEL);
+        DISCORDSRV_WEBHOOK = config.getString("settings.discordsrv-integration.log-webhook", DISCORDSRV_WEBHOOK);
+        DISCORDSRV_WEBHOOK_ENABLED = config.getBoolean("settings.discordsrv-integration.log-webhook-enabled", DISCORDSRV_WEBHOOK_ENABLED);
     }
 
-    public static boolean UI_COORDINATES_ENABLED = true;
-    public static boolean UI_LINK_ENABLED = true;
-    public static String UI_SIDEBAR_PINNED = "pinned";
+    public static String DB_TYPE = "h2";
+    public static String DB_HOST = "localhost";
+    public static int DB_PORT = 3306;
+    public static String DB_NAME = "townyplus";
+    public static String DB_USERNAME = "root";
+    public static String DB_PASSWORD = "password";
+    public static String DB_TABLE_PREFIX = "townyplus_";
+    public static boolean DB_USE_SSL = false;
 
-    private static void uiSettings() {
-        UI_COORDINATES_ENABLED = config.getBoolean("settings.ui.coordinates.enabled", UI_COORDINATES_ENABLED);
-        UI_LINK_ENABLED = config.getBoolean("settings.ui.link.enabled", UI_LINK_ENABLED);
-        UI_SIDEBAR_PINNED = config.getString("settings.ui.sidebar.pinned", UI_SIDEBAR_PINNED);
+    public static String DB_URL = "jdbc:h2:./plugins/TownyPlus/data.db";
+
+    private static void databaseSettings() {
+        DB_TYPE = config.getString("settings.database.type", DB_TYPE);
+        DB_URL = config.getString("settings.database.url", DB_URL);
+        DB_HOST = config.getString("settings.database.host", DB_HOST);
+        DB_NAME = config.getString("settings.database.name", DB_NAME);
+        DB_USERNAME = config.getString("settings.database.username", DB_USERNAME);
+        DB_PASSWORD = config.getString("settings.database.password", DB_PASSWORD);
+        DB_TABLE_PREFIX = config.getString("settings.database.table-prefix", DB_TABLE_PREFIX);
+        DB_USE_SSL = config.getBoolean("settings.database.use-ssl", DB_USE_SSL);
     }
 
     public static String MAIN_COMMAND_LABEL = "townyplus";
-    public static final List<String> MAIN_COMMAND_ALIASES = new ArrayList<>();
+    public static List<String> MAIN_COMMAND_ALIASES = new ArrayList<>();
 
     private static void commandSettings() {
         MAIN_COMMAND_LABEL = config.getString("settings.commands.main-command-label", MAIN_COMMAND_LABEL);
         MAIN_COMMAND_ALIASES.clear();
         config.getList("settings.commands.main-command-aliases", List.of(
-                "map"
+                "townplus", "townyp", "tplus", "townp"
         )).forEach(entry -> MAIN_COMMAND_ALIASES.add(entry.toString()));
+    }
+    public Map<String, Object> outputConfig() {
+        return config.outputConfig();
     }
 
 }

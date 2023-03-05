@@ -10,7 +10,11 @@
 
 package me.romvnly.TownyPlus.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.JsonElement;
+import io.javalin.json.JsonMapper;
+import me.romvnly.TownyPlus.TownyPlusMain;
 
 public class StandardResponse {
     private StatusResponse status;
@@ -53,5 +57,15 @@ public class StandardResponse {
 
     public void setData(JsonElement data) {
         this.data = data;
+    }
+    public String toString() {
+        JsonNode standardResponse = TownyPlusMain.JSONMapper.createObjectNode()
+                        .put("status", status.toString())
+                        .put("message", message);
+        try {
+            return TownyPlusMain.JSONMapper.writeValueAsString(standardResponse);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

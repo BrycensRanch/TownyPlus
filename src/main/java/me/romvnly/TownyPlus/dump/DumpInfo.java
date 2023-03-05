@@ -11,41 +11,42 @@
 package me.romvnly.TownyPlus.dump;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.javaprop.JavaPropsMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.google.common.hash.Hashing;
 import com.google.common.io.ByteSource;
 import com.google.common.io.Files;
-import com.google.gson.Gson;
 
-import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.TownyAPI;
+import io.github.townyadvanced.commentedconfiguration.CommentedConfiguration;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.romvnly.TownyPlus.TownyPlusMain;
-import me.romvnly.TownyPlus.hooks.chat.ChatHook;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.management.ManagementFactory;
 import java.net.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.jar.Attributes;
 import java.util.jar.JarFile;
-import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
 import java.util.stream.Collectors;
 
+import me.romvnly.TownyPlus.configuration.Config;
+import me.romvnly.TownyPlus.configuration.Lang;
+import me.romvnly.TownyPlus.util.CpuUtils;
+import me.romvnly.TownyPlus.util.FileUtils;
+import me.romvnly.TownyPlus.util.WebUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
-
-import javax.annotation.Nullable;
+import org.yaml.snakeyaml.Yaml;
 
 @Getter
 public class DumpInfo {
@@ -66,6 +67,9 @@ public class DumpInfo {
     private final RESTAPIInfo restAPIInfo;
     private final ChatHookInfo chatHookInfo;
     private BukkitInfo bukkitInfo;
+    private ObjectNode configInfo;
+    private ObjectNode townyInfo;
+    private JsonNode localeInfo;
     public static String getManifestInfo() {
         Enumeration resEnum;
         try {
@@ -90,7 +94,7 @@ public class DumpInfo {
         }
         return null;
     }
-    public DumpInfo(boolean addLog) {
+    public DumpInfo(boolean addLog) throws IOException {
         this.versionInfo = new VersionInfo();
 
         this.cpuCount = Runtime.getRuntime().availableProcessors();
@@ -105,6 +109,16 @@ public class DumpInfo {
             TownyPlusMain.getInstance().getLogger().warning("Unable to get manifest of JAR file");
         }
 
+        File configFile = new File(TownyPlusMain.getInstance().getDataFolder(), "config.yml");
+        File langFile = new File(TownyPlusMain.getInstance().getDataFolder(), Config.LANGUAGE_FILE);
+        this.configInfo = TownyPlusMain.JSONMapper.readValue(TownyPlusMain.JSONMapper.writeValueAsString(TownyPlusMain.YAMLMapper.readValue(configFile, ObjectNode.class)).replace(Config.DISCORDSRV_WEBHOOK, "[REDACTED]").replace(Config.DB_PASSWORD, "[REDACTED PASSWORD]").replace(Config.githubPAT, "[PAT]"), ObjectNode.class);
+        this.localeInfo = TownyPlusMain.YAMLMapper.readValue(langFile, JsonNode.class);
+        // Bad idea in the first place
+//        this.townyInfo = TownyPlusMain.JSONMapper.createObjectNode()
+//                .set("nations", TownyPlusMain.JSONMapper.valueToTree(TownyAPI.getInstance().getNations()));
+//        townyInfo.set("towns", TownyPlusMain.JSONMapper.valueToTree(TownyAPI.getInstance().getTowns()));
+
+//        townyInfo.set("residents", TownyPlusMain.JSONMapper.valueToTree(TownyAPI.getInstance().getResidents()));
         try (InputStream stream = getClass().getClassLoader().getResourceAsStream("git.properties")) {
             Properties gitProp = new Properties();
             gitProp.load(stream);
@@ -141,6 +155,7 @@ public class DumpInfo {
         this.restAPIInfo = new RESTAPIInfo();
         this.flagsInfo = new FlagsInfo();
         this.bukkitInfo = new BukkitInfo();
+
     }
     @Getter
     public static class BukkitInfo {

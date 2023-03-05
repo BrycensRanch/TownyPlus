@@ -18,6 +18,7 @@ import cloud.commandframework.minecraft.extras.MinecraftExtrasMetaKeys;
 import me.romvnly.TownyPlus.TownyPlusMain;
 import me.romvnly.TownyPlus.command.BaseCommand;
 import me.romvnly.TownyPlus.command.CommandManager;
+import me.romvnly.TownyPlus.configuration.Lang;
 import me.romvnly.TownyPlus.util.CommandUtil;
 import me.romvnly.TownyPlus.util.Constants;
 import net.kyori.adventure.audience.Audience;
@@ -113,7 +114,7 @@ public final class BypassCommand extends BaseCommand {
                 })
                 .build();
         this.commandManager.registerSubcommand(builder ->
-                builder.literal("bypass").meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.miniMessage().deserialize("Bypass towny's stupid protections!"))
+                builder.literal("bypass").meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.miniMessage().deserialize(Lang.COMMAND_BYPASS_DESCRIPTION))
                         .argument(toggleArgument, CommandUtil.description("On/off to force enable/disable"))
                         .argument(timeArgument, CommandUtil.description("Duration to bypass towny's protections on Towns"))
                         .argument(SinglePlayerSelectorArgument.optional("player"), CommandUtil.description("Defaults to the executing player if unspecified (console must specify a player)"))

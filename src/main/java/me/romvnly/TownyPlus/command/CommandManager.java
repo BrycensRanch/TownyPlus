@@ -16,21 +16,19 @@ import cloud.commandframework.brigadier.CloudBrigadierManager;
 import cloud.commandframework.annotations.AnnotationParser;
 import cloud.commandframework.arguments.parser.ParserParameters;
 import cloud.commandframework.arguments.parser.StandardParameters;
-import cloud.commandframework.bukkit.BukkitCommandManager;
 import cloud.commandframework.bukkit.CloudBukkitCapabilities;
 import cloud.commandframework.exceptions.CommandExecutionException;
 import cloud.commandframework.meta.CommandMeta;
 import cloud.commandframework.minecraft.extras.MinecraftExceptionHandler;
 import cloud.commandframework.paper.PaperCommandManager;
 import me.romvnly.TownyPlus.command.commands.*;
+import me.romvnly.TownyPlus.configuration.Config;
 import me.romvnly.TownyPlus.configuration.Lang;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import cloud.commandframework.execution.AsynchronousCommandExecutionCoordinator;
 import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.extra.confirmation.CommandConfirmationManager;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -101,6 +99,9 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
     //
     this.confirmationManager.registerConfirmationProcessor(this);
 
+
+    // I'm so close to using reflections to register all the commands...
+        // This is so annoying...
         ImmutableList.of(
                 new HelpCommand(plugin, this),
                 new BypassCommand(plugin, this),
@@ -108,7 +109,8 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
                 new VersionCommand(plugin, this),
                 new ConfirmCommand(plugin, this),
                 new DumpCommand(plugin, this),
-                new DiscordCommand(plugin, this)
+                new DiscordCommand(plugin, this),
+                new ChestCommand(plugin, this)
 //                new TownyBypassCommand(plugin, this),
         ).forEach(BaseCommand::register);
 
@@ -141,8 +143,6 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
     }
 
     private Command.@NonNull Builder<CommandSender> rootBuilder() {
-        final List<String> MAIN_COMMAND_ALIASES = new ArrayList<>();
-        MAIN_COMMAND_ALIASES.addAll(List.of("townyplus", "townplus"));
                 //
         // Parse all @CommandMethod-annotated methods
         //
@@ -153,7 +153,7 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
         } catch (final Exception e) {
             e.printStackTrace();
         }
-        return this.commandBuilder("townyplus", MAIN_COMMAND_ALIASES.toArray(String[]::new))
+        return this.commandBuilder(Config.MAIN_COMMAND_LABEL, Config.MAIN_COMMAND_ALIASES.toArray(String[]::new))
 
                 /* MinecraftHelp uses the MinecraftExtrasMetaKeys.DESCRIPTION meta, this is just so we give Bukkit a description
                  * for our commands in the Bukkit and EssentialsX '/help' command */

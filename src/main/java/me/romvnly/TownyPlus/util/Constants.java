@@ -16,11 +16,13 @@ public final class Constants {
     }
 
     private static final String BASE_PERMISSION = "townyplus";
+
+    public static final String CHEST_PERMISSION = BASE_PERMISSION + ".tchest";
     public static final String HELP_PERMISSION = BASE_PERMISSION + ".help";
     public static final String RELOAD_PERMISSION = BASE_PERMISSION + ".reload";
     public static final String VERSION_PERMISSION = BASE_PERMISSION + ".version";
     public static final String CONFIRM_PERMISSION = BASE_PERMISSION + ".version";
-    public static final String UPDATENOTIFICATIONS_PERMISSION = BASE_PERMISSION + ".updatenotifications";
+    public static final String UPDATE_NOTIFICATIONS_PERMISSION = BASE_PERMISSION + ".updatenotifications";
     public static final String BYPASS_PERMISSION = BASE_PERMISSION + ".bypass";
     public static final String DUMP_PERMISSION = BASE_PERMISSION + ".dump";
     // MAHAHAHAHAHAH

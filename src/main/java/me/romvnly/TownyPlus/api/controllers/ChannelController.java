@@ -75,7 +75,7 @@ public class ChannelController extends CrudHandler {
                         .color(TextColor.color(0x443344))
                         .build();
                 plugin.getLogger().info("Forward " + channel + " Message: " + message);
-                plugin.chatHook.broadcastMessageToChannel(channel, inGameMessage, resident);
+                plugin.chatHook.broadcastMessageToChannel(channel, inGameMessage, resident.getTownOrNull());
                 ctx.status(200);
                 ctx.json(new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, "Success! Handled message!")));
                 return;
