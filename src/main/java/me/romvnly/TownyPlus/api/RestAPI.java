@@ -67,7 +67,8 @@ public class RestAPI {
             .toJson(new StandardResponse(StatusResponse.ERROR, "500 Internal Server Error")));
         });
         server.error(404, ctx -> {
-            ctx.result("{\"status\": \"ERROR\", \"message\":\"Page not found. 404!\"}");
+            ctx.result(new Gson()
+                    .toJson(new StandardResponse(StatusResponse.ERROR, "404 Not Found")));
         });
         // server.routes(() -> {
         //     crud("channels", new ChannelController(this.plugin, this.server));
@@ -85,7 +86,7 @@ public class RestAPI {
         });
         new ChannelController(this.plugin, this.server);
         server.start(host, port);
-        plugin.getLogger().info(String.format("REST API started on http://%s:%s", host, port));
+        plugin.getLogger().info(String.format("REST API started on http://%s:%s", host, server.port()));
         this.active = true;
     }
 

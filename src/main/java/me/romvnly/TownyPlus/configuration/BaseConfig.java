@@ -11,10 +11,11 @@
 package me.romvnly.TownyPlus.configuration;
 
 import com.google.common.collect.ImmutableMap;
+import io.github.townyadvanced.commentedconfiguration.CommentedConfiguration;
 import me.romvnly.TownyPlus.TownyPlusMain;
+import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -26,23 +27,27 @@ import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 @SuppressWarnings({"unused", "SameParameterValue"})
 abstract class BaseConfig {
     final File file;
-    final YamlConfiguration yaml;
+    final CommentedConfiguration yaml;
+    ComponentLogger logger = TownyPlusMain.plugin.logger;
 
     BaseConfig(String filename) {
         this.file = new File(TownyPlusMain.getInstance().getDataFolder(), filename);
-        this.yaml = new YamlConfiguration();
+        this.yaml = new CommentedConfiguration(file.toPath(), TownyPlusMain.plugin);
         try {
             yaml.load(file);
         } catch (IOException ignore) {
         } catch (InvalidConfigurationException ex) {
-            TownyPlusMain.getInstance().getLogger().severe(String.format("Could not load %s, please correct your syntax errors", filename));
+            logger.error(String.format("Could not load %s, please correct your syntax errors", filename));
             throw new RuntimeException(ex);
         }
         yaml.options().copyDefaults(true);
+        yaml.addComment("config-version", "TownyPlus config version. Do not change this.");
+        yaml.addComment("settings", "Last touched by TownyPlus version " + TownyPlusMain.plugin.getDescription().getVersion());
     }
 
     void readConfig(Class<?> clazz, Object instance) {
@@ -55,7 +60,7 @@ abstract class BaseConfig {
                     } catch (InvocationTargetException ex) {
                         throw new RuntimeException(ex.getCause());
                     } catch (Exception ex) {
-                        TownyPlusMain.getInstance().getLogger().severe("Error invoking " + method);
+                        logger.error("Error invoking " + method);
                         ex.printStackTrace();
                     }
                 }
@@ -65,7 +70,7 @@ abstract class BaseConfig {
         try {
             yaml.save(file);
         } catch (IOException ex) {
-            TownyPlusMain.getInstance().getLogger().severe("Could not save " + file);
+            logger.error("Could not save " + file);
             ex.printStackTrace();
         }
     }
@@ -99,7 +104,9 @@ abstract class BaseConfig {
         yaml.addDefault(path, def);
         return yaml.getList(path, yaml.getList(path));
     }
-
+    public Map<String, Object> outputConfig() {
+        return yaml.getValues(true);
+    }
     @NonNull <T> Map<String, T> getMap(final @NonNull String path, final @Nullable Map<String, T> def) {
         final ImmutableMap.Builder<String, T> builder = ImmutableMap.builder();
         if (def != null && yaml.getConfigurationSection(path) == null) {

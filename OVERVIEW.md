@@ -11,11 +11,15 @@
 <a href="https://beta.curseforge.com/minecraft/bukkit-plugins/townyoverloaded"><img src="https://cf.way2muchnoise.eu/title/832361.svg?badge_style=for_the_badge" alt="CurseForge Project"></a>
 <a href="https://beta.curseforge.com/minecraft/bukkit-plugins/townyoverloaded"><img src="https://cf.way2muchnoise.eu/832361.svg?badge_style=for_the_badge" alt="CurseForge Downloads"></a></p>
 <p align="center"><a href="https://www.spigotmc.org/resources/townyplus.108295/"><img src="https://img.shields.io/spiget/downloads/108295?style=for-the-badge&amp;label=Spigot+Downloads" alt="Spiget Downloads"></a><a href="https://www.spigotmc.org/resources/townyplus.108295/"><img src="https://img.shields.io/spiget/rating/108295?style=for-the-badge&amp;label=Spigot+Rating" alt="Spiget Rating"></a>
-<a href="https://codecov.io/gh/BrycensRanch/TownyPlus"><img src="https://img.shields.io/codecov/c/github/BrycensRanch/TownyPlus?style=for-the-badge" alt="codecov"></a>
 <a href="https://commitizen.github.io/cz-cli/"><img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=for-the-badge" alt="Commitizen friendly"></a>
 <a href="https://github.com/semantic-release/semantic-release"><img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=for-the-badge" alt="semantic-release"></a>
 <a href="https://discord.gg/cX89RdaF32"><img src="https://img.shields.io/discord/557529166644510731?logo=discord&amp;style=for-the-badge" alt="Support Server"></a></p>
 
+> This plugin requires Towny to be installed on your server. It will not work without it. It also requires Java 17 or higher.
+
+> This plugin is still in development and is not ready for production use.
+
+> This plugin is not affiliated with Towny or TownyAdvanced in any way.
 
 [//]: # (> View the plugin on [SpigotMC]&#40;https://github.com/Silthus/minecraft-server-template&#41;, [PolymartMC]&#40;&#41;, [Bukkit]&#40;&#41;)
 

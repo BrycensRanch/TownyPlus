@@ -37,9 +37,9 @@ public class TownToggleListener implements Listener {
         boolean newState = event.getFutureState();
         Town town = event.getTown();
         TownyPlusMain.getInstance().adventure().console().sendMessage(MiniMessage.miniMessage().deserialize(
-                "<red><player> has toggled PVP for <town> <newState></red>",
+                "<red><player> has toggled PVP for <town> <new_state></red>",
                 Placeholder.unparsed("player", event.isAdminAction() ? "An Admin" : resident.getFormattedName()),
-                Placeholder.unparsed("newState", humanizeToggle(newState)),
+                Placeholder.unparsed("new_state", humanizeToggle(newState)),
                 Placeholder.unparsed("town", town.getFormattedName())
         ));
     }

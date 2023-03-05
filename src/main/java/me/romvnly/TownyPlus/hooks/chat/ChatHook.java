@@ -35,7 +35,7 @@ public interface ChatHook extends PluginHook {
                 .serialize(message));
     }
 
-    default void broadcastMessageToChannel(String channel, Component message, Resident resident) {
+    default void broadcastMessageToChannel(String channel, Component message, Town town) {
         broadcastMessageToChannel(channel, LegacyComponentSerializer
                 .legacySection()
                 .serialize(message));

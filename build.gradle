@@ -57,9 +57,6 @@ static def getTime() {
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
-ext {
-    mcVersion = project.property("mcVersion")
-}
 
 group project.property("group")
 //def details = versionDetails()
@@ -74,21 +71,42 @@ group project.property("group")
 
 
 // CI channels will clash if you change the version within build.gradle, this is only for local builds
+gitProperties {
+    failOnNoGitDirectory = false
+    customProperty 'git.mcVersion', { project.property("mcVersion") }
+    customProperty 'git.build.time', { new Date().getTime() }
+    extProperty = 'gitProps' // git properties will be put in a map at project.ext.gitProps
+}
+generateGitProperties.outputs.upToDateWhen { false } // make sure the generateGitProperties task always executes (even when git.properties is not changed)
 
-if (System.getenv("CI") == null) {
+
+ext {
+    mcVersion = project.property("mcVersion")
+}
+
+// Automatically apply Java versioning conventions and have it comply with Semantic Versioning
+// Our versioning scheme is: MAJOR.MINOR.PATCH-QUALIFIER
+// MAJOR: Major changes to the plugin, such as a complete rewrite
+// MINOR: Minor changes to the plugin, such as new features
+// PATCH: Bug fixes
+// QUALIFIER: A qualifier to the version, such as alpha, beta, or release candidate
+// The version is governed from our CI server, and is automatically incremented.
+// The CI should never run this.
+if (System.getenv("CI") == null && project.property("DO_NOT_CHANGE_VERSION") != "true") {
     if (version == null || version == "") {
         version = "SNAPSHOT"
     } else if (gitBranchName.contains("alpha") || gitBranchName.contains("beta") || gitBranchName.contains("rc")) {
-        version = version + "-" + gitBranchName + "-SNAPSHOT";
+        version = version + "-SNAPSHOT";
     } else {
             version = version
     }
 }
 println("Version: " + version)
 // The current version based on the most recent tag on the current git branch.
+// Doesn't mean anything, just a nice to have.
 println("Git Version: " + gitVersion)
 println("Branch: " + gitBranchName)
-println("Is CI detected? " + System.getenv("CI"))
+println("Is CI detected? " + System.getenv("CI") != null)
 
 task generateFiles {
   // Generates some files.
@@ -98,7 +116,6 @@ checkstyle {
     // toolVersion '10.6.0'
     // maxWarnings = 0
 }
-
 
 tasks.withType(Checkstyle) {
     reports {
@@ -118,6 +135,7 @@ tasks.withType(Checkstyle) {
 //    }
 //}
 
+def gitHubRepo = "https://github.com/BrycensRanch/TownyPlus"
 
 bukkit {
 
@@ -132,9 +150,9 @@ bukkit {
     name = project.property("pluginName")
     description = project.property("description")
     depend = ['Towny']
-    softDepend = ['DiscordSRV', 'TownyChat', 'VentureChat', 'ProtocolLib']
+    softDepend = ['DiscordSRV', 'TownyChat', 'VentureChat', 'ProtocolLib', 'PlaceholderAPI']
     defaultPermission = 'NOT_OP' // 'TRUE', 'FALSE', 'OP' or 'NOT_OP'
-    website = "https://github.com/BrycensRanch/TownyPlus"
+    website = gitHubRepo
 //    commands {
 //        test {
 //            description = 'This is a test command!'
@@ -194,15 +212,25 @@ repositories {
 }
 
 dependencies {
+
+    // Keep in mind: you can never have too many dependencies!
+    // If you're using a dependency that isn't listed here, add it!
+
     // using spigot-api
+    // notice how we arent using bukkit-api. i honestly think the plugin won't work with bukkit-api due to the shitload of opinionated dependencies we use
     compileOnly "org.spigotmc:spigot-api:${mcVersion}-R0.1-SNAPSHOT" // The Spigot API with no shadowing. Requires the OSS repo.
     // or using paper-api
-//    implementation "io.papermc.paper:paper-api:${mcVersion}-R0.1-SNAPSHOT"
+//    compileOnly "io.papermc.paper:paper-api:${mcVersion}-R0.1-SNAPSHOT"
 
     // Command Handling! https://commandframework.cloud
     implementation 'cloud.commandframework:cloud-core:1.8.2'
     implementation 'cloud.commandframework:cloud-annotations:1.8.2'
     annotationProcessor('cloud.commandframework:cloud-annotations:1.8.2')
+    implementation 'cloud.commandframework:cloud-paper:1.8.2'
+    implementation 'cloud.commandframework:cloud-minecraft-extras:1.8.2'
+    // Dependency for our way of command handling
+    implementation 'me.lucko:commodore:2.2'
+
     library 'org.projectlombok:lombok:1.18.26';
     library 'com.fasterxml.jackson.core:jackson-annotations:2.14.2'
     library 'com.fasterxml.jackson.core:jackson-databind:2.14.2';
@@ -212,39 +240,65 @@ dependencies {
     annotationProcessor('org.projectlombok:lombok:1.18.26')
     annotationProcessor('com.fasterxml.jackson.core:jackson-annotations:2.14.2')
     library 'com.fasterxml.jackson.dataformat:jackson-dataformat-properties:2.14.2'
-    implementation 'cloud.commandframework:cloud-paper:1.8.2'
-    implementation 'cloud.commandframework:cloud-minecraft-extras:1.8.2'
-    // Dependency for our way of command handling
-    implementation 'me.lucko:commodore:2.2'
+    library 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.2'
     // For handling multi platform configuration, simply amazing
     // library "org.spongepowered:configurate-yaml:4.1.2"
     // Spigot/GitHub Releases Update checker. Am I that lazy? Yes.
     implementation 'com.jeff_media:SpigotUpdateChecker:3.0.2'
+
+    // Just a reminder: compileOnly means that we're not shading this dependency into our jar. This is usually when we're using a dependency that is already provided by the server. Aka, when it's already in the server's classpath.
+    // implementation means that we're shading this dependency into our jar. This is usually when we're using a dependency that is not provided by the server. Aka, when it's not in the server's classpath.
     // Towny
     compileOnly 'com.palmergames.bukkit.towny:towny:0.98.6.10'
     compileOnly 'com.palmergames.bukkit:TownyChat:0.45'
 
-    // Stealing all your data lmfao
-    compileOnly 'org.bstats:bstats-bukkit:3.0.1'
+    // PlaceholderAPI
+    compileOnly 'me.clip:placeholderapi:2.11.2'
+
+    // Towny's implementation of CommentedConfiguration, which we use for our config.yml and lang_en.yml
+    implementation 'io.github.townyadvanced.commentedconfiguration:CommentedConfiguration:1.0.1'
+
+    // Inventory Framework we use for our GUIs /tplus chest
+    implementation 'com.github.stefvanschie.inventoryframework:IF:0.10.8'
+
+    // Telemetry
+    implementation 'org.bstats:bstats-bukkit:3.0.1'
     // better http server than spark
     library "io.javalin:javalin-bundle:5.3.2"
     // DiscordSRV, optional dependency
     compileOnly 'com.discordsrv:discordsrv:1.24.0'
+
+    // Semver version parsing for auto updating
+    library 'com.vdurmont:semver4j:3.1.0'
+
 //    // JDA for DiscordSRV
 // Apparently, this is already included in DiscordSRV.
     implementation("net.dv8tion:JDA:5.0.0-beta.5") {
         exclude module: 'opus-java'
     }
     // VentureChat support for chat listening
-    compileOnly "mineverse.aust1n46:venturechat:3.5.0"
+    compileOnly("mineverse.aust1n46:venturechat:2.20.1")
     // ProtocolLib (required by venturechat)
     compileOnly "com.comphenix.protocol:ProtocolLib:4.8.0"
 //    compileOnly 'com.github.spotbugs:spotbugs-annotations:4.7.3'
+//    library 'org.hibernate:hibernate-core:5.6.5.Final'
+
+    implementation 'dev.vankka:mcdiscordreserializer:4.3.0'
+
+
+    // Database stuff
+    implementation 'com.zaxxer:HikariCP:5.0.1'
+    implementation 'com.h2database:h2:1.4.200'
+    implementation 'org.xerial:sqlite-jdbc:3.25.2'
+//    compileOnly 'org.h2.Driver:Driver:1.4.200'
+//    compileOnly 'com.mysql.jdbc.Driver:Driver:8.0.26'
 
     // Adventure
     implementation "net.kyori:adventure-api:4.12.0"
     implementation "net.kyori:adventure-platform-bukkit:4.2.0"
     implementation "net.kyori:adventure-text-minimessage:4.12.0"
+    // Adventure logger that takes advantage of Adventure's text components
+    implementation "net.kyori:adventure-text-logger-slf4j:4.12.0"
 
     // Test dependencies
 //    spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.12.0'
@@ -264,11 +318,15 @@ shadowJar {
         // These are sorted by internal dependencies to ones for compatability/functionatlity related to other plugins
         include(dependency('net.kyori::'))
         include(dependency('org.bstats::'))
+            include(dependency('io.github.townyadvanced.commentedconfiguration::'))
+            include(dependency('com.github.stefvanschie.inventoryframework::'))
+            include(dependency('com.zaxxer::'))
+            include(dependency('com.h2database::'))
+            include(dependency('dev.vankka::'))
         include(dependency('com.jeff_media::'))
         include(dependency('me.lucko::'))
         include(dependency('cloud.commandframework::'))
         include(dependency('com.palmergames.bukkit::'))
-        include(dependency('com.github.TownyAdvanced::'))
         include(dependency('com.discordsrv::'))
 //        include(dependency('github.scarsz.discordsrv::'))
         include(dependency('mineverse.aust1n46::'))
@@ -282,6 +340,11 @@ shadowJar {
     relocate 'mineverse.aust1n46', "${packageName}.libs.aust1n46"
     relocate 'com.comphenix.protocol', "${packageName}.libs.protocol"
     relocate 'com.discordsrv', "${packageName}.libs.discordsrv"
+    relocate 'io.github.townyadvanced.commentedconfiguration', "${packageName}.libs.commentedconfiguration"
+    relocate 'com.github.stefvanschie.inventoryframework', "${packageName}.inventoryframework"
+    relocate 'com.zaxxer', "${packageName}.libs.zaxxer"
+    relocate 'com.h2database', "${packageName}.libs.h2database"
+    relocate 'dev.vankka', "${packageName}.libs.vankka"
     // Exclude signatures, maven/ and proguard/ from META-INF
     exclude("META-INF/*.SF")
     exclude("META-INF/*.DSA")
@@ -295,11 +358,6 @@ license {
     matching('**/*.java') {
         header = file('HEADER.txt')
     }
-}
-
-gitProperties {
-    failOnNoGitDirectory = false
-    customProperty 'git.mcVersion', { project.property("mcVersion") }
 }
 
 sourcesJar.enabled = true;

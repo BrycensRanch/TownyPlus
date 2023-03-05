@@ -2,16 +2,92 @@
 # The best towny plugin yet undefeated
 # Don't forget to use PlaceholderAPI! Best options for custiomizable messages for server owners!
 
-maxtime: 10m # MF set this to something low or 0 to have it forever!!
-coreprotect: true # TODO allow this to generate some kind of pastebin placeholder that can be used in the discordsrv embed
-# TODO make this shit use discordsrv channels along with configurable messages
 
-# I'm pretty sure our plugin will get delisted if this is true by default
-autoupdate: false
-discordsrv:
-  enabled: true
-restapi:
-   enabled: true
-   externalURL: 'none'
-   host: '0.0.0.0'
-   port: 8080
+# Don't you dare touch this, it's for the plugin to know if it needs to update the config in the future
+config-version: 1
+
+settings:
+
+  # The language file to use (must be in the root folder)
+  language-file: "lang-en.yml"
+
+  # Should we check for updates?
+  # If disabled, auto-update will be disabled as well (if enabled)
+  update-checker: true
+
+
+  # The GitHub personal access token to use for the auto updater
+  # This doesn't apply to the update checker nor should you need to use it.
+  # This was only used for testing purposes and is not needed for the plugin to work.
+  github-pat: ''
+
+  # Polymart users should not enable this, you guys already have a way to auto update that is proven to work with TownyPlus
+  # If you're not using Polymart, you can enable this to auto-update TownyPlus
+  # Keep in mind that auto-updating is not recommended by a majority of the Minecraft community, but, it's your choice.
+  # The plugin will never auto-update to a version that isn't on the same release channel or major version.
+  # For example, if you're on 1.0.0, it will never auto-update to 2.0.0
+  # If you're on 1.0.0, it will auto-update to 1.1.0
+  # If you're on 1.0.11-alpha.4, it will auto-update to 1.0.11-alpha.5
+  # If you're on 1.0.11-alpha.4, it will not auto-update to 1.0.12
+  # Since it is not on the same release channel (alpha vs stable)
+  auto-update: false
+
+  # Activate debug mode (produces extra logs)
+  debug-mode: false
+
+  # Whether to upload metrics to bStats (https://bstats.org/plugin/bukkit/TownyPlus/14161)
+  metrics: true
+
+
+  # Enable CoreProtect integration (requires CoreProtect)
+  # Basic gist of it is that it will log towny actions, CoreProtect logs, and send a message to Discord with the logs.
+  coreprotect:
+    enabled: true
+
+  database:
+    # The type of database to use
+    # Supported types: mysql, h2, sqlite
+    type: h2
+    # JDBC connection string, only an example
+    url: jdbc:h2:./plugins/TownyPlus/data.db
+    host: localhost
+    port: 3306
+    # The name of the database to use
+    name: townyplus
+    username: root
+    password: password
+    # Only used for MySQL
+    use-ssl: false
+    # The table prefix to use for the database
+    # If you're using a shared database, you can use this to prevent conflicts with other plugins
+    table-prefix: townyplus_
+
+  # Enable DiscordSRV integration (requires DiscordSRV)
+  # Basic gist of it is that it will send messages to Discord when something happens with a town
+  discordsrv-integration:
+    enabled: true
+    # The channel to log general towny actions to (e.g. town creation, town deletion, etc.)
+    log-channel: 'towny-logs'
+    # Whether to use a webhook for logging general towny actions
+    log-webhook-enabled: false
+    # The webhook to use for logging general towny actions instead of using the bot's account
+    log-webhook: 'https://discord.com/api/webhooks/1234567890/1234567890'
+
+  # Enable internal webserver
+  internal-webserver:
+     # Enable the REST API (produces extra logs)
+     enabled: true
+     # Must the same exact parameters our internal webserver uses
+     # Refer to the source code for more information
+     # If you don't know what you're doing, leave it as 'none'
+     # We're also open to pull requests if you want to properly add support for other APIs via the config
+     external-api: 'none'
+     # Localhost is the default, but you can change it to '0.0.0.0' to allow external connections
+     bind: '127.0.0.1'
+     # Port to bind to, if it is already in use, the rest API will error, but, won't disable.
+     port: 8080
+  commands:
+    # The main command label and aliases
+    # You can change these to whatever you want as long as they don't conflict with other plugins
+    main-command-label: townyplus
+    main-command-aliases: [townplus, townyp, tplus, townp]

@@ -18,17 +18,22 @@ import me.romvnly.TownyPlus.command.BaseCommand;
 import me.romvnly.TownyPlus.command.CommandManager;
 import me.romvnly.TownyPlus.configuration.Config;
 import me.romvnly.TownyPlus.util.Constants;
+import me.romvnly.TownyPlus.util.TimeUtil;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
 // This whole implementation is inspired from https://github.com/GeyserMC/Geyser/blob/master/core/src/main/java/org/geysermc/geyser/command/defaults/VersionCommand.java
@@ -52,16 +57,26 @@ public final class VersionCommand extends BaseCommand {
             Properties gitProp = new Properties();
             gitProp.load(stream);
             sender.sendMessage(MiniMessage.miniMessage().deserialize(
-                            "<rainbow>This server is running <plugin> version <version> (git-<branch>-<commit>)</rainbow>",
+                            "<rainbow>This server is running <plugin> version <version> (git-<branch>-<commit>) built <ago></rainbow>",
                     // The plugin.yml is considered the source of truth for the plugin name and version, regardless of what gitProperties says.
                     // This should prevent issues when gitProperties is not present (e.g. when building from source with no .git folder).
                     Placeholder.unparsed("plugin", plugin.getDescription().getName()),
                     Placeholder.unparsed("version", plugin.getDescription().getVersion()),
                     Placeholder.unparsed("branch", gitProp.getProperty("git.branch")),
+                    Placeholder.unparsed("ago", TimeUtil.calculateHumanFriendlyTimeAgo(new Date(Long.parseLong(gitProp.getProperty("git.build.time"))))),
                     Placeholder.unparsed("commit", gitProp.getProperty("git.commit.id.abbrev"))
                     ).clickEvent(ClickEvent.openUrl(gitProp.getProperty("git.remote.origin.url")))
             );
+            if (gitProp.getProperty("git.dirty").equals("true") || plugin.getDescription().getVersion().contains("SNAPSHOT")) {
+                sender.sendMessage(MiniMessage.miniMessage().deserialize(
+                        "<gray>This build is a development build</gray>"
+                ));
+            }
+            if (plugin.updateChecker != null)
             plugin.updateChecker.checkNow(context.getSender());
+            if (Config.AUTO_UPDATE_PLUGIN) {
+                plugin.possiblyAutoUpdate(JavaPlugin.getPlugin(plugin.getClass()), plugin.adventure().sender(context.getSender()), plugin.updateChecker.getLatestVersion());
+            }
         } catch (IOException | AssertionError | NumberFormatException | NullPointerException e) {
             sender.sendMessage(MiniMessage.miniMessage().deserialize(
                     "<red>Could not check plugin version. Check your console.</red>"

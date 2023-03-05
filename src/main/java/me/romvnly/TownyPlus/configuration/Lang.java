@@ -18,21 +18,83 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.Locale;
+import java.util.Map;
 import java.util.logging.Level;
 
+import io.github.townyadvanced.commentedconfiguration.CommentedConfiguration;
 import me.romvnly.TownyPlus.TownyPlusMain;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import net.kyori.adventure.translation.GlobalTranslator;
 import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.checkerframework.checker.nullness.qual.NonNull;
+
+import static me.romvnly.TownyPlus.TownyPlusMain.plugin;
 
 public final class Lang {
 
     // MiniMessage formatted strings, to be sent using Logger.info(String, Template...) or Lang.send(CommandSender, String, Template...)
     @LangKey("description")
     public static String BUKKIT_COMMAND_DESCRIPTION = "It's time to upgrade your Towny server. '/townyplus help' for more information";
+
+    @LangKey("attempting-to-auto-update")
+    public static String ATTEMPTING_TO_AUTO_UPDATE = "<green>Attempting to auto-update <plugin>...";
+    @LangKey("prefix")
+    public static String PREFIX = "<gold>[<plugin>] <reset>";
+
+    @LangKey("no-permission")
+    public static String NO_PERMISSION = "<red>You do not have permission to use this command.";
+
+    @LangKey("command.bypass-description")
+    public static String COMMAND_BYPASS_DESCRIPTION = "Bypass towny restrictions temporarily";
+
+    @LangKey("failed-to-auto-update")
+    public static String FAILED_TO_AUTO_UPDATE = "<red>Failed to auto-update <plugin>. Please update manually.";
+    @LangKey("failed-to-auto-update-reason")
+    public static String FAILED_TO_AUTO_UPDATE_REASON = "<red>Failed to auto-update <plugin>. Reason: <reason>";
+
+    @LangKey("successfully-auto-updated")
+    public static String SUCCESSFULLY_AUTO_UPDATED = "<green>Successfully auto-updated <plugin> to version <version>. It will take effect on the next server restart.";
+
+    @LangKey("failed-to-grab-github-repo")
+    public static String FAILED_TO_GRAB_GITHUB_REPO = "<red>Failed to get GitHub repo URL from git.properties. Using default.";
+    @LangKey("towny-not-installed")
+    public static String TOWNY_NOT_INSTALLED = "<red>Towny is not installed. Please install Towny to use <plugin>.";
+
+    @LangKey("semver-not-higher")
+    public static String SEMVER_NOT_HIGHER = "<red>Version <version> is not higher than the current version <current>.";
+
+    @LangKey("semver-do-not-auto-update-on-major")
+    public static String SEMVER_DO_NOT_AUTO_UPDATE_ON_MAJOR = "<red>Version <version> is a major version update. Auto-updating on major version updates is DEFINITELY NOT SUPPORTED. Please update manually.";
+
+
+    @LangKey("internal-webserver-failed-to-start")
+    public static String INTERNAL_WEBSERVER_FAILED_TO_START = "<red>Internal webserver failed to start. Please report this to the plugin author.";
+    @LangKey("command-manager-failed-to-initialize")
+    public static String COMMAND_MANAGER_FAILED_TO_INITIALIZE = "<red>Command manager failed to initialize. Please report this to the plugin author.";
+    @LangKey("discordsrv-not-installed")
+    public static String DISCORDSRV_NOT_INSTALLED = "<red>DiscordSRV is not installed or enabled. DiscordSRV integration will not work. After installing DiscordSRV, please restart your server.";
+    @LangKey("townychat-not-installed")
+    public static String TOWNYCHAT_NOT_INSTALLED = "<red>TownyChat is not installed or enabled. TownyChat hooks will not work.";
+    @LangKey("venturechat-not-installed")
+    public static String VENTURECHAT_NOT_INSTALLED = "<red>VentureChat is not installed or enabled. VentureChat hooks will not work. After installing VentureChat, please restart your server.";
+    @LangKey("placeholderapi-not-installed")
+    public static String PLACEHOLDERAPI_NOT_INSTALLED = "<red>PlaceholderAPI is not installed or enabled. PlaceholderAPI hooks will not work. After installing PlaceholderAPI, please restart your server.";
+    @LangKey("not-in-town")
+    public static String NOT_IN_TOWN = "<red>You are not in a town. You may not use this command.";
+    @LangKey("not-town-mayor")
+    public static String NOT_TOWN_MAYOR = "<red>You are not the mayor of your town. You may not use this command.";
+
+    @LangKey("not-linked-to-discord")
+    public static String NOT_LINKED_TO_DISCORD = "<red>You are not linked to Discord. You may not use this command. Please link your account using /discord link";
+    @LangKey("link-discord-to-town")
+    public static String LINK_DISCORD_TO_TOWN = "<green>Invite the Discord bot to your town's Discord server (<town>) and say <code> in the server anywhere the bot can see it. You have <time> to do this.";
+    @LangKey("town-already-linked")
+    public static String TOWN_ALREADY_LINKED = "<red>Your town is already linked to a Discord server.";
     @LangKey("render-not-in-progress")
     public static String RENDER_NOT_IN_PROGRESS = "<red>No renders running for <world>";
     @LangKey("cancelled-render")
@@ -178,18 +240,18 @@ public final class Lang {
         try {
             field.set(null, getString(langKey.value(), (String) field.get(null)));
         } catch (IllegalAccessException e) {
-            TownyPlusMain.getInstance().getLogger().log(Level.WARNING, "Failed to load " + Config.LANGUAGE_FILE, e);
+            plugin.getLogger().log(Level.WARNING, "Failed to load " + Config.LANGUAGE_FILE, e);
         }
     }
 
     public static void reload() {
-        File configFile = TownyPlusMain.getInstance().getDataFolder().toPath().resolve(Config.LANGUAGE_FILE).toFile();
-        config = new YamlConfiguration();
+        File configFile = plugin.getDataFolder().toPath().resolve(Config.LANGUAGE_FILE).toFile();
+        config = new CommentedConfiguration(configFile.toPath());
         try {
             config.load(configFile);
         } catch (IOException ignore) {
         } catch (InvalidConfigurationException ex) {
-            TownyPlusMain.getInstance().getLogger().log(Level.SEVERE, "Could not load " + Config.LANGUAGE_FILE + ", please correct your syntax errors", ex);
+            plugin.getLogger().log(Level.SEVERE, "Could not load " + Config.LANGUAGE_FILE + ", please correct your syntax errors", ex);
             throw new RuntimeException(ex);
         }
         config.options().copyDefaults(true);
@@ -199,11 +261,12 @@ public final class Lang {
         try {
             config.save(configFile);
         } catch (IOException ex) {
-            TownyPlusMain.getInstance().getLogger().log(Level.SEVERE, "Could not save " + configFile, ex);
+            plugin.getLogger().log(Level.SEVERE, "Could not save " + configFile, ex);
         }
     }
 
-    private static YamlConfiguration config;
+    private static CommentedConfiguration config;
+    private static final Component prefix = parse(PREFIX);
 
     private static String getString(String path, String def) {
         config.addDefault(path, def);
@@ -211,12 +274,38 @@ public final class Lang {
     }
 
     public static @NonNull Component parse(final @NonNull String miniMessage) {
-        return MiniMessage.miniMessage().deserialize(miniMessage);
+        return MiniMessage.miniMessage().deserialize(miniMessage, Placeholder.unparsed("plugin", plugin.getName()));
+    }
+    public static @NonNull Component parse(final @NonNull String miniMessage,  @NonNull TagResolver @NonNull ... placeholders) {
+        return MiniMessage.miniMessage().deserialize(miniMessage, placeholders);
+    }
+    public static void send(final @NonNull Audience recipient, final @NonNull String miniMessage) {
+        recipient.sendMessage(MiniMessage.miniMessage().deserialize(miniMessage, Placeholder.unparsed("plugin", plugin.getName())));
+    }
+    public static void send(final @NonNull Audience recipient, final @NonNull Component component) {
+        recipient.sendMessage(component);
+    }
+    public static void sendComponentToConsole(final @NonNull Component component) {
+        final Component rendered = GlobalTranslator.render(component, Locale.getDefault());
+        plugin.logger.info(prefix.append(rendered));
+    }
+    public static void sendComponentToConsole(final @NonNull String miniMessage) {
+        final Component rendered = parse(miniMessage);
+        plugin.logger.info(prefix.append(rendered));
     }
 
-    public static void send(final @NonNull Audience recipient, final @NonNull String miniMessage) {
-        recipient.sendMessage(MiniMessage.miniMessage().deserialize(miniMessage));
+    public static void sendComponentToConsole(final @NonNull String miniMessage, @NonNull Level level ) {
+        final Component rendered = parse(miniMessage);
+        plugin.getLogger().log(level, MiniMessage.miniMessage().serialize(prefix.append(rendered)));
     }
+    public static void sendComponentToConsole(final @NonNull Component component, @NonNull Level level ) {
+        final Component rendered = GlobalTranslator.render(component, Locale.getDefault());
+        plugin.getLogger().log(level, MiniMessage.miniMessage().serialize(prefix.append(rendered)));
+    }
+    public Map<String, Object> outputConfig() {
+        return config.getValues(true);
+    }
+
     @Target(ElementType.FIELD)
     @Retention(RetentionPolicy.RUNTIME)
     private @interface LangKey {

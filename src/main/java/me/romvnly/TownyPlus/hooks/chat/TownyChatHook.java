@@ -91,7 +91,7 @@ public class TownyChatHook implements ChatHook {
     }
 
     @Override
-    public void broadcastMessageToChannel(String channel, Component message, Resident resident) {
+    public void broadcastMessageToChannel(String channel, Component message, Town town) {
         // get instance of TownyChat plugin
         Chat instance = (Chat) Bukkit.getPluginManager().getPlugin("TownyChat");
 
@@ -117,13 +117,12 @@ public class TownyChatHook implements ChatHook {
         for (Player player : PlayerUtil.getOnlinePlayers()) {
             if (destinationChannel.isPresent(player.getName())) {
                 if (channel == "town") {
-                    Town residentTown = resident.getTownOrNull();
-                    if (residentTown != null && residentTown.hasResident(player.getUniqueId())) {
+                    if (town != null && town.hasResident(player.getUniqueId())) {
                         player.sendMessage(plainMessage);
                     }
 
                 } else if (channel == "nation") {
-                    Nation residentNation = resident.getNationOrNull();
+                    Nation residentNation = town.getNationOrNull();
                     if (residentNation != null && residentNation.hasResident(player.getName().toString())) {
                         player.sendMessage(plainMessage);
                     }

@@ -22,7 +22,7 @@ import cloud.commandframework.arguments.standard.StringArgument;
  import me.romvnly.TownyPlus.command.BaseCommand;
  import me.romvnly.TownyPlus.command.CommandManager;
  import me.romvnly.TownyPlus.dump.DumpInfo;
-import me.romvnly.TownyPlus.dump.WebUtils;
+import me.romvnly.TownyPlus.util.WebUtils;
 import me.romvnly.TownyPlus.util.CommandUtil;
  import me.romvnly.TownyPlus.util.Constants;
  import net.kyori.adventure.audience.Audience;
@@ -45,8 +45,9 @@ import java.io.IOException;
  import java.nio.file.Path;
 import java.util.Date;
 import java.util.List;
- 
- public final class DumpCommand extends BaseCommand {
+ import java.util.logging.Logger;
+
+public final class DumpCommand extends BaseCommand {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
 
@@ -74,6 +75,7 @@ import java.util.List;
      @SneakyThrows
      private void execute(final @NonNull CommandContext<CommandSender> context) {
          Audience sender = plugin.adventure().sender(context.getSender());
+         Logger logger = plugin.getLogger();
          String typeOfDump = context.getOrDefault("type", "full");
          Boolean shouldDumpLatestLog = context.getOrDefault("shouldUploadServerLogs", true);
 
@@ -100,7 +102,7 @@ import java.util.List;
             }
         } catch (IOException e) {
             sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>An error occurred while dumping information. Please check the console for more information.</red>"));
-            this.plugin.getLogger().severe("An error occurred while dumping information");
+            logger.severe("An error occurred while dumping information");
             e.printStackTrace();
             return;
         }
@@ -119,7 +121,7 @@ import java.util.List;
                 }
             } catch (IOException e) {
                 sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>An error occurred while dumping information. Please check the console for more information.</red>"));
-                this.plugin.getLogger().severe("An error occurred while dumping information");
+                logger.severe("An error occurred while dumping information");
                 e.printStackTrace();
             }
 
@@ -134,7 +136,7 @@ import java.util.List;
                 responseNode = MAPPER.readTree(response);
             } catch (IOException e) {
                 sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>An error occurred while uploading the dump. Please check the console for more information.</red>"));
-                this.plugin.getLogger().severe("An error occurred while dumping information");
+                logger.severe("An error occurred while dumping information");
                 e.printStackTrace();
                 return;
             }
