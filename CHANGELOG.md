@@ -1,3 +1,22 @@
+## [1.1.0-alpha.2](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.1...v1.1.0-alpha.2) (2023-03-06)
+
+
+### ⚡️ Code Performance
+
+* **discord:** move discord management to new class ([3bce65f](https://github.com/BrycensRanch/TownyPlus/commit/3bce65f1bc6b83dcd01b65c31c88293b54a90d69))
+
+
+### 🔨  Misc.
+
+* **dev-fix:** fix misspelled env variables ([a2ec49d](https://github.com/BrycensRanch/TownyPlus/commit/a2ec49d5c162440750d75c68120dc9ef1b048eed))
+* **todo:** add reflection todo ([4da96a2](https://github.com/BrycensRanch/TownyPlus/commit/4da96a227383bc2144e0ead9d46b29a490f3b8b8))
+* update debug server files ([200d557](https://github.com/BrycensRanch/TownyPlus/commit/200d5573eb652dae137d7821d6c5a5cdc731d870))
+
+
+### 🐛 Bugfix 🐛
+
+* **deps:** update dependency com.h2database:h2 to v2 ([#60](https://github.com/BrycensRanch/TownyPlus/issues/60)) ([8c52ebb](https://github.com/BrycensRanch/TownyPlus/commit/8c52ebb01b2e57fdfc53707309d5fc4c24f0c39b))
+
 ## [1.1.0-alpha.1](https://github.com/BrycensRanch/TownyPlus/compare/v1.0.11-alpha.7...v1.1.0-alpha.1) (2023-03-06)
 
 
