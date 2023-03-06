@@ -1,3 +1,15 @@
+## [1.1.0-alpha.1](https://github.com/BrycensRanch/TownyPlus/compare/v1.0.11-alpha.7...v1.1.0-alpha.1) (2023-03-06)
+
+
+### 🔨  Misc.
+
+* **dev:** clarify which dev environment built the jar ([9d51350](https://github.com/BrycensRanch/TownyPlus/commit/9d51350b4629dc96b2d5ef1e41027bd12849a340))
+
+
+### ✨ Feature ✨
+
+* use github token environment variable ([393cb59](https://github.com/BrycensRanch/TownyPlus/commit/393cb597671915eb743f660c4581e2239a1e65be))
+
 ## [1.0.11-alpha.7](https://github.com/BrycensRanch/TownyPlus/compare/v1.0.11-alpha.6...v1.0.11-alpha.7) (2023-03-06)
 
 
