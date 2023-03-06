@@ -38,7 +38,7 @@ jar {
                 'GHA-BASE_REF': "${System.getenv('GITHUB_BASE_REF')}",
                 'GHA-ACTION': "${System.getenv('GITHUB_ACTION')}",
                 'CODESPACES': "${System.getenv('CODESPACES')}",
-                'CODESPACES-NAME': "${System.getenv('CODESPACES_NAME')}",
+                'CODESPACES-NAME': "${System.getenv('CODESPACE_NAME	')}",
                 'GITPOD':"${System.getenv('GITPOD_WORKSPACE_URL')}",
         )
     }
