@@ -1,3 +1,16 @@
+## [1.0.11-alpha.7](https://github.com/BrycensRanch/TownyPlus/compare/v1.0.11-alpha.6...v1.0.11-alpha.7) (2023-03-06)
+
+
+### 🐛 Bugfix 🐛
+
+* do not require github pat to dump ([537e300](https://github.com/BrycensRanch/TownyPlus/commit/537e300292faa464fe461652a1e8717f3fde1952))
+
+
+### 🔨  Misc.
+
+* comment out unused lang keys ([08799cf](https://github.com/BrycensRanch/TownyPlus/commit/08799cf6bd10caaba99a982814e29561826cd1aa))
+* update server files ([8d5a096](https://github.com/BrycensRanch/TownyPlus/commit/8d5a0968c41b9f514b6e5a32cc856e7d05a036e4))
+
 ## [1.0.11-alpha.6](https://github.com/BrycensRanch/TownyPlus/compare/v1.0.11-alpha.5...v1.0.11-alpha.6) (2023-03-06)
 
 
