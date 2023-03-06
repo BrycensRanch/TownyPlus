@@ -1,3 +1,26 @@
+## [1.0.11-alpha.6](https://github.com/BrycensRanch/TownyPlus/compare/v1.0.11-alpha.5...v1.0.11-alpha.6) (2023-03-06)
+
+
+### 📝  Documentation
+
+* clarify on extra information section ([f202144](https://github.com/BrycensRanch/TownyPlus/commit/f2021449890f94b9c27ed065b7741553d68c4f8e))
+* update platforms that we auto publish to ([97ed3a1](https://github.com/BrycensRanch/TownyPlus/commit/97ed3a1f5304414da251d57833e0bea8050db1cb))
+
+
+### ⚡️ Code Performance
+
+* wip ([1d62880](https://github.com/BrycensRanch/TownyPlus/commit/1d62880af33eebd952b930ee602e2c306060be18))
+
+
+### 📦️ Build and CI
+
+* **fix:** allow ci to automatically format src files and commit them ([f1a899e](https://github.com/BrycensRanch/TownyPlus/commit/f1a899e1549534cfc44faeaceb627f85309b099c))
+
+
+### 🐛 Bugfix 🐛
+
+* **deps:** update dependency org.xerial:sqlite-jdbc to v3.41.0.0 ([a01b6ee](https://github.com/BrycensRanch/TownyPlus/commit/a01b6eea66553aceb05b6b0c55a671e7ab702c1b))
+
 ## [1.0.11-alpha.5](https://github.com/BrycensRanch/TownyPlus/compare/v1.0.11-alpha.4...v1.0.11-alpha.5) (2023-03-04)
 
 
