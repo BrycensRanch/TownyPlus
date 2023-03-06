@@ -53,7 +53,7 @@ public class WebUtils {
             URL url = new URL(reqURL);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
-            if (Config.githubPAT != null && !Config.githubPAT.isEmpty()) {
+            if (Config.githubPAT != null && !Config.githubPAT.isEmpty() && !Config.githubPAT.equalsIgnoreCase("none")) {
                 con.setRequestProperty("Authorization", "Bearer " + Config.githubPAT);
             }
             con.setConnectTimeout(10000);

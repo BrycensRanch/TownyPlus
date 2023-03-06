@@ -19,7 +19,7 @@ settings:
   # The GitHub personal access token to use for the auto updater
   # This doesn't apply to the update checker nor should you need to use it.
   # This was only used for testing purposes and is not needed for the plugin to work.
-  github-pat: ''
+  github-pat: 'none'
 
   # Polymart users should not enable this, you guys already have a way to auto update that is proven to work with TownyPlus
   # If you're not using Polymart, you can enable this to auto-update TownyPlus
