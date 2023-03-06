@@ -42,6 +42,15 @@ import lombok.val;
 import me.romvnly.TownyPlus.TownyPlusMain;
 
 public class WebUtils {
+    public static String getToken() {
+        if (Config.githubPAT != null && !Config.githubPAT.isEmpty() && !Config.githubPAT.equalsIgnoreCase("none")) {
+            return Config.githubPAT;
+        } else if (System.getenv("GITHUB_TOKEN") != null && !System.getenv("GITHUB_TOKEN").isEmpty() && !System.getenv("GITHUB_TOKEN").equalsIgnoreCase("none")) {
+            return System.getenv("GITHUB_TOKEN");
+        } else {
+            return null;
+        }
+    }
     /**
      * Makes a web request to the given URL and returns the body as a string
      *
@@ -53,8 +62,9 @@ public class WebUtils {
             URL url = new URL(reqURL);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
-            if (Config.githubPAT != null && !Config.githubPAT.isEmpty() && !Config.githubPAT.equalsIgnoreCase("none")) {
-                con.setRequestProperty("Authorization", "Bearer " + Config.githubPAT);
+            String token = getToken();
+            if (token != null) {
+                con.setRequestProperty("Authorization", "Bearer " + token);
             }
             con.setConnectTimeout(10000);
             con.setReadTimeout(10000);
