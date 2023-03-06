@@ -126,103 +126,103 @@ public final class Lang {
     @LangKey("click-to-confirm")
     public static String CLICK_TO_CONFIRM = "Click to confirm";
 
-    @LangKey("command.prefix")
-    public static String COMMAND_PREFIX = "<white>[<gradient:#C028FF:#5B00FF>Pl3xMap</gradient>]</white> ";
-    @LangKey("command.description.help")
-    public static String HELP_COMMAND_DESCRIPTION = "Get help for Pl3xmap commands";
-    @LangKey("command.description.resetmap")
-    public static String RESETMAP_COMMAND_DESCRIPTION = "Resets the map of a specified world";
-    @LangKey("command.description.confirm")
-    public static String CONFIRM_COMMAND_DESCRIPTION = "Confirm a pending command";
-    @LangKey("command.description.reload")
-    public static String RELOAD_COMMAND_DESCRIPTION = "Reloads the plugin";
-    @LangKey("command.description.full-render")
-    public static String FULLRENDER_COMMAND_DESCRIPTION = "Starts a full render for the specified world";
-    @LangKey("command.description.cancel-render")
-    public static String CANCEL_RENDER_COMMAND_DESCRIPTION = "Cancels a render for the specified world";
-    @LangKey("command.description.pause-render")
-    public static String PAUSE_RENDER_COMMAND_DESCRIPTION = "Pauses all renders for the specified world";
-    @LangKey("command.argument.optional-world")
-    public static String OPTIONAL_WORLD_ARGUMENT_DESCRIPTION = "Defaults to the players current world if not provided";
-    @LangKey("command.description.radius-render")
-    public static String RADIUSRENDER_COMMAND_DESCRIPTION = "Starts a radius render";
-    @LangKey("command.argument.optional-center")
-    public static String OPTIONAL_CENTER_ARGUMENT_DESCRIPTION = "Defaults to (<white>0<gray>,</gray> 0</white>) if unspecified";
-    @LangKey("command.argument.optional-player")
-    public static String OPTIONAL_PLAYER_ARGUMENT_DESCRIPTION = "Defaults to the executing player if unspecified (console must specify a player)";
-    @LangKey("command.argument.help-query")
-    public static String HELP_QUERY_ARGUMENT_DESCRIPTION = "Help Query";
+    // @LangKey("command.prefix")
+    // public static String COMMAND_PREFIX = "<white>[<gradient:#C028FF:#5B00FF>Pl3xMap</gradient>]</white> ";
+    // @LangKey("command.description.help")
+    // public static String HELP_COMMAND_DESCRIPTION = "Get help for Pl3xmap commands";
+    // @LangKey("command.description.resetmap")
+    // public static String RESETMAP_COMMAND_DESCRIPTION = "Resets the map of a specified world";
+    // @LangKey("command.description.confirm")
+    // public static String CONFIRM_COMMAND_DESCRIPTION = "Confirm a pending command";
+    // @LangKey("command.description.reload")
+    // public static String RELOAD_COMMAND_DESCRIPTION = "Reloads the plugin";
+    // @LangKey("command.description.full-render")
+    // public static String FULLRENDER_COMMAND_DESCRIPTION = "Starts a full render for the specified world";
+    // @LangKey("command.description.cancel-render")
+    // public static String CANCEL_RENDER_COMMAND_DESCRIPTION = "Cancels a render for the specified world";
+    // @LangKey("command.description.pause-render")
+    // public static String PAUSE_RENDER_COMMAND_DESCRIPTION = "Pauses all renders for the specified world";
+    // @LangKey("command.argument.optional-world")
+    // public static String OPTIONAL_WORLD_ARGUMENT_DESCRIPTION = "Defaults to the players current world if not provided";
+    // @LangKey("command.description.radius-render")
+    // public static String RADIUSRENDER_COMMAND_DESCRIPTION = "Starts a radius render";
+    // @LangKey("command.argument.optional-center")
+    // public static String OPTIONAL_CENTER_ARGUMENT_DESCRIPTION = "Defaults to (<white>0<gray>,</gray> 0</white>) if unspecified";
+    // @LangKey("command.argument.optional-player")
+    // public static String OPTIONAL_PLAYER_ARGUMENT_DESCRIPTION = "Defaults to the executing player if unspecified (console must specify a player)";
+    // @LangKey("command.argument.help-query")
+    // public static String HELP_QUERY_ARGUMENT_DESCRIPTION = "Help Query";
 
-    @LangKey("command.description.hide")
-    public static String HIDE_COMMAND_DESCRIPTION = "Hide a player from the map view";
-    @LangKey("command.hide.already-hidden")
-    public static String PLAYER_ALREADY_HIDDEN = "<red><player> is already hidden from map";
-    @LangKey("command.hide.hidden")
-    public static String PLAYER_HIDDEN = "<green><player> is now hidden from map";
+    // @LangKey("command.description.hide")
+    // public static String HIDE_COMMAND_DESCRIPTION = "Hide a player from the map view";
+    // @LangKey("command.hide.already-hidden")
+    // public static String PLAYER_ALREADY_HIDDEN = "<red><player> is already hidden from map";
+    // @LangKey("command.hide.hidden")
+    // public static String PLAYER_HIDDEN = "<green><player> is now hidden from map";
 
-    @LangKey("command.description.show")
-    public static String SHOW_COMMAND_DESCRIPTION = "Show a player on the map view";
-    @LangKey("command.show.not-hidden")
-    public static String PLAYER_NOT_HIDDEN = "<red><player> is not hidden from map";
-    @LangKey("command.show.shown")
-    public static String PLAYER_SHOWN = "<green><player> is no longer hidden from map";
+    // @LangKey("command.description.show")
+    // public static String SHOW_COMMAND_DESCRIPTION = "Show a player on the map view";
+    // @LangKey("command.show.not-hidden")
+    // public static String PLAYER_NOT_HIDDEN = "<red><player> is not hidden from map";
+    // @LangKey("command.show.shown")
+    // public static String PLAYER_SHOWN = "<green><player> is no longer hidden from map";
 
-    @LangKey("ui.page-title")
-    public static String UI_TITLE = "Pl3xMap - {world}";
-    @LangKey("ui.coordinates")
-    public static String UI_COORDINATES_HTML = "Coordinates<br/>{x}, {z}";
-    @LangKey("ui.sidebar.player-list")
-    public static String UI_SIDEBAR_PLAYER_LIST_LABEL = "Players ({cur}/{max})";
-    @LangKey("ui.sidebar.world-list")
-    public static String UI_SIDEBAR_WORLD_LIST_LABEL = "Worlds";
-    @LangKey("ui.layers.player-tracker")
-    public static String UI_PLAYER_TRACKER_LABEL = "Players";
-    @LangKey("ui.layers.world-spawn")
-    public static String UI_SPAWN_MARKER_ICON_LABEL = "Spawn";
-    @LangKey("ui.layers.world-border")
-    public static String UI_WORLDBORDER_MARKER_LABEL = "World Border";
+    // @LangKey("ui.page-title")
+    // public static String UI_TITLE = "Pl3xMap - {world}";
+    // @LangKey("ui.coordinates")
+    // public static String UI_COORDINATES_HTML = "Coordinates<br/>{x}, {z}";
+    // @LangKey("ui.sidebar.player-list")
+    // public static String UI_SIDEBAR_PLAYER_LIST_LABEL = "Players ({cur}/{max})";
+    // @LangKey("ui.sidebar.world-list")
+    // public static String UI_SIDEBAR_WORLD_LIST_LABEL = "Worlds";
+    // @LangKey("ui.layers.player-tracker")
+    // public static String UI_PLAYER_TRACKER_LABEL = "Players";
+    // @LangKey("ui.layers.world-spawn")
+    // public static String UI_SPAWN_MARKER_ICON_LABEL = "Spawn";
+    // @LangKey("ui.layers.world-border")
+    // public static String UI_WORLDBORDER_MARKER_LABEL = "World Border";
 
-    @LangKey("plugin-reloaded")
-    public static String PLUGIN_RELOADED = "<green><name> v<version> reloaded";
+    // @LangKey("plugin-reloaded")
+    // public static String PLUGIN_RELOADED = "<green><name> v<version> reloaded";
 
-    @LangKey("log.prefix")
-    public static String LOGGER_PREFIX = "<dark_aqua>[<light_purple>Pl3xMap</light_purple>]</dark_aqua>";
+    // @LangKey("log.prefix")
+    // public static String LOGGER_PREFIX = "<dark_aqua>[<light_purple>Pl3xMap</light_purple>]</dark_aqua>";
 
-    @LangKey("log.started-full-render")
-    public static String LOG_STARTED_FULLRENDER = "<dark_aqua>Started full map render for <yellow><world>";
-    @LangKey("log.started-radius-render")
-    public static String LOG_STARTED_RADIUSRENDER = "<dark_aqua>Started radius map render for <yellow><world>";
-    @LangKey("log.scanning-region-files")
-    public static String LOG_SCANNING_REGION_FILES = "<yellow>Scanning region files... (this may take a moment)";
-    @LangKey("log.found-total-region-files")
-    public static String LOG_FOUND_TOTAL_REGION_FILES = "<green>Found <gray><total> <green>region files";
-    @LangKey("log.finished-rendering")
-    public static String LOG_FINISHED_RENDERING = "<dark_aqua>Finished rendering map for <yellow><world>";
-    @LangKey("log.cancelled-rendering")
-    public static String LOG_CANCELLED_RENDERING = "<dark_aqua>Rendering map for <yellow><world> <dark_aqua>has been interrupted";
-    @LangKey("log.resumed-rendering")
-    public static String LOG_RESUMED_RENDERING = "<dark_aqua>Rendering map for <yellow><world> <dark_aqua>has been resumed";
-    @LangKey("log.scanning-region-progress")
-    public static String LOG_RENDER_PROGRESS = "<gray>(</gray><yellow><percent></yellow><gray>)</gray> <dark_aqua>World<gray>:</gray> <yellow><world></yellow> Chunks<gray>:</gray> <yellow><current_chunks></yellow><gray>/</gray><yellow><total_chunks></yellow> Elapsed<gray>:</gray> <yellow><elapsed></yellow> ETA<gray>:</gray> <yellow><eta></yellow> Rate<gray>:</gray> <yellow><rate></yellow> cps";
-    @LangKey("log.scanning-region-progress-with-regions")
-    public static String LOG_RENDER_PROGRESS_WITH_REGIONS = "<gray>(</gray><yellow><percent></yellow><gray>)</gray> <dark_aqua>World<gray>:</gray> <yellow><world></yellow> Regions<gray>:</gray> <yellow><current_regions></yellow><gray>/</gray><yellow><total_regions></yellow> Chunks<gray>:</gray> <yellow><current_chunks></yellow><gray>/</gray><yellow><total_chunks></yellow> Elapsed<gray>:</gray> <yellow><elapsed></yellow> ETA<gray>:</gray> <yellow><eta></yellow> Rate<gray>:</gray> <yellow><rate></yellow> cps";
+    // @LangKey("log.started-full-render")
+    // public static String LOG_STARTED_FULLRENDER = "<dark_aqua>Started full map render for <yellow><world>";
+    // @LangKey("log.started-radius-render")
+    // public static String LOG_STARTED_RADIUSRENDER = "<dark_aqua>Started radius map render for <yellow><world>";
+    // @LangKey("log.scanning-region-files")
+    // public static String LOG_SCANNING_REGION_FILES = "<yellow>Scanning region files... (this may take a moment)";
+    // @LangKey("log.found-total-region-files")
+    // public static String LOG_FOUND_TOTAL_REGION_FILES = "<green>Found <gray><total> <green>region files";
+    // @LangKey("log.finished-rendering")
+    // public static String LOG_FINISHED_RENDERING = "<dark_aqua>Finished rendering map for <yellow><world>";
+    // @LangKey("log.cancelled-rendering")
+    // public static String LOG_CANCELLED_RENDERING = "<dark_aqua>Rendering map for <yellow><world> <dark_aqua>has been interrupted";
+    // @LangKey("log.resumed-rendering")
+    // public static String LOG_RESUMED_RENDERING = "<dark_aqua>Rendering map for <yellow><world> <dark_aqua>has been resumed";
+    // @LangKey("log.scanning-region-progress")
+    // public static String LOG_RENDER_PROGRESS = "<gray>(</gray><yellow><percent></yellow><gray>)</gray> <dark_aqua>World<gray>:</gray> <yellow><world></yellow> Chunks<gray>:</gray> <yellow><current_chunks></yellow><gray>/</gray><yellow><total_chunks></yellow> Elapsed<gray>:</gray> <yellow><elapsed></yellow> ETA<gray>:</gray> <yellow><eta></yellow> Rate<gray>:</gray> <yellow><rate></yellow> cps";
+    // @LangKey("log.scanning-region-progress-with-regions")
+    // public static String LOG_RENDER_PROGRESS_WITH_REGIONS = "<gray>(</gray><yellow><percent></yellow><gray>)</gray> <dark_aqua>World<gray>:</gray> <yellow><world></yellow> Regions<gray>:</gray> <yellow><current_regions></yellow><gray>/</gray><yellow><total_regions></yellow> Chunks<gray>:</gray> <yellow><current_chunks></yellow><gray>/</gray><yellow><total_chunks></yellow> Elapsed<gray>:</gray> <yellow><elapsed></yellow> ETA<gray>:</gray> <yellow><eta></yellow> Rate<gray>:</gray> <yellow><rate></yellow> cps";
 
-    @LangKey("log.internal-web-disabled")
-    public static String LOG_INTERNAL_WEB_DISABLED = "<green>Internal webserver is disabled in config.yml";
-    @LangKey("log.internal-web-started")
-    public static String LOG_INTERNAL_WEB_STARTED = "<green>Internal webserver running on <bind>:<port>";
-    @LangKey("log.internal-web-stopped")
-    public static String LOG_INTERNAL_WEB_STOPPED = "<green>Internal webserver stopped";
+    // @LangKey("log.internal-web-disabled")
+    // public static String LOG_INTERNAL_WEB_DISABLED = "<green>Internal webserver is disabled in config.yml";
+    // @LangKey("log.internal-web-started")
+    // public static String LOG_INTERNAL_WEB_STARTED = "<green>Internal webserver running on <bind>:<port>";
+    // @LangKey("log.internal-web-stopped")
+    // public static String LOG_INTERNAL_WEB_STOPPED = "<green>Internal webserver stopped";
 
-    // Colorless console log messages
-    @LangKey("log.internal-web-start-error")
-    public static String LOG_INTERNAL_WEB_START_ERROR = "Internal webserver could not start";
-    @LangKey("log.could-not-create-directory")
-    public static String LOG_COULD_NOT_CREATE_DIR = "Could not create directory! {path}";
-    @LangKey("log.could-not-save-region")
-    public static String LOG_COULD_NOT_SAVE_REGION = "Could not save map for region {x},{z}";
-    @LangKey("log.internal-web-not-running")
-    public static String LOG_INTERNAL_WEB_STOP_ERROR = "An error occurred with the internal webserver";
+    // // Colorless console log messages
+    // @LangKey("log.internal-web-start-error")
+    // public static String LOG_INTERNAL_WEB_START_ERROR = "Internal webserver could not start";
+    // @LangKey("log.could-not-create-directory")
+    // public static String LOG_COULD_NOT_CREATE_DIR = "Could not create directory! {path}";
+    // @LangKey("log.could-not-save-region")
+    // public static String LOG_COULD_NOT_SAVE_REGION = "Could not save map for region {x},{z}";
+    // @LangKey("log.internal-web-not-running")
+    // public static String LOG_INTERNAL_WEB_STOP_ERROR = "An error occurred with the internal webserver";
 
     private static void init() {
         Arrays.stream(Lang.class.getDeclaredFields())
