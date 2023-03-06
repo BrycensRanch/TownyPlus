@@ -141,7 +141,7 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
         plugin = this;
         this.adventure = BukkitAudiences.create(this);
         logger = ComponentLogger.logger(getName());
-//        saveDefaultConfig();
+        saveDefaultConfig();
         Config.reload();
         Lang.reload();
         expansion = new TownyPlusExpansion();
