@@ -102,6 +102,8 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
 
     // I'm so close to using reflections to register all the commands...
         // This is so annoying...
+
+        // TODO: Invest reflection to automatically register all commands
         ImmutableList.of(
                 new HelpCommand(plugin, this),
                 new BypassCommand(plugin, this),
