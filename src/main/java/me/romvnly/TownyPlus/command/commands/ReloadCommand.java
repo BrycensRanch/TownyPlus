@@ -61,14 +61,20 @@ public final class ReloadCommand extends BaseCommand {
                 this.plugin.chatHook.reload();
             }
             if (this.plugin.expansion != null) {
-                Boolean didRegisterSuccessfully = this.plugin.expansion.register();
-                if (didRegisterSuccessfully) {
+                Boolean didUnRegisterSuccessfully = this.plugin.expansion.unregister();
+                if (didUnRegisterSuccessfully) {
+                    logger.info("Successfully unregistered with PlaceholderAPI!");
+                }
+                else {
+                    logger.warn("Failed to unregister with PlaceholderAPI!");
+                }
+                Boolean didRegisterSuccesfully = this.plugin.expansion.register();
+                if (didRegisterSuccesfully) {
                     logger.info("Successfully registered with PlaceholderAPI!");
                 }
                 else {
                     logger.warn("Failed to register with PlaceholderAPI!");
                 }
-                this.plugin.expansion.unregister();
             }
             if (this.plugin.restAPI != null && this.plugin.restAPI.active) {
                 this.plugin.restAPI.stopServer();
