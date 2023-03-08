@@ -277,7 +277,7 @@ dependencies {
         exclude module: 'opus-java'
     }
     // VentureChat support for chat listening
-    compileOnly("mineverse.aust1n46:venturechat:2.20.1")
+    compileOnly("mineverse.aust1n46:venturechat:3.5.0")
     // ProtocolLib (required by venturechat)
     compileOnly "com.comphenix.protocol:ProtocolLib:4.8.0"
 //    compileOnly 'com.github.spotbugs:spotbugs-annotations:4.7.3'
