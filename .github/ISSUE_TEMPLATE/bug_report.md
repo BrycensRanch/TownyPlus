@@ -23,14 +23,11 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**I have tested the latest [snapshot build](../../actions)**
+**I have tested the latest [alpha build](../../actions)**
 
 **Server Information (please complete the following information):**
 
 - TownyPlus Dump Link (`/townyplus dump`):
-
-**Relevant Server logs**
-If the logs are long, please upload it to https://mclo.gs 
 
 **Additional context**
 Add any other context about the problem here.
