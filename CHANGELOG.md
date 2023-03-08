@@ -1,3 +1,27 @@
+## [1.1.0-alpha.4](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.3...v1.1.0-alpha.4) (2023-03-08)
+
+
+### 🔨  Misc.
+
+* **deps:** update dependency io.javalin:javalin-bundle to v5.4.2 ([#59](https://github.com/BrycensRanch/TownyPlus/issues/59)) ([077fc76](https://github.com/BrycensRanch/TownyPlus/commit/077fc76cbc75121b58e11e29711a887ecebe8734))
+
+
+### 📝  Documentation
+
+* **issue-template:** require townyplus dump ([ebd58d4](https://github.com/BrycensRanch/TownyPlus/commit/ebd58d46d4105d9170395fa10769d59bb9dfa29c))
+* point download link to alpha branch ([a69c433](https://github.com/BrycensRanch/TownyPlus/commit/a69c433837c44c129b8c4245ed6fd2fcdfc12e36))
+* remove useless information and point to alpha ([44e3c97](https://github.com/BrycensRanch/TownyPlus/commit/44e3c97d8df21f22d61b67cc09aaf519d81c8231))
+
+
+### 📦️ Build and CI
+
+* **branch-change:** allow beta branch to pr master ([42eaa81](https://github.com/BrycensRanch/TownyPlus/commit/42eaa8100cecea567c79bb77dc7178d50bccef48))
+
+
+### 🐛 Bugfix 🐛
+
+* **deps:** update dependency mineverse.aust1n46:venturechat to v3 ([#65](https://github.com/BrycensRanch/TownyPlus/issues/65)) ([b9c8507](https://github.com/BrycensRanch/TownyPlus/commit/b9c85075c920db1e1184ec49cc354b4f91897342))
+
 ## [1.1.0-alpha.3](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.2...v1.1.0-alpha.3) (2023-03-07)
 
 
