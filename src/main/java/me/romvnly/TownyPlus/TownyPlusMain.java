@@ -420,6 +420,9 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
          }
     }
     public void processChatMessage(Player player, String providedMessage, String channel, ChatHook hook) {
+        // Don't process messages if DiscordSRV isn't ready or in the classpath.
+        if (this.discordSRVListener == null) return;
+
         String message = providedMessage.trim();
         String channelName = channel.toLowerCase().trim();
         if (player == null) return;
