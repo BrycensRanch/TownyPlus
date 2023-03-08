@@ -1,6 +1,7 @@
 ---
-name: Bug report about: Create a report to help us improve title: "[BUG]"
-labels: ''
+name: Bug report about: Create a report to help us improve 
+title: "[BUG]"
+labels: 'bug'
 assignees: ''
 
 ---
@@ -26,9 +27,7 @@ If applicable, add screenshots to help explain your problem.
 
 **Server Information (please complete the following information):**
 
-- Server version (`/bukkit:version`):
-- Installed plugins (`/bukkit:plugins`):
-- WorldGuard Report Pastebin Link (`/wg report -p`):
+- TownyPlus Dump Link (`/townyplus dump`):
 
 **Relevant Server logs**
 If the logs are long, please upload it to https://mclo.gs 
