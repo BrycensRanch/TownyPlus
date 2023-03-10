@@ -1,3 +1,34 @@
+## [1.1.0-alpha.7](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.6...v1.1.0-alpha.7) (2023-03-10)
+
+
+### 📦️ Build and CI
+
+* **renovate:** use type chore for all deps ([f42d14a](https://github.com/BrycensRanch/TownyPlus/commit/f42d14aca447075f0ac7d95a365a18a2004540a7))
+
+
+### 🐛 Bugfix 🐛
+
+* **discordsrv:** do not process msgs if discordSRVListener is null ([a6f1285](https://github.com/BrycensRanch/TownyPlus/commit/a6f1285295dda681f78d9fe165b1954acab8bb39))
+* **expansion:** only register when papi is present ([f792dfd](https://github.com/BrycensRanch/TownyPlus/commit/f792dfdba15da4e065af2046072072f2398382a0))
+* **reload:** deregister and register expansion ([7580b07](https://github.com/BrycensRanch/TownyPlus/commit/7580b07951395b35a783cbb9a96a3a791a9fb1d6))
+
+
+### 🧪 Code Test
+
+* bump mc test server version ([6bb13b1](https://github.com/BrycensRanch/TownyPlus/commit/6bb13b1e2126b46eccd09aae40ad780ec39e3533))
+* **e2e:** wip ([82cf290](https://github.com/BrycensRanch/TownyPlus/commit/82cf2900a88c989ec5c90a8fb97cb0716f681e9d))
+* **server:** update files ([2f769eb](https://github.com/BrycensRanch/TownyPlus/commit/2f769eb9f793a7ad586f6fd5708c37764ba735f3))
+
+
+### 🔨  Misc.
+
+* add additional checks  for gh_token ([9bd1a7e](https://github.com/BrycensRanch/TownyPlus/commit/9bd1a7e630f02a865cdd93e4a4d5356a97bba9e2))
+
+
+### ✨ Feature ✨
+
+* **ssl:** add in-depth ssl options in config ([f3952bd](https://github.com/BrycensRanch/TownyPlus/commit/f3952bd9271a4a367fcebe107b0dee9960b716d5))
+
 ## [1.1.0-alpha.6](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.5...v1.1.0-alpha.6) (2023-03-10)
 
 
