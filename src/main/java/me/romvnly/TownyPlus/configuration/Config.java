@@ -39,7 +39,7 @@ public class Config extends BaseConfig {
     public static boolean CHECK_FOR_UPDATES = true;
     public static boolean METRICS_ENABLED = true;
 
-    public static String githubPAT = null;
+    public static String githubPAT = "none";
 
 
     private static void baseSettings() {

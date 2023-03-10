@@ -1,6 +1,7 @@
 ---
-name: Bug report about: Create a report to help us improve title: "[BUG]"
-labels: ''
+name: Bug report about: Create a report to help us improve 
+title: "[BUG]"
+labels: 'bug'
 assignees: ''
 
 ---
@@ -22,16 +23,11 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**I have tested the latest [snapshot build](../../actions)**
+**I have tested the latest [alpha build](../../actions)**
 
 **Server Information (please complete the following information):**
 
-- Server version (`/bukkit:version`):
-- Installed plugins (`/bukkit:plugins`):
-- WorldGuard Report Pastebin Link (`/wg report -p`):
-
-**Relevant Server logs**
-If the logs are long, please upload it to https://mclo.gs 
+- TownyPlus Dump Link (`/townyplus dump`):
 
 **Additional context**
 Add any other context about the problem here.

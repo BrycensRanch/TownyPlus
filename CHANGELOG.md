@@ -1,3 +1,101 @@
+## [1.1.0-alpha.4](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.3...v1.1.0-alpha.4) (2023-03-08)
+
+
+### 🔨  Misc.
+
+* **deps:** update dependency io.javalin:javalin-bundle to v5.4.2 ([#59](https://github.com/BrycensRanch/TownyPlus/issues/59)) ([077fc76](https://github.com/BrycensRanch/TownyPlus/commit/077fc76cbc75121b58e11e29711a887ecebe8734))
+
+
+### 📝  Documentation
+
+* **issue-template:** require townyplus dump ([ebd58d4](https://github.com/BrycensRanch/TownyPlus/commit/ebd58d46d4105d9170395fa10769d59bb9dfa29c))
+* point download link to alpha branch ([a69c433](https://github.com/BrycensRanch/TownyPlus/commit/a69c433837c44c129b8c4245ed6fd2fcdfc12e36))
+* remove useless information and point to alpha ([44e3c97](https://github.com/BrycensRanch/TownyPlus/commit/44e3c97d8df21f22d61b67cc09aaf519d81c8231))
+
+
+### 📦️ Build and CI
+
+* **branch-change:** allow beta branch to pr master ([42eaa81](https://github.com/BrycensRanch/TownyPlus/commit/42eaa8100cecea567c79bb77dc7178d50bccef48))
+
+
+### 🐛 Bugfix 🐛
+
+* **deps:** update dependency mineverse.aust1n46:venturechat to v3 ([#65](https://github.com/BrycensRanch/TownyPlus/issues/65)) ([b9c8507](https://github.com/BrycensRanch/TownyPlus/commit/b9c85075c920db1e1184ec49cc354b4f91897342))
+
+## [1.1.0-alpha.3](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.2...v1.1.0-alpha.3) (2023-03-07)
+
+
+### 🐛 Bugfix 🐛
+
+* **deps:** update dependency com.palmergames.bukkit.towny:towny to v0.98.6.12 ([fef757e](https://github.com/BrycensRanch/TownyPlus/commit/fef757e59ad82eb458c67958a50707723c60d301))
+
+## [1.1.0-alpha.2](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.1...v1.1.0-alpha.2) (2023-03-06)
+
+
+### ⚡️ Code Performance
+
+* **discord:** move discord management to new class ([3bce65f](https://github.com/BrycensRanch/TownyPlus/commit/3bce65f1bc6b83dcd01b65c31c88293b54a90d69))
+
+
+### 🔨  Misc.
+
+* **dev-fix:** fix misspelled env variables ([a2ec49d](https://github.com/BrycensRanch/TownyPlus/commit/a2ec49d5c162440750d75c68120dc9ef1b048eed))
+* **todo:** add reflection todo ([4da96a2](https://github.com/BrycensRanch/TownyPlus/commit/4da96a227383bc2144e0ead9d46b29a490f3b8b8))
+* update debug server files ([200d557](https://github.com/BrycensRanch/TownyPlus/commit/200d5573eb652dae137d7821d6c5a5cdc731d870))
+
+
+### 🐛 Bugfix 🐛
+
+* **deps:** update dependency com.h2database:h2 to v2 ([#60](https://github.com/BrycensRanch/TownyPlus/issues/60)) ([8c52ebb](https://github.com/BrycensRanch/TownyPlus/commit/8c52ebb01b2e57fdfc53707309d5fc4c24f0c39b))
+
+## [1.1.0-alpha.1](https://github.com/BrycensRanch/TownyPlus/compare/v1.0.11-alpha.7...v1.1.0-alpha.1) (2023-03-06)
+
+
+### 🔨  Misc.
+
+* **dev:** clarify which dev environment built the jar ([9d51350](https://github.com/BrycensRanch/TownyPlus/commit/9d51350b4629dc96b2d5ef1e41027bd12849a340))
+
+
+### ✨ Feature ✨
+
+* use github token environment variable ([393cb59](https://github.com/BrycensRanch/TownyPlus/commit/393cb597671915eb743f660c4581e2239a1e65be))
+
+## [1.0.11-alpha.7](https://github.com/BrycensRanch/TownyPlus/compare/v1.0.11-alpha.6...v1.0.11-alpha.7) (2023-03-06)
+
+
+### 🐛 Bugfix 🐛
+
+* do not require github pat to dump ([537e300](https://github.com/BrycensRanch/TownyPlus/commit/537e300292faa464fe461652a1e8717f3fde1952))
+
+
+### 🔨  Misc.
+
+* comment out unused lang keys ([08799cf](https://github.com/BrycensRanch/TownyPlus/commit/08799cf6bd10caaba99a982814e29561826cd1aa))
+* update server files ([8d5a096](https://github.com/BrycensRanch/TownyPlus/commit/8d5a0968c41b9f514b6e5a32cc856e7d05a036e4))
+
+## [1.0.11-alpha.6](https://github.com/BrycensRanch/TownyPlus/compare/v1.0.11-alpha.5...v1.0.11-alpha.6) (2023-03-06)
+
+
+### 📝  Documentation
+
+* clarify on extra information section ([f202144](https://github.com/BrycensRanch/TownyPlus/commit/f2021449890f94b9c27ed065b7741553d68c4f8e))
+* update platforms that we auto publish to ([97ed3a1](https://github.com/BrycensRanch/TownyPlus/commit/97ed3a1f5304414da251d57833e0bea8050db1cb))
+
+
+### ⚡️ Code Performance
+
+* wip ([1d62880](https://github.com/BrycensRanch/TownyPlus/commit/1d62880af33eebd952b930ee602e2c306060be18))
+
+
+### 📦️ Build and CI
+
+* **fix:** allow ci to automatically format src files and commit them ([f1a899e](https://github.com/BrycensRanch/TownyPlus/commit/f1a899e1549534cfc44faeaceb627f85309b099c))
+
+
+### 🐛 Bugfix 🐛
+
+* **deps:** update dependency org.xerial:sqlite-jdbc to v3.41.0.0 ([a01b6ee](https://github.com/BrycensRanch/TownyPlus/commit/a01b6eea66553aceb05b6b0c55a671e7ab702c1b))
+
 ## [1.0.11-alpha.5](https://github.com/BrycensRanch/TownyPlus/compare/v1.0.11-alpha.4...v1.0.11-alpha.5) (2023-03-04)
 
 

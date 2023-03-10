@@ -113,6 +113,7 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
     public CommandManager commandManager;
     public ChatHook chatHook;
     public UpdateChecker updateChecker;
+    public DiscordSRVChannelCreator discordSRVChannelCreator;
     public RestAPI restAPI;
     public ComponentLogger logger = ComponentLogger.logger(getName());
     public DiscordSRVListener discordSRVListener;
@@ -141,7 +142,7 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
         plugin = this;
         this.adventure = BukkitAudiences.create(this);
         logger = ComponentLogger.logger(getName());
-//        saveDefaultConfig();
+        saveDefaultConfig();
         Config.reload();
         Lang.reload();
         expansion = new TownyPlusExpansion();
@@ -170,6 +171,9 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        discordSRVChannelCreator = new DiscordSRVChannelCreator();
+
+        // TODO: Use dependency injection to make this less ugly
 
 
         String gitRepo = GitProperties.getGitProperty("git.remote.origin.url");

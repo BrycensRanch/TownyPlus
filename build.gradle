@@ -249,7 +249,7 @@ dependencies {
     // Just a reminder: compileOnly means that we're not shading this dependency into our jar. This is usually when we're using a dependency that is already provided by the server. Aka, when it's already in the server's classpath.
     // implementation means that we're shading this dependency into our jar. This is usually when we're using a dependency that is not provided by the server. Aka, when it's not in the server's classpath.
     // Towny
-    compileOnly 'com.palmergames.bukkit.towny:towny:0.98.6.10'
+    compileOnly 'com.palmergames.bukkit.towny:towny:0.98.6.12'
     compileOnly 'com.palmergames.bukkit:TownyChat:0.45'
 
     // PlaceholderAPI
@@ -264,7 +264,7 @@ dependencies {
     // Telemetry
     implementation 'org.bstats:bstats-bukkit:3.0.1'
     // better http server than spark
-    library "io.javalin:javalin-bundle:5.3.2"
+    library "io.javalin:javalin-bundle:5.4.2"
     // DiscordSRV, optional dependency
     compileOnly 'com.discordsrv:discordsrv:1.24.0'
 
@@ -277,7 +277,7 @@ dependencies {
         exclude module: 'opus-java'
     }
     // VentureChat support for chat listening
-    compileOnly("mineverse.aust1n46:venturechat:2.20.1")
+    compileOnly("mineverse.aust1n46:venturechat:3.5.0")
     // ProtocolLib (required by venturechat)
     compileOnly "com.comphenix.protocol:ProtocolLib:4.8.0"
 //    compileOnly 'com.github.spotbugs:spotbugs-annotations:4.7.3'
@@ -288,8 +288,8 @@ dependencies {
 
     // Database stuff
     implementation 'com.zaxxer:HikariCP:5.0.1'
-    implementation 'com.h2database:h2:1.4.200'
-    implementation 'org.xerial:sqlite-jdbc:3.25.2'
+    implementation 'com.h2database:h2:2.1.214'
+    implementation 'org.xerial:sqlite-jdbc:3.41.0.0'
 //    compileOnly 'org.h2.Driver:Driver:1.4.200'
 //    compileOnly 'com.mysql.jdbc.Driver:Driver:8.0.26'
 

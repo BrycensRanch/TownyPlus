@@ -1,0 +1,30 @@
+{
+    "recommendations": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "rvest.vs-code-prettier-eslint",
+        "mikestead.dotenv",
+        "orta.vscode-jest",
+        "knisterpeter.vscode-commitizen",
+        "davidanson.vscode-markdownlint",
+        "github.copilot",
+        "vscjava.vscode-java-pack",
+        "vscjava.vscode-gradle",
+        "donjayamanne.javadebugger",
+        "esafirm.kotlin-formatter",
+        "fwcd.kotlin",
+        "naco-siren.gradle-language",
+        "redhat.java",
+        "spmeesseman.vscode-taskexplorer",
+        "alexcvzz.vscode-sqlite",
+        "inferrinizzard.prettier-sql-vscode",
+        "cweijan.vscode-database-client2",
+        "vivaxy.vscode-conventional-commits",
+        "eamodio.gitlens",
+        "wakatime.vscode-wakatime",
+        "ms-azuretools.vscode-docker",
+        "christian-kohler.path-intellisense",
+        "christian-kohler.npm-intellisense"
+    ]
+}
+  
