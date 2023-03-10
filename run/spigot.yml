@@ -40,7 +40,7 @@ messages:
   outdated-server: Outdated server! I'm still on {0}
   restart: Server is restarting
 advancements:
-  disable-saving: false
+  disable-saving: true
   disabled:
   - minecraft:story/disabled
 commands:
