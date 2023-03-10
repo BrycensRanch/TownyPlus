@@ -145,6 +145,8 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
         saveDefaultConfig();
         Config.reload();
         Lang.reload();
+        if (pluginManager.getPlugin("PlaceholderAPI") != null && pluginManager.isPluginEnabled("PlaceholderAPI")) {
+
         expansion = new TownyPlusExpansion();
         Boolean didRegisterSuccessfully = expansion.register();
         if (didRegisterSuccessfully) {
@@ -152,6 +154,7 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
         }
         else {
             logger.warn("Failed to register with PlaceholderAPI!");
+        }
         }
         if (Config.DEBUG_MODE) {
             logger.info("Debug mode is enabled. This will cause a lot of spam in the console.");
@@ -209,10 +212,21 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
                 metrics.addCustomChart(new SimplePie("internal_web_server", () ->
                         BooleanUtils.toStringTrueFalse(Config.HTTPD_ENABLED)
                 ));
-                metrics.addCustomChart(new DrilldownPie("plugin_version", () -> {
-                    String[] version = getDescription().getVersion().split("-");
-                    return Map.of(version[0], Map.of(version[1], 1));
-                }));
+                metrics.addCustomChart(new SimplePie("branch", () ->
+                    GitProperties.getGitProperty("git.branch")
+                ));
+                metrics.addCustomChart(new SimplePie("database_type", () ->
+                Config.DB_TYPE
+            ));
+            metrics.addCustomChart(new SimplePie("checking_for_updates", () ->
+            BooleanUtils.toStringTrueFalse(Config.CHECK_FOR_UPDATES)
+        ));
+        metrics.addCustomChart(new SimplePie("auto_updating", () ->
+        BooleanUtils.toStringTrueFalse(Config.AUTO_UPDATE_PLUGIN)
+    ));
+    metrics.addCustomChart(new SimplePie("discordsrv_integration", () ->
+    BooleanUtils.toStringTrueFalse(Config.DISCORDSRV_ENABLED)
+));
             }
             if (Config.CHECK_FOR_UPDATES) {
                 this.updateChecker = new UpdateChecker(this, UpdateCheckSource.GITHUB_RELEASE_TAG, githubRepo)
@@ -314,6 +328,7 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
         }
         logger.info("Plugin has been disabled.");
         if (this.database != null) this.database.close();
+        if (expansion != null)
         expansion.unregister();
         if (this.isEnabled()) Bukkit.getServer().getPluginManager().disablePlugin(this);
         Bukkit.getScheduler().cancelTasks(this);
