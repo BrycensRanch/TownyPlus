@@ -1,3 +1,20 @@
+## [1.1.0-alpha.5](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.4...v1.1.0-alpha.5) (2023-03-10)
+
+
+### 🔨  Misc.
+
+* **vscode:** recommend extensions for vscode ([dcd66aa](https://github.com/BrycensRanch/TownyPlus/commit/dcd66aab19b73262e2d7526982d049d4784c91a8))
+
+
+### ✨ Feature ✨
+
+* **expansion:** add %townyplus_town_NAME_networth% ([b28cf62](https://github.com/BrycensRanch/TownyPlus/commit/b28cf62916fe14baed69ed9e7cc81fbcd402ee22))
+
+
+### 🧪 Code Test
+
+* **server:** add tne for economy testing ([2866bc5](https://github.com/BrycensRanch/TownyPlus/commit/2866bc512e6028a7a083edf129f8c09681a9e84e))
+
 ## [1.1.0-alpha.4](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.3...v1.1.0-alpha.4) (2023-03-08)
 
 
