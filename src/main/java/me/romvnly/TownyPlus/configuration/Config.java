@@ -20,7 +20,7 @@ public class Config extends BaseConfig {
         super("config.yml");
     }
 
-    static Config config;
+    public static Config config;
     static int version;
 
     public static void reload() {
@@ -83,6 +83,8 @@ public class Config extends BaseConfig {
     public static String DB_PASSWORD = "password";
     public static String DB_TABLE_PREFIX = "townyplus_";
     public static boolean DB_USE_SSL = false;
+    public static boolean DB_REQUIRE_SSL = false;
+    public static String DB_SSL_MODE = "default";
 
     public static String DB_URL = "jdbc:h2:./plugins/TownyPlus/data.db";
 
@@ -90,11 +92,14 @@ public class Config extends BaseConfig {
         DB_TYPE = config.getString("settings.database.type", DB_TYPE);
         DB_URL = config.getString("settings.database.url", DB_URL);
         DB_HOST = config.getString("settings.database.host", DB_HOST);
+        DB_PORT = config.getInt("settings.database.port", DB_PORT);
         DB_NAME = config.getString("settings.database.name", DB_NAME);
         DB_USERNAME = config.getString("settings.database.username", DB_USERNAME);
         DB_PASSWORD = config.getString("settings.database.password", DB_PASSWORD);
         DB_TABLE_PREFIX = config.getString("settings.database.table-prefix", DB_TABLE_PREFIX);
         DB_USE_SSL = config.getBoolean("settings.database.use-ssl", DB_USE_SSL);
+        DB_REQUIRE_SSL = config.getBoolean("settings.database.require-ssl", DB_REQUIRE_SSL);
+        DB_SSL_MODE = config.getString("settings.database.ssl-mode", DB_SSL_MODE);
     }
 
     public static String MAIN_COMMAND_LABEL = "townyplus";

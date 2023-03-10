@@ -1,7 +1,5 @@
-# TownyBypass Config file
+# ${project.name} ${project.version} Configuration
 # The best towny plugin yet undefeated
-# Don't forget to use PlaceholderAPI! Best options for custiomizable messages for server owners!
-
 
 # Don't you dare touch this, it's for the plugin to know if it needs to update the config in the future
 config-version: 1
@@ -46,18 +44,39 @@ settings:
 
   database:
     # The type of database to use
-    # Supported types: mysql, h2, sqlite
-    type: h2
-    # JDBC connection string, only an example
+    # Supported types: MySQL, MariaDB, h2, SQLite
+    # Case insensitive
+    type: sqlite
+    # JDBC connection string
+    # If you want to use SQLite, your URL would be:
+    # jdbc:sqlite:./plugins/TownyPlus/data.db
+    # You can also put 'none' to specify that you want the plugin to generate a JDBC connection string for you based off of what you configured.
     url: jdbc:h2:./plugins/TownyPlus/data.db
     host: localhost
     port: 3306
     # The name of the database to use
     name: townyplus
+
     username: root
-    password: password
-    # Only used for MySQL
+
+    password: DONTUSETHISPASSWORD
+
+    # Only used for MySQL & PostgreSQL
     use-ssl: false
+    
+    # The type of SSL standard you want to use
+    # default uses the driver's default property - which is preferred 
+    # If you want a higher level of security, you should view your database's docs for this setting.
+    # MySQL: https://dev.mysql.com/doc/refman/5.7/en/connection-options.html#option_general_ssl-mode
+    # PostgreSQL: https://www.postgresql.org/docs/current/libpq-ssl.html
+
+    # If you feed this a bad value expect the plugin to fail to start.
+    ssl-mode: default
+
+    # Will create an encrypted connection if the server supports encrypted connections. 
+    # If the server cannot create an encrypted connection, the connection will fail. 
+    require-ssl: false
+
     # The table prefix to use for the database
     # If you're using a shared database, you can use this to prevent conflicts with other plugins
     table-prefix: townyplus_

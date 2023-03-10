@@ -42,6 +42,7 @@ import me.romvnly.TownyPlus.configuration.Lang;
 import me.romvnly.TownyPlus.util.CpuUtils;
 import me.romvnly.TownyPlus.util.FileUtils;
 import me.romvnly.TownyPlus.util.WebUtils;
+import me.romvnly.TownyPlus.util.DatabaseType;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -70,6 +71,7 @@ public class DumpInfo {
     private ObjectNode configInfo;
     private ObjectNode townyInfo;
     private JsonNode localeInfo;
+    private DatabaseInfo databaseInfo;
     public static String getManifestInfo() {
         Enumeration resEnum;
         try {
@@ -111,7 +113,7 @@ public class DumpInfo {
 
         File configFile = new File(TownyPlusMain.getInstance().getDataFolder(), "config.yml");
         File langFile = new File(TownyPlusMain.getInstance().getDataFolder(), Config.LANGUAGE_FILE);
-        this.configInfo = TownyPlusMain.JSONMapper.readValue(TownyPlusMain.JSONMapper.writeValueAsString(TownyPlusMain.YAMLMapper.readValue(configFile, ObjectNode.class)).replace(Config.DISCORDSRV_WEBHOOK, "[REDACTED]").replace(Config.DB_PASSWORD, "[REDACTED PASSWORD]").replace(Config.githubPAT, "[PAT]"), ObjectNode.class);
+        this.configInfo = TownyPlusMain.JSONMapper.readValue(TownyPlusMain.JSONMapper.writeValueAsString(TownyPlusMain.YAMLMapper.readValue(configFile, ObjectNode.class)).replace(Config.DISCORDSRV_WEBHOOK, "[REDACTED]").replace(Config.DB_PASSWORD, "[REDACTED PASSWORD]").replace(Config.DB_URL, "[REDACTED JDBC URL]").replace(Config.githubPAT, "[PAT]"), ObjectNode.class);
         this.localeInfo = TownyPlusMain.YAMLMapper.readValue(langFile, JsonNode.class);
         // Bad idea in the first place
 //        this.townyInfo = TownyPlusMain.JSONMapper.createObjectNode()
@@ -155,6 +157,7 @@ public class DumpInfo {
         this.restAPIInfo = new RESTAPIInfo();
         this.flagsInfo = new FlagsInfo();
         this.bukkitInfo = new BukkitInfo();
+        this.databaseInfo = new DatabaseInfo();
 
     }
     @Getter
@@ -192,6 +195,15 @@ public class DumpInfo {
         public List<String> authors;
         public String description;
         public String website;
+    }
+    @Getter
+    public static class DatabaseInfo {
+        public boolean enabled;
+        public String type;
+        DatabaseInfo() {
+            this.enabled = TownyPlusMain.getInstance().database.connection != null;
+            this.type = TownyPlusMain.getInstance().database.dbType.toString().toUpperCase();
+        }
     }
     @Getter
     public static class VersionInfo {

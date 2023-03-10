@@ -18,6 +18,9 @@ import me.romvnly.TownyPlus.configuration.Config;
 import me.romvnly.TownyPlus.configuration.Lang;
 import me.romvnly.TownyPlus.model.SavedCode;
 import me.romvnly.TownyPlus.model.SavedTownData;
+import me.romvnly.TownyPlus.util.DatabaseType;
+import me.romvnly.TownyPlus.util.Debug;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.sql.*;
@@ -28,6 +31,8 @@ public class Database {
     public String tablePrefix = Config.DB_TABLE_PREFIX;
     public String townTable = tablePrefix + "towns";
     public String codeTable = tablePrefix + "codes";
+    public DatabaseType dbType;
+    public String dateString = "datetime";
     public Database () throws SQLException {
         reload();
     }
@@ -57,6 +62,10 @@ public class Database {
     }
 
     public void initializeDatabase() throws SQLException {
+        if (dbType == DatabaseType.POSTGRESQL) {
+            dateString = "timestamp";
+        }
+
 
         Statement statement = getConnection().createStatement();
 
@@ -68,7 +77,7 @@ public class Database {
 
         statement.execute(sql);
 
-        String sql2 = "CREATE TABLE IF NOT EXISTS " + codeTable + " (code varchar(36) primary key, created_by varchar(36), created_on DateTime)";
+        String sql2 = String.format("CREATE TABLE IF NOT EXISTS " + codeTable + " (code varchar(36) primary key, created_by varchar(36), created_on %s)", dateString);
 
         statement.execute(sql2);
 
@@ -203,24 +212,50 @@ public class Database {
         HikariConfig config = new HikariConfig();
         config.setUsername(Config.DB_USERNAME);
         config.setPassword(Config.DB_PASSWORD);
+        // config.setDatabase(Config.DB_NAME);
+        config.addDataSourceProperty("useSSL", String.valueOf(Config.DB_USE_SSL));
+        config.addDataSourceProperty("requireSSL", String.valueOf(Config.DB_REQUIRE_SSL));
+        if (Config.DB_SSL_MODE != null && !Config.DB_SSL_MODE.equalsIgnoreCase("default") && !Config.DB_SSL_MODE.isBlank() && !Config.DB_SSL_MODE.isEmpty()) {
+        config.addDataSourceProperty("sslMode", Config.DB_SSL_MODE);
+        }
+        config.addDataSourceProperty("serverName", Config.DB_HOST);
+        config.addDataSourceProperty("port", String.valueOf(Config.DB_PORT));
+
+    
         config.setPoolName("TownyPlusPool");
         config.setConnectionTestQuery("SELECT 1");
 
         // database is unavariable
         if (Config.DB_TYPE.equalsIgnoreCase("mysql") || Config.DB_TYPE.equalsIgnoreCase("mariadb")) {
+            dbType = DatabaseType.MYSQL;
             config.setDriverClassName("com.mysql.jdbc.Driver");
-            config.setJdbcUrl(String.format("jdbc:mysql://%s:%s/%s?autoReconnect=true&useSSL=%s", Config.DB_HOST, Config.DB_PORT, Config.DB_NAME, Config.DB_USE_SSL));
         } else if (Config.DB_TYPE.equalsIgnoreCase("h2")) {
+            dbType = DatabaseType.H2;
             config.setDriverClassName(org.h2.Driver.class.getName());
-            config.setJdbcUrl(Config.DB_URL);
         }
         else if (Config.DB_TYPE.equalsIgnoreCase("sqlite")) {
+            dbType = DatabaseType.SQLITE;
             config.setDriverClassName(org.sqlite.JDBC.class.getName());
-            config.setJdbcUrl(Config.DB_URL);
+        }
+        else if (Config.DB_TYPE.equalsIgnoreCase("postgres") || Config.DB_TYPE.equalsIgnoreCase("postgressql") || Config.DB_TYPE.equalsIgnoreCase("postgresql")) {
+            
+            dbType = DatabaseType.POSTGRESQL;
+            config.setDriverClassName(org.postgresql.Driver.class.getName());
         }
         else {
             throw new SQLException("Invalid database type");
         }
+        if (!Config.DB_URL.equalsIgnoreCase("none") && !Config.DB_URL.equalsIgnoreCase("auto") && !Config.DB_URL.equalsIgnoreCase("default")) {
+            config.setJdbcUrl(Config.DB_URL);
+            }
+            else {
+                Debug.log("Setting JDBC URL to: " + "jdbc:" + dbType.toString().toLowerCase() + "://" + Config.DB_HOST + ":" + Config.DB_PORT + "/" + Config.DB_NAME);
+                config.setJdbcUrl("jdbc:" + dbType.toString().toLowerCase() + "://" + Config.DB_HOST + ":" + Config.DB_PORT + "/" + Config.DB_NAME);
+            }
+
+        config.addDataSourceProperty("useServerPrepStmts", true);
+        // config.setMaxPoolSize(20);
+        config.setLeakDetectionThreshold(5000);
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
