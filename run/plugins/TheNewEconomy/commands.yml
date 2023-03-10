@@ -1,0 +1,1440 @@
+Commands:
+  account:
+    Alias:
+      - acc
+    Permission: ""
+    Console: false
+    Player: true
+    Developer: false
+    Description: "Command help is currently not implemented for this."
+    Executor: "account_exe"
+    Sub:
+      pin:
+        Permission: ""
+        Console: false
+        Player: true
+        Developer: false
+        Description: ""
+        Executor: "pin_exe"
+        Sub:
+          reset:
+            Permission: ""
+            Console: false
+            Player: true
+            Developer: false
+            Description: ""
+            Executor: "pin_reset_exe"
+            Params:
+              Player:
+                Order: 0
+                Validation:
+                  Type: "String"
+                  MaxLength: 0
+
+                  Regex:
+                    Use: false
+                    Statement: ""
+                Optional: false
+                Complete: true
+                CompleteType: "player"
+          set:
+            Permission: ""
+            Console: false
+            Player: true
+            Developer: false
+            Description: ""
+            Executor: "pin_set_exe"
+            Params:
+              Pin:
+                Order: 0
+                Validation:
+                  Type: "String"
+                  MaxLength: 60
+                  Regex:
+                    Use: false
+                    Statement: ""
+                Optional: false
+                Complete: false
+                CompleteType: "player"
+              OldPin:
+                Order: 0
+                Validation:
+                  Type: "String"
+                  MaxLength: 60
+                  Regex:
+                    Use: false
+                    Statement: ""
+                Optional: true
+                Complete: false
+                CompleteType: "player"
+
+  currency:
+    Alias:
+      - cur
+      - tnecur
+    Permission: ""
+    Console: true
+    Player: true
+    Developer: false
+    Description: ""
+    Executor: "currency_exe"
+    Sub:
+      list:
+        Alias:
+          - l
+        Permission: "tne.currency.list"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Currency.List"
+        Executor: "currency_list_exe"
+        Params:
+          World:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: true
+            CompleteType: "world"
+      editor:
+        Permission: "tne.currency.editor"
+        Console: false
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Currency.Editor"
+        Executor: "currency_editor_exe"
+        Params:
+          Name:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: true
+            CompleteType: "currency"
+
+      rename:
+        Permission: "tne.currency.rename"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Currency.Rename"
+        Executor: "currency_rename_exe"
+        Params:
+          Name:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: false
+            CompleteType: "world"
+          NewName:
+            Order: 1
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: false
+            CompleteType: "world"
+      tiers:
+        Alias:
+          - t
+        Permission: "tne.currency.tiers"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Currency.Tiers"
+        Executor: "currency_tiers_exe"
+        Params:
+          Name:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: true
+            CompleteType: "currency"
+          World:
+            Order: 1
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: true
+            CompleteType: "world"
+  tnemodule:
+    Alias:
+      - tnem
+    Permission: ""
+    Console: true
+    Player: true
+    Developer: false
+    Description: ""
+    Executor: "tnemodule_exe"
+    Sub:
+      available:
+        Alias:
+          - avail
+        Permission: "tne.module.available"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Module.Available"
+        Executor: "module_available_exe"
+        Params:
+          URL:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: false
+            CompleteType: "world"
+      download:
+        Alias:
+          - dl
+        Permission: "tne.module.download"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Module.Download"
+        Executor: "module_download_exe"
+        Params:
+          Name:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "module"
+          URL:
+            Order: 1
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: false
+            CompleteType: "world"
+      info:
+        Alias:
+          - i
+        Permission: "tne.module.info"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Module.Info"
+        Executor: "module_info_exe"
+        Params:
+          Name:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "module"
+      list:
+        Alias:
+          - i
+        Permission: "tne.module.list"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Module.List"
+        Executor: "module_list_exe"
+      load:
+        Alias:
+          - l
+        Permission: "tne.module.load"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Module.Load"
+        Executor: "module_load_exe"
+        Params:
+          Name:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: false
+            CompleteType: "module"
+      reload:
+        Alias:
+          - r
+        Permission: "tne.module.reload"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Module.Reload"
+        Executor: "module_reload_exe"
+        Params:
+          Name:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "module"
+      unload:
+        Alias:
+          - u
+        Permission: "tne.module.unload"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Module.Unload"
+        Executor: "module_unload_exe"
+        Params:
+          Name:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "module"
+
+  convert:
+    Permission: "tne.command.convert"
+    Console: true
+    Player: true
+    Developer: false
+    Description: "/convert <from> - Converts all data from plugin <from>."
+    Executor: "convert_exe"
+
+  transaction:
+    Alias:
+      - trans
+    Permission: ""
+    Console: true
+    Player: true
+    Developer: false
+    Description: "Command help is currently not implemented for this."
+    Executor: "transaction_exe"
+    Sub:
+      away:
+        Permission: "tne.transaction.away"
+        Console: false
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Transaction.Away"
+        Executor: "transaction_away_exe"
+      history:
+        Alias:
+          - h
+        Permission: "tne.transaction.history"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Transaction.History"
+        Executor: "transaction_history_exe"
+      info:
+        Alias:
+          - i
+        Permission: "tne.transaction.info"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Transaction.Info"
+        Executor: "transaction_info_exe"
+      void:
+        Permission: "tne.transaction.void"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Transaction.Void"
+        Executor: "transaction_void_exe"
+
+  yediot:
+    Permission: ""
+    Console: false
+    Player: true
+    Developer: false
+    Description: ""
+    Executor: "yediot_exe"
+    Sub:
+      idiot:
+        Permission: ""
+        Console: true
+        Player: true
+        Developer: false
+        Description: "§a/yediot§f - Determine if a Yediot is near. http://www.urbandictionary.com/define.php?term=yediot"
+        Executor: "yediot_idiot_exe"
+  language:
+    Alias:
+      - lang
+    Permission: ""
+    Console: false
+    Player: true
+    Developer: false
+    Description: ""
+    Executor: "language_exe"
+    Sub:
+      current:
+        Permission: "tne.language.current"
+        Console: false
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Language.Current"
+        Executor: "language_current_exe"
+      list:
+        Permission: "tne.language.list"
+        Console: false
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Language.List"
+        Executor: "language_list_exe"
+      reload:
+        Permission: "tne.language.reload"
+        Console: false
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Language.Reload"
+        Executor: "language_reload_exe"
+      set:
+        Permission: "tne.language.set"
+        Console: false
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Language.Set"
+        Executor: "language_set_exe"
+        Params:
+          Name:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "language"
+  tnedev:
+    Alias:
+      - theneweconomydev
+    Permission: ""
+    Console: true
+    Player: true
+    Developer: true
+    Description: ""
+    Executor: "tnedev_exe"
+    Sub:
+      debug:
+        Permission: ""
+        Console: false
+        Player: true
+        Developer: true
+        Description: "/tnedev debug <console/log> - Display the configuration, or balance sharing worlds for this world."
+        Executor: "dev_debug_exe"
+        Params:
+          Name:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: false
+            CompleteType: "module"
+  money:
+    Permission: ""
+    Console: true
+    Player: true
+    Developer: false
+    Description: ""
+    Executor: "money_exe"
+    Sub:
+      balance:
+        Alias:
+          - bal
+          - mybal
+        Permission: "tne.money.balance"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Money.Balance"
+        Executor: "money_balance_exe"
+        Short:
+          - bal
+          - balance
+          - mybal
+        Params:
+          World:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: true
+            CompleteType: "world"
+          Currency:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: true
+            CompleteType: "currency"
+      convert:
+        Permission: "tne.money.convert"
+        Console: false
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Money.Convert"
+        Executor: "money_convert_exe"
+        Params:
+          Amount:
+            Order: 0
+            Validation:
+              Type: "BigDecimal"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "decimal"
+          To:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: false
+            CompleteType: "world"
+          From:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: false
+            CompleteType: "currency"
+      consolidate:
+        Permission: "tne.money.consolidate"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Money.Consolidate"
+        Executor: "money_consolidate_exe"
+        Params:
+          Player:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: true
+            CompleteType: "player"
+      give:
+        Alias:
+          - "+"
+        Permission: "tne.money.give"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Money.Give"
+        Executor: "money_give_exe"
+        Params:
+          Player:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "player"
+          Amount:
+            Order: 1
+            Validation:
+              Type: "BigDecimal"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "decimal"
+          World:
+            Order: 2
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: true
+            CompleteType: "world"
+          Currency:
+            Order: 3
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: true
+            CompleteType: "currency"
+      note:
+        Permission: "tne.money.note"
+        Console: false
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Money.Note"
+        Executor: "money_note_exe"
+        Params:
+          Amount:
+            Order: 0
+            Validation:
+              Type: "BigDecimal"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "decimal"
+          Currency:
+            Order: 1
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: true
+            CompleteType: "currency"
+      other:
+        Short:
+          - balo
+          - balother
+          - balanceother
+        Permission: "tne.money.other"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "/money other <player> - Check the balance of another player."
+        Executor: "money_other_exe"
+        Params:
+          Player:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "player"
+      pay:
+        Alias:
+          - "-+"
+        Permission: "tne.money.pay"
+        Console: false
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Money.Pay"
+        Executor: "money_pay_exe"
+        Params:
+          Player:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "player"
+          Amount:
+            Order: 1
+            Validation:
+              Type: "BigDecimal"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "decimal"
+          Currency:
+            Order: 2
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: true
+            CompleteType: "currency"
+      payfrom:
+        Short:
+          - payf
+          - payg
+          - ghostpay
+        Permission: "tne.money.payfrom"
+        Console: false
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Money.PayFrom"
+        Executor: "money_payfrom_exe"
+        Params:
+          Account:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "player"
+          Player:
+            Order: 1
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "player"
+          Amount:
+            Order: 2
+            Validation:
+              Type: "BigDecimal"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "decimal"
+          Currency:
+            Order: 3
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: true
+            CompleteType: "currency"
+      set:
+        Alias:
+          - "="
+        Permission: "tne.money.set"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Money.Set"
+        Executor: "money_set_exe"
+        Params:
+          Player:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "player"
+          Amount:
+            Order: 1
+            Validation:
+              Type: "BigDecimal"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "decimal"
+          World:
+            Order: 2
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: true
+            CompleteType: "world"
+          Currency:
+            Order: 3
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: true
+            CompleteType: "currency"
+      setall:
+        Alias:
+          - "=a"
+        Permission: "tne.money.setall"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Money.SetAll"
+        Executor: "money_setall_exe"
+        Params:
+          Amount:
+            Order: 0
+            Validation:
+              Type: "BigDecimal"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "decimal"
+          World:
+            Order: 1
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: true
+            CompleteType: "world"
+      take:
+        Alias:
+          - "-"
+        Permission: "tne.money.take"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Money.Take"
+        Executor: "money_take_exe"
+        Params:
+          Player:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "player"
+          Amount:
+            Order: 1
+            Validation:
+              Type: "BigDecimal"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "decimal"
+          World:
+            Order: 2
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: true
+            CompleteType: "world"
+          Currency:
+            Order: 3
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: true
+            CompleteType: "currency"
+      top:
+        Permission: "tne.money.top"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Money.Top"
+        Executor: "money_top_exe"
+        Params:
+          Page:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: false
+            CompleteType: "player"
+  tneconfig:
+    Alias:
+      - tnec
+    Permission: ""
+    Console: true
+    Player: true
+    Developer: false
+    Description: "Command help is currently not implemented for this."
+    Executor: "tneconfig_exe"
+    Sub:
+      get:
+        Permission: "tne.config.get"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Config.Get"
+        Executor: "config_get_exe"
+        Params:
+          Node:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: false
+            CompleteType: "player"
+          Configuration:
+            Order: 1
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: false
+            CompleteType: "player"
+      save:
+        Permission: "tne.config.save"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Config.Save"
+        Executor: "config_save_exe"
+        Params:
+          Configuration:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: false
+            CompleteType: "player"
+      set:
+        Permission: "tne.config.set"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Config.Set"
+        Executor: "config_set_exe"
+        Params:
+          Node:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: false
+            CompleteType: "player"
+          Value:
+            Order: 1
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: false
+            CompleteType: "player"
+          Configuration:
+            Order: 2
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: false
+            CompleteType: "player"
+      tneget:
+        Alias:
+          - tget
+        Permission: "tne.config.tneget"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Config.TNEGet"
+        Executor: "config_tneget_exe"
+        Params:
+          Node:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: false
+            CompleteType: "player"
+          World:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: true
+            CompleteType: "world"
+          Player:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: true
+            CompleteType: "player"
+  tne:
+    Alias:
+      - eco
+      - theneweconomy
+    Permission: "tne.admin"
+    Console: true
+    Player: true
+    Developer: false
+    Description: "Command help is currently not implemented for this."
+    Executor: "tne_exe"
+    Sub:
+      account:
+        Permission: "tne.admin.account"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "/tne account <username> - Returns a count of how many accounts are associated with a display name, debug command."
+        Executor: "admin_account_exe"
+      balance:
+        Alias:
+          - bal
+        Permission: "tne.admin.balance"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Admin.Balance"
+        Executor: "admin_balance_exe"
+        Params:
+          Player:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "player"
+          World:
+            Order: 1
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: true
+            CompleteType: "world"
+          Currency:
+            Order: 2
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: true
+            CompleteType: "currency"
+      build:
+        Alias:
+          - b
+        Permission: "tne.admin.build"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Admin.Build"
+        Executor: "admin_build_exe"
+      caveats:
+        Permission: "tne.admin.caveats"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Admin.Caveats"
+        Executor: "admin_caveats_exe"
+      create:
+        Permission: "tne.admin.create"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Admin.Create"
+        Executor: "admin_create_exe"
+        Params:
+          Player:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: false
+            CompleteType: "player"
+          Balance:
+            Order: 0
+            Validation:
+              Type: "BigDecimal"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "decimal"
+      debug:
+        Permission: "tne.admin.debug"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Admin.Debug"
+        Executor: "admin_debug_exe"
+      delete:
+        Permission: "tne.admin.delete"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Admin.Delete"
+        Executor: "admin_delete_exe"
+        Params:
+          Player:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "player"
+      extract:
+        Permission: "tne.admin.extract"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Admin.Extract"
+        Executor: "admin_extract_exe"
+      id:
+        Permission: "tne.admin.id"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Admin.ID"
+        Executor: "admin_id_exe"
+        Params:
+          Player:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "player"
+      idexport:
+        Alias:
+          - ide
+        Permission: "tne.admin.ide"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "/tne idexport"
+        Executor: "admin_idexport_exe"
+      maintenance:
+        Permission: "tne.admin.maintenance"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Admin.Maintenance"
+        Executor: "admin_maintenance_exe"
+      menu:
+        Permission: "tne.admin.menu"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Admin.Menu"
+        Executor: "admin_menu_exe"
+        Params:
+          Player:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "player"
+      player:
+        Permission: "tne.admin.player"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "/tne player <username> - Checks if the specified account is a player or not."
+        Executor: "admin_player_exe"
+        Params:
+          Player:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "player"
+      purge:
+        Permission: "tne.admin.purge"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Admin.Purge"
+        Executor: "admin_purge_exe"
+      reload:
+        Permission: "tne.admin.reload"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Admin.Reload"
+        Executor: "admin_reload_exe"
+        Params:
+          Configuration:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: true
+            CompleteType: "config"
+      reset:
+        Permission: "tne.admin.reset"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Admin.Reset"
+        Executor: "admin_reset_exe"
+      restore:
+        Permission: "tne.admin.restore"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Admin.Restore"
+        Executor: "admin_restore_exe"
+      save:
+        Permission: "tne.admin.save"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Admin.Save"
+        Executor: "admin_save_exe"
+      status:
+        Permission: "tne.admin.status"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Admin.Status"
+        Executor: "admin_status_exe"
+        Params:
+          Player:
+            Order: 0
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: false
+            Complete: true
+            CompleteType: "player"
+          Status:
+            Order: 1
+            Validation:
+              Type: "String"
+              MaxLength: 0
+              Regex:
+                Use: false
+                Statement: ""
+            Optional: true
+            Complete: false
+            CompleteType: "player"
+      upload:
+        Alias:
+          - up
+        Permission: "tne.admin.upload"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Admin.Upload"
+        Executor: "admin_upload_exe"
+      version:
+        Alias:
+          - v
+        Permission: "tne.admin.version"
+        Console: true
+        Player: true
+        Developer: false
+        Description: "Messages.Commands.Admin.Version"
+        Executor: "admin_version_exe"
+
+Completion:
+
+  Player:
+
+    Limit: 5
+
+  Int:
+
+    Values:
+      - 1
+      - 5
+      - 10
+      - 50
+      - 100
+
+  decimal:
+
+    Values:
+      - .5
+      - 1
+      - 25
+      - 50
+      - 100
+
+  Configuration:
+
+    Values:
+      - main
+      - language
+      - world
+      - player
+      - item
