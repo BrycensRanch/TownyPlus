@@ -45,7 +45,8 @@ public class WebUtils {
     public static String getToken() {
         if (Config.githubPAT != null && !Config.githubPAT.isEmpty() && !Config.githubPAT.equalsIgnoreCase("none")) {
             return Config.githubPAT;
-        } else if (System.getenv("GITHUB_TOKEN") != null && !System.getenv("GITHUB_TOKEN").isEmpty() && !System.getenv("GITHUB_TOKEN").equalsIgnoreCase("none")) {
+        }
+         else if (System.getenv("GITHUB_TOKEN") != null && !System.getenv("GITHUB_TOKEN").isEmpty() && !System.getenv("GITHUB_TOKEN").equalsIgnoreCase("none")) {
             return System.getenv("GITHUB_TOKEN");
         } else {
             return null;
