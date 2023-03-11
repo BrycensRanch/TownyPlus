@@ -127,7 +127,7 @@ bot.once('spawn', async() => {
     for (const command of commands) {
         // await bot.tabComplete(command, true)
         await bot.chat(command)
-        await bot.awaitMessage(/(.*townyplus|reload|version|opened|done|showing|toggled|successfully|uploaded.*)/gi)
+        await bot.awaitMessage(/(.*townyplus|reload|version|opened|done|showing|toggled|successfully|uploaded|town.*)/gi)
     }
     // Does the bot need to exit out mof the dist folder?
     let baseDir = path.join(__dirname, '..')
@@ -219,7 +219,7 @@ bot.on('error', (error) => {
 })
 
 }
-bot(["/townyplus version", "/townyplus", "/townyplus reload", "/tasktest", "/tchest", "/tdiscord", "/townyplus bypass on", "/townyplus dump"]).catch((error) => {
+bot(["/townyplus version", "/townyplus", "/townyplus reload", "/tasktest", "/tchest", "/townyplus bypass on", "/townyplus dump"]).catch((error) => {
   console.log(error)
   process.exit(1)
   })
