@@ -116,7 +116,7 @@ jobs:
         uses: ./.github/actions/pnpm-install
 
       - name: Build
-        run: ./gradlew build -x test -x checkLicenseMain
+        run: ./gradlew build -x test -x checkLicenseMain -x spotbugsMain -x spotlessCheck -x checkstyleMain -x checkstyleTest
         working-directory: ${{ github.workspace }}
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
