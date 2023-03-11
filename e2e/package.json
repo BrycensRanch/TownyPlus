@@ -5,12 +5,17 @@
   "main": "test.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node-dev --loader ts-node/esm bot.ts",
+    "start": "node dist/bot.js",
+    "build": "tsc",
+    "e2e": "concurrently \"cd .. && .\/gradlew runServer\" \"pnpm sleep 45s && pnpm build && pnpm start\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "concurrently": "^7.6.0",
     "execa": "^7.0.0",
     "jest": "^29.5.0",
     "minecraft-data": "^3.30.0",
@@ -21,6 +26,8 @@
     "node-dev": "^8.0.0",
     "prismarine-viewer": "^1.24.0",
     "rcon-client": "^4.2.3",
+    "shx": "^0.3.4",
+    "sleep.cmd": "^2.0.21",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1"
   },

@@ -76,6 +76,9 @@ public final class ReloadCommand extends BaseCommand {
                     logger.warn("Failed to register with PlaceholderAPI!");
                 }
             }
+            if (this.plugin.database != null) {
+                this.plugin.database.reload();
+            }
             if (this.plugin.restAPI != null && this.plugin.restAPI.active) {
                 this.plugin.restAPI.stopServer();
             }

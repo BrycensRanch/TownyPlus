@@ -254,14 +254,13 @@ public class Database {
             }
 
         config.addDataSourceProperty("useServerPrepStmts", true);
-        // config.setMaxPoolSize(20);
-        config.setLeakDetectionThreshold(5000);
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+//        config.setLeakDetectionThreshold(60*1000);
+
         ds = new HikariDataSource(config);
         connection = ds.getConnection();
-        ds.validate();
         TownyPlusMain.getInstance().logger.info(Lang.parse("<green>Database connection established"));
         initializeDatabase();
     }
