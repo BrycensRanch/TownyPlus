@@ -48,10 +48,10 @@ settings:
     # Case insensitive
     type: sqlite
     # JDBC connection string
-    # If you want to use SQLite, your URL would be:
-    # jdbc:sqlite:./plugins/TownyPlus/data.db
+    # If you want to use h2, your URL would be:
+    # jdbc:h2:./plugins/TownyPlus/data.db
     # You can also put 'none' to specify that you want the plugin to generate a JDBC connection string for you based off of what you configured.
-    url: jdbc:h2:./plugins/TownyPlus/data.db
+    url: jdbc:sqlite:./plugins/TownyPlus/data.db
     host: localhost
     port: 3306
     # The name of the database to use
