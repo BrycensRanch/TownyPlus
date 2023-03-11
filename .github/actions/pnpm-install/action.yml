@@ -54,6 +54,7 @@ runs:
 
     - name: Install dependencies
       shell: bash
+      working-directory: ${{ github.workspace }}/e2e
       run: pnpm install --frozen-lockfile --strict-peer-dependencies --prefer-offline
       env:
         # Other environment variables
