@@ -110,7 +110,8 @@ jobs:
         run: chmod +x gradlew
 
       - name: Test
-        run: ./gradlew test -x checkLicenseMain
+        working-directory: e2e
+        run: pnpm e2e
 
         # I honestly detest Minecraft plugin unit testing and I don't think it's worth the time to write tests for a project like this. 
         # I'm not going to write tests for this project, but I will leave the code here in case you want to write tests for your own project.
@@ -118,16 +119,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
-      - name: Create Coverage
-        run: ./gradlew jacocoTestReport
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-
-      - name: Upload CodeCov Report
-        uses: codecov/codecov-action@v3
-        continue-on-error: true
-        with:
-          file: "**/build/reports/jacoco/**/*.xml"
+#      - name: Create Coverage
+#        run: ./gradlew jacocoTestReport
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+#
+#      - name: Upload CodeCov Report
+#        uses: codecov/codecov-action@v3
+#        continue-on-error: true
+#        with:
+#          file: "**/build/reports/jacoco/**/*.xml"
 
 #       - name: Publish Unit Test Results
 #         uses: EnricoMi/publish-unit-test-result-action@v1.40
