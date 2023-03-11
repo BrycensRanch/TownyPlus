@@ -91,6 +91,9 @@ jobs:
 
     runs-on: ubuntu-latest
     needs: build
+    defaults:
+      run:
+        working-directory: e2e
     steps:
       - name: Check out current repository
         uses: actions/checkout@v3
@@ -107,14 +110,12 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Grant execute permission to gradlew
-        run: chmod +x gradlew
+        run: chmod +x ../gradlew
 
       - name: 📥 Monorepo install all deps & pnpm
         uses: ./.github/actions/pnpm-install
-        working-directory: ./e2e
 
       - name: Test
-        working-directory: ./e2e
         run: pnpm e2e
 
         # I honestly detest Minecraft plugin unit testing and I don't think it's worth the time to write tests for a project like this. 
