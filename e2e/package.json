@@ -11,7 +11,7 @@
     "build": "tsc",
     "yq": "wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq",
     "pree2e": "pnpm yq && yq -i '.BotToken = strenv(DISCORDSRV_TOKEN)' ../run/config/config.yml && shx mkdir ../run/plugins/DiscordSRV && mv ../run/config/config.yml ../run/plugins/DiscordSRV",
-    "e2e": "concurrently \"cd .. && .\/gradlew runServer\" \"sleep 90 && pnpm build && pnpm start\""
+    "e2e": "concurrently \"cd .. && ./gradlew runServer\" \"sleep 90 && pnpm build && pnpm start\""
   },
   "keywords": [],
   "author": "",
@@ -29,7 +29,6 @@
     "prismarine-viewer": "^1.24.0",
     "rcon-client": "^4.2.3",
     "shx": "^0.3.4",
-    "sleep.cmd": "^2.0.21",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1"
   },
