@@ -115,6 +115,10 @@ jobs:
       - name: 📥 Monorepo install all deps & pnpm
         uses: ./.github/actions/pnpm-install
 
+      - name: Build
+        run: ../gradlew build -x test -x checkLicenseMain
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Test
         run: pnpm e2e
 
