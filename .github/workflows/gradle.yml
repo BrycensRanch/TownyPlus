@@ -111,9 +111,10 @@ jobs:
 
       - name: 📥 Monorepo install all deps & pnpm
         uses: ./.github/actions/pnpm-install
+        working-directory: ./e2e
 
       - name: Test
-        working-directory: e2e
+        working-directory: ./e2e
         run: pnpm e2e
 
         # I honestly detest Minecraft plugin unit testing and I don't think it's worth the time to write tests for a project like this. 
