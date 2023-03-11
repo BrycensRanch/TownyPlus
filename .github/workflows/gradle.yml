@@ -117,7 +117,7 @@ jobs:
 
       - name: Build
         run: ./gradlew build -x test -x checkLicenseMain
-        working-directory: ../
+        working-directory: ${{ github.workspace }}
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Test
