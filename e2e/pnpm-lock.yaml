@@ -14,7 +14,6 @@ specifiers:
   prismarine-viewer: ^1.24.0
   rcon-client: ^4.2.3
   shx: ^0.3.4
-  sleep.cmd: ^2.0.21
   ts-jest: ^29.0.5
   ts-node: ^10.9.1
   typescript: ^4.9.5
@@ -32,7 +31,6 @@ dependencies:
   prismarine-viewer: 1.24.0
   rcon-client: 4.2.3
   shx: 0.3.4
-  sleep.cmd: 2.0.21
   ts-jest: 29.0.5_doipufordlnvh5g4adbwayvyvy
   ts-node: 10.9.1_alpjt73dvgv6kni625hu7f2l4m
 
@@ -3395,11 +3393,6 @@ packages:
   /slash/3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
-    dev: false
-
-  /sleep.cmd/2.0.21:
-    resolution: {integrity: sha512-gKj3N5Kq0wrvc5utL6DkomFZ4uZFlo/XxK+zu1KCgrn6gFqRiWKiurR/6dTHzhkW3lUJMNlCYxFYutR2mShuGA==}
-    hasBin: true
     dev: false
 
   /smart-buffer/4.2.0:
