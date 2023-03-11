@@ -1,3 +1,34 @@
+## [1.1.0-alpha.9](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.8...v1.1.0-alpha.9) (2023-03-11)
+
+
+### 🧪 Code Test
+
+* **e2e:** add e2e tests ([f1e7040](https://github.com/BrycensRanch/TownyPlus/commit/f1e70408e0499830cbdcfc69e16c9f1ff3a53936))
+
+
+### 🐛 Bugfix 🐛
+
+* **default config:** use sqlite jdbc url ([7c0e2f9](https://github.com/BrycensRanch/TownyPlus/commit/7c0e2f923a1f3eff8fa10bfa56889b32f7ec9594))
+
+
+### 📦️ Build and CI
+
+* **e2e:** bump wait time ([c7ffd14](https://github.com/BrycensRanch/TownyPlus/commit/c7ffd14902e0ff3b5bbbfdbd96efe718e36d60d2))
+* **e2e:** ci ([2d2accb](https://github.com/BrycensRanch/TownyPlus/commit/2d2accb587dad66e469a4442de87e730a68e858c))
+* **e2e:** dont test tdiscord ([94203a3](https://github.com/BrycensRanch/TownyPlus/commit/94203a3786c9090141d18ac6aa641da7bfd5afe8))
+* **e2e:** install in e2e dir ([c191784](https://github.com/BrycensRanch/TownyPlus/commit/c191784f017c4d2e3a8dfe2cf92c981745794e11))
+* **e2e:** install in e2e dir ([b49e9e8](https://github.com/BrycensRanch/TownyPlus/commit/b49e9e8d72531bcc833a1139a62cdbe38038d92b))
+* **e2e:** install in e2e dir ([c17cff3](https://github.com/BrycensRanch/TownyPlus/commit/c17cff3394e9d2320b24c202b3f58dc41c13cb15))
+* **e2e:** install in e2e dir ([86a3393](https://github.com/BrycensRanch/TownyPlus/commit/86a33939e8a644d6045d03d20edc6dddfeeb590a))
+* **e2e:** install pnpm for testing ([2c1d2d9](https://github.com/BrycensRanch/TownyPlus/commit/2c1d2d9847d93d6c0f254cdffcc9a630eedb8ada))
+* **e2e:** kill others when done ([2864425](https://github.com/BrycensRanch/TownyPlus/commit/28644258474f6c878309625a2cd5663d6cf89a30))
+* **e2e:** kill others when done ([100e29c](https://github.com/BrycensRanch/TownyPlus/commit/100e29cc1ecb235fad1136634a3c50132af43e1c))
+* **e2e:** kill others when done ([354fe15](https://github.com/BrycensRanch/TownyPlus/commit/354fe15eabbd5fcaca5c71f9fcc3d3f24fcd2b45))
+* **e2e:** kill others when done ([8a65441](https://github.com/BrycensRanch/TownyPlus/commit/8a654411cf597c66c2727242dc22243519af6612))
+* **e2e:** remove sleep dep ([437f227](https://github.com/BrycensRanch/TownyPlus/commit/437f2277a3b35083e69bb5fecbbc2ebc658b7fe9))
+* **e2e:** run tests on ci ([2c2f973](https://github.com/BrycensRanch/TownyPlus/commit/2c2f973f77ce097f9ab278e8379f9ee6ae819ce2))
+* **e2e:** update deps ([56998b2](https://github.com/BrycensRanch/TownyPlus/commit/56998b2fea735f12903854a65a4c7512cde35756))
+
 ## [1.1.0-alpha.8](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.7...v1.1.0-alpha.8) (2023-03-11)
 
 
