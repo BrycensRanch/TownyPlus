@@ -109,6 +109,9 @@ jobs:
       - name: Grant execute permission to gradlew
         run: chmod +x gradlew
 
+      - name: 📥 Monorepo install all deps & pnpm
+        uses: ./.github/actions/pnpm-install
+
       - name: Test
         working-directory: e2e
         run: pnpm e2e
