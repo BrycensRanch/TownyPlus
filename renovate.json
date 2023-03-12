@@ -7,6 +7,12 @@
   "prCreation": "not-pending",
   "semanticCommits": "enabled",
   "automerge": true,
+  "gradle": {
+    "enabled": true
+  },
+  "labels": [
+    "dependencies"
+  ],
   "automergeSchedule": [
     "after 10pm every weekday",
     "before 5am every weekday",
@@ -16,7 +22,7 @@
   "prHourlyLimit": 0,
   "baseBranches": ["alpha"],
   "branchConcurrentLimit": 20,
-  "baseBranches": ["alpha"],
+  "baseBranches": ["alpha", "beta"],
   "branchPrefix": "dep/",
   "branchPrefixOld": "renovate/",
   "timezone": "America/New_York"
