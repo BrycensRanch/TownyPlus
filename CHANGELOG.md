@@ -1,3 +1,22 @@
+## [1.1.0-alpha.10](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.9...v1.1.0-alpha.10) (2023-03-12)
+
+
+### 🐛 Bugfix 🐛
+
+* localize more functionality ([e5a62ce](https://github.com/BrycensRanch/TownyPlus/commit/e5a62ce2247584499c59778ad3f0178f5e000f16))
+* **rest:** use debug instead of regular logger ([b65ab59](https://github.com/BrycensRanch/TownyPlus/commit/b65ab592aedd859bb07f3a21b1127e6b06c81711))
+* use cloud duration argument instead of custom ([db3de9e](https://github.com/BrycensRanch/TownyPlus/commit/db3de9e441fb7688a84a9a646112b096e43f973a))
+
+
+### 🔨  Misc.
+
+* prepare for bypass command to be configurable ([e08c2fd](https://github.com/BrycensRanch/TownyPlus/commit/e08c2fd365c29f28a27985874c2e174819006545))
+
+
+### 🧪 Code Test
+
+* **server:** update server files ([422768c](https://github.com/BrycensRanch/TownyPlus/commit/422768ceff4df900e258b146e14c4860a9eee8cb))
+
 ## [1.1.0-alpha.9](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.8...v1.1.0-alpha.9) (2023-03-11)
 
 
