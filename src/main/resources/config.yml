@@ -24,6 +24,7 @@ settings:
   # Keep in mind that auto-updating is not recommended by a majority of the Minecraft community, but, it's your choice.
   # The plugin will never auto-update to a version that isn't on the same release channel or major version.
   # For example, if you're on 1.0.0, it will never auto-update to 2.0.0
+  # Since that it indicates a major change in the plugin.
   # If you're on 1.0.0, it will auto-update to 1.1.0
   # If you're on 1.0.11-alpha.4, it will auto-update to 1.0.11-alpha.5
   # If you're on 1.0.11-alpha.4, it will not auto-update to 1.0.12
@@ -41,6 +42,30 @@ settings:
   # Basic gist of it is that it will log towny actions, CoreProtect logs, and send a message to Discord with the logs.
   coreprotect:
     enabled: true
+
+  bypass:
+    # Whether to enable the bypass command
+    # This command allows you to bypass towny restrictions
+    # This is useful for admins that need to do something that would normally be restricted
+    # For example, if you're an admin, and you need to break a block in a town, you can use this command to bypass the towny restrictions
+    # This command is only available to players with the townyplus.bypass permission
+    enabled: true
+    # The default duration of the bypass (in 1d2h3m4s format)
+    # This is the default duration that will be used if the player didn't specify a duration
+    # If you want to disable the default duration, set this to 0s
+    default-duration: 30s
+    # The maximum duration of the bypass (in 1d2h3m4s format)
+    # This is the maximum duration that a player can bypass towny restrictions for
+    # If you want to disable the maximum duration, set this to 0s
+    # If the player has the townyplus.bypass.max-duration permission, they will be able to bypass towny restrictions for as long as they want
+    # However, if the player doesn't have the townyplus.bypass.max-duration permission, they will be able to bypass towny restrictions for the duration specified in this setting
+    max-duration: 30s
+    # The cooldown of the bypass command (in 1d2h3m4s format)
+    # This is the cooldown that will be applied to the bypass command
+    # If you want to disable the cooldown, set this to 0s
+    cooldown: 10s
+
+
 
   database:
     # The type of database to use
