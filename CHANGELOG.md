@@ -1,3 +1,10 @@
+## [1.1.0-alpha.11](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.10...v1.1.0-alpha.11) (2023-03-12)
+
+
+### 🐛 Bugfix 🐛
+
+* **build:** declare cloud-annotations as annotationProcessor ([c1d0219](https://github.com/BrycensRanch/TownyPlus/commit/c1d02196d4c0f3ed70e9faf58befa871563ac66d))
+
 ## [1.1.0-alpha.10](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.9...v1.1.0-alpha.10) (2023-03-12)
 
 
