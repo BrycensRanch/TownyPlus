@@ -375,7 +375,7 @@ channels:
     distance: 0
     cooldown: 0
     bungeecord: false
-    alias: d
+    alias: townc
     permissions: None
     speak_permissions: None
     channel_prefix: '&f[&dTown&f]'
@@ -390,7 +390,7 @@ channels:
     distance: 0
     cooldown: 0
     bungeecord: false
-    alias: d
+    alias: nationc
     permissions: None
     speak_permissions: None
     channel_prefix: '&f[&dNation&f]'
