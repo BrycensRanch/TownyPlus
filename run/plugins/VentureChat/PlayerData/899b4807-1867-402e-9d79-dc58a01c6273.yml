@@ -1,5 +1,5 @@
 name: Romvnly
-current: Town
+current: Nation
 ignores: ''
 listen: Nation,Trade,Help,Announcement,Donator,Town,Network,Staff,Local,Global
 mutes: {}
@@ -13,4 +13,4 @@ commandspy: false
 rangedspy: false
 messagetoggle: true
 bungeetoggle: true
-date: 2023/Mar/11 14:11:28
+date: 2023/Mar/12 12:56:41
