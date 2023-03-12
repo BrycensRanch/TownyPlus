@@ -11,6 +11,7 @@
 package me.romvnly.TownyPlus.command.commands;
 
 
+import cloud.commandframework.arguments.standard.DurationArgument;
 import cloud.commandframework.arguments.standard.StringArgument;
 import cloud.commandframework.bukkit.parsers.selector.SinglePlayerSelectorArgument;
 import cloud.commandframework.context.CommandContext;
@@ -21,6 +22,7 @@ import me.romvnly.TownyPlus.command.CommandManager;
 import me.romvnly.TownyPlus.configuration.Lang;
 import me.romvnly.TownyPlus.util.CommandUtil;
 import me.romvnly.TownyPlus.util.Constants;
+import me.romvnly.TownyPlus.util.Debug;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
@@ -116,7 +118,7 @@ public final class BypassCommand extends BaseCommand {
         this.commandManager.registerSubcommand(builder ->
                 builder.literal("bypass").meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.miniMessage().deserialize(Lang.COMMAND_BYPASS_DESCRIPTION))
                         .argument(toggleArgument, CommandUtil.description("On/off to force enable/disable"))
-                        .argument(timeArgument, CommandUtil.description("Duration to bypass towny's protections on Towns"))
+                        .argument(DurationArgument.optional("time", "30s"), CommandUtil.description("Duration to bypass towny's protections on Towns"))
                         .argument(SinglePlayerSelectorArgument.optional("player"), CommandUtil.description("Defaults to the executing player if unspecified (console must specify a player)"))
                         .permission(Constants.BYPASS_PERMISSION)
                         .handler(this::executeBypass));
@@ -139,10 +141,11 @@ public final class BypassCommand extends BaseCommand {
         }
         Duration time;
         try {
-            time = Duration.ofMillis(parseDuration(context.getOrDefault("time", "30s")));
-        } catch (IllegalArgumentException e) {
-            sender.sendMessage(MiniMessage.miniMessage().deserialize("<dark_red>That's not a time duration!</dark_red>"));
-            return;
+            time = context.get("time");
+        } catch (
+                NullPointerException e) {
+            time= Duration.ofSeconds(30);
+            Debug.log("Time was null, setting to 30 seconds");
         }
         if (!toggled) time = null;
         Player target = CommandUtil.resolvePlayer(context, plugin);
