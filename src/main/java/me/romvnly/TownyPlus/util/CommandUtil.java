@@ -15,6 +15,7 @@ import cloud.commandframework.context.CommandContext;
 import cloud.commandframework.minecraft.extras.RichDescription;
 import me.romvnly.TownyPlus.TownyPlusMain;
 import me.romvnly.TownyPlus.command.exception.CompletedSuccessfullyException;
+import me.romvnly.TownyPlus.configuration.Lang;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
@@ -36,13 +37,13 @@ public final class CommandUtil {
             if (rawSender instanceof Player) {
                 return (Player) rawSender;
             }
-            sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>You must specify a target player when running this command from console"));
+            Lang.send(sender, Lang.CONSOLE_MUST_SPECIFY_PLAYER);
             throw new CompletedSuccessfullyException();
         }
 
         final Player targetPlayer = selector.getPlayer();
         if (targetPlayer == null) {
-            sender.sendMessage(MiniMessage.miniMessage().deserialize("<red>No player found for input '<input>'", Placeholder.unparsed("input", selector.getSelector())));
+            Lang.send(sender, Lang.parse(Lang.PLAYER_NOT_FOUND_FOR_INPUT, Placeholder.unparsed("input", selector.getSelector())));
             throw new CompletedSuccessfullyException();
         }
 
@@ -50,6 +51,6 @@ public final class CommandUtil {
     }
 
     public static @NonNull RichDescription description(final @NonNull String miniMessage) {
-        return RichDescription.of(MiniMessage.miniMessage().deserialize(miniMessage));
+        return RichDescription.of(Lang.parse(miniMessage));
     }
 }

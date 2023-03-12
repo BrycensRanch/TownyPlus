@@ -105,7 +105,8 @@ public final class Lang {
     public static String PAUSED_RENDER = "<green>Paused renders for <world>";
     @LangKey("unpaused-renders")
     public static String UNPAUSED_RENDER = "<green>Unpaused renders for <world>";
-
+    @LangKey("command.message.not-an-valid-toggle")
+    public static String NOT_AN_VALID_TOGGLE = "<red><bold><toggles></bold>Not is not a valid toggle. Valid toggles: <toggles>";
     @LangKey("command.message.console-must-specify-player")
     public static String CONSOLE_MUST_SPECIFY_PLAYER = "<red>You must specify a target player when running this command from console";
     @LangKey("command.message.player-not-found-for-input")
@@ -207,22 +208,27 @@ public final class Lang {
     // @LangKey("log.scanning-region-progress-with-regions")
     // public static String LOG_RENDER_PROGRESS_WITH_REGIONS = "<gray>(</gray><yellow><percent></yellow><gray>)</gray> <dark_aqua>World<gray>:</gray> <yellow><world></yellow> Regions<gray>:</gray> <yellow><current_regions></yellow><gray>/</gray><yellow><total_regions></yellow> Chunks<gray>:</gray> <yellow><current_chunks></yellow><gray>/</gray><yellow><total_chunks></yellow> Elapsed<gray>:</gray> <yellow><elapsed></yellow> ETA<gray>:</gray> <yellow><eta></yellow> Rate<gray>:</gray> <yellow><rate></yellow> cps";
 
-    // @LangKey("log.internal-web-disabled")
-    // public static String LOG_INTERNAL_WEB_DISABLED = "<green>Internal webserver is disabled in config.yml";
-    // @LangKey("log.internal-web-started")
-    // public static String LOG_INTERNAL_WEB_STARTED = "<green>Internal webserver running on <bind>:<port>";
-    // @LangKey("log.internal-web-stopped")
-    // public static String LOG_INTERNAL_WEB_STOPPED = "<green>Internal webserver stopped";
+     @LangKey("log.internal-web-disabled")
+     public static String LOG_INTERNAL_WEB_DISABLED = "<green>Internal webserver is disabled in config.yml";
+     @LangKey("log.internal-web-starting")
+        public static String LOG_INTERNAL_WEB_STARTING = "<green>Starting internal webserver";
+     @LangKey("log.internal-web-started")
+     public static String LOG_INTERNAL_WEB_STARTED = "<green>Internal webserver running on <bind>:<port>";
 
-    // // Colorless console log messages
-    // @LangKey("log.internal-web-start-error")
-    // public static String LOG_INTERNAL_WEB_START_ERROR = "Internal webserver could not start";
+     @LangKey("log.internal-web-stopped")
+     public static String LOG_INTERNAL_WEB_STOPPED = "<green>Internal webserver stopped";
+     @LangKey("log.internal-web-stopping")
+        public static String LOG_INTERNAL_WEB_STOPPING = "<green>Stopping internal webserver";
+     @LangKey("log.internal-web-start-error")
+     public static String LOG_INTERNAL_WEB_START_ERROR = "<red><bold>Internal webserver could not start";
     // @LangKey("log.could-not-create-directory")
     // public static String LOG_COULD_NOT_CREATE_DIR = "Could not create directory! {path}";
     // @LangKey("log.could-not-save-region")
     // public static String LOG_COULD_NOT_SAVE_REGION = "Could not save map for region {x},{z}";
-    // @LangKey("log.internal-web-not-running")
-    // public static String LOG_INTERNAL_WEB_STOP_ERROR = "An error occurred with the internal webserver";
+     @LangKey("log.internal-web-error")
+     public static String LOG_INTERNAL_WEB_STOP_ERROR = "<red>An error occurred with the internal webserver";
+     @LangKey("log.debug-mode-enabled")
+        public static String LOG_DEBUG_MODE_ENABLED = "<green>Debug mode enabled. This will cause a lot of spam in the console.";
 
     private static void init() {
         Arrays.stream(Lang.class.getDeclaredFields())
