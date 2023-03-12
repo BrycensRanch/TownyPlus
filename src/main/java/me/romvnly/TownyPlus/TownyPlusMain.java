@@ -157,7 +157,7 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
         }
         }
         if (Config.DEBUG_MODE) {
-            logger.info("Debug mode is enabled. This will cause a lot of spam in the console.");
+            logger.info(Lang.parse(Lang.LOG_DEBUG_MODE_ENABLED));
         }
 
         try {
@@ -197,6 +197,7 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
                 try {
                     this.restAPI = new RestAPI(this);
                      if (Config.HTTPD_ENABLED) this.restAPI.startServer(Config.HTTPD_BIND, Config.HTTPD_PORT);
+                     else logger.info(Lang.parse(Lang.LOG_INTERNAL_WEB_DISABLED));
                 } catch (Exception e) {
                     logger.error(Lang.parse(Lang.INTERNAL_WEBSERVER_FAILED_TO_START));
                     e.printStackTrace();
@@ -238,7 +239,7 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
                         .checkEveryXHours(12)
                         .checkNow();
             }
-            if (Config.AUTO_UPDATE_PLUGIN) {
+            if (Config.AUTO_UPDATE_PLUGIN && Config.CHECK_FOR_UPDATES) {
                 if (this.updateChecker.isUsingLatestVersion() || !Config.AUTO_UPDATE_PLUGIN || getDescription().getVersion().contains("SNAPSHOT")) {
                     Debug.log("Not updating plugin, either already on latest version or auto update is disabled");
                     return;
@@ -299,12 +300,12 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
         }
         // I will not be adding this to the localization file. It's just a message to let the user know that the plugin is enabled.
         logger.info("----------------------------------------");
-        logger.info(getDescription().getName() + " Enabled!");
-        logger.info("Version: " + getDescription().getVersion());
-        logger.info("Author: " + getDescription().getAuthors());
-        logger.info("GitHub: " + getDescription().getWebsite());
-        logger.info("Any issues or suggestions? Report them here: " + getDescription().getWebsite() + "/issues");
-        if (this.restAPI != null) logger.warn("Any messages related to Jetty are normal. They are not errors. They are just letting you know that the Rest API is running. If you want to disable them, you'll have to disable the Rest API in the config. I can't do anything about the logs. Sorry.");
+        logger.info(Lang.parse("<gold>" + getDescription().getName() + "<green> Enabled!"));
+        logger.info(Lang.parse("<rainbow>Version: " + getDescription().getVersion()));
+        logger.info(Lang.parse("<blue>Author: " + getDescription().getAuthors()));
+        logger.info(Lang.parse("GitHub: " + getDescription().getWebsite()));
+        logger.info(Lang.parse("<underlined>Any issues or suggestions? Report them here: " + getDescription().getWebsite() + "/issues"));
+        if (this.restAPI != null) logger.warn(Lang.parse("<green>Any messages related to Jetty are normal. They are <bold>not</bold> errors. <gradient:green:blue>They are just letting you know that the internal webserver is running. If you want to disable it, you'll have to disable the internal-webserver in the config. I can't do anything about the logs when it's running. Sorry.</gradient>"));
         logger.info("----------------------------------------");
     }
 
@@ -314,11 +315,15 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
     }
 
     public void onDisable() {
+        if (this.isEnabled()) {
+            // The idea: If the plugin calls onDisable() itself, it will disable the plugin without having to call Bukkit.getServer().getPluginManager().disablePlugin(this);
+            Bukkit.getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
         if (this.adventure != null) {
             this.adventure.close();
             this.adventure = null;
         }
-        plugin = null;
         if (this.updateChecker != null) {
             this.updateChecker.stop();
         }
@@ -326,12 +331,15 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
         if (discordSRVListener != null) {
             DiscordSRV.api.unsubscribe(discordSRVListener);
         }
-        logger.info("Plugin has been disabled.");
         if (this.database != null) this.database.close();
         if (expansion != null)
-        expansion.unregister();
-        if (this.isEnabled()) Bukkit.getServer().getPluginManager().disablePlugin(this);
+            expansion.unregister();
+        // I haVE NO IDEA WHY THIS IS HERE BUT I'M NOT TOUCHING IT
         Bukkit.getScheduler().cancelTasks(this);
+        logger.info(Lang.parse("<red>Plugin has been disabled."));
+        this.commandManager = null;
+        // Should be done last to prevent any errors whilst disabling the plugin.
+        plugin = null;
     }
     public void possiblyAutoUpdate(JavaPlugin plugin, Audience commandSenders, String latestVersion) {
         logger.info(Lang.parse(Lang.ATTEMPTING_TO_AUTO_UPDATE));

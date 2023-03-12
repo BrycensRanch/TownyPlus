@@ -60,7 +60,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
-
+import java.util.stream.Collectors;
 
 
 public class DiscordSRVChannelCreator {
@@ -75,10 +75,11 @@ public class DiscordSRVChannelCreator {
         try {
             SavedCode code = plugin.database.findCodeByString(event.getMessage().getContentDisplay());
             if (code == null) {
-                Debug.log(Component.text("Code is null").appendNewline().append(MiniMessage.miniMessage().deserialize("From type <type> <user> <msg>", Placeholder.unparsed("type", event.getChannelType().name()), Placeholder.unparsed("user", event.getAuthor().getAsTag()), Placeholder.unparsed("msg", event.getMessage().getContentDisplay()))));
+                Debug.log(Lang.parse("<red>Code is null").appendNewline().append(MiniMessage.miniMessage().deserialize("From type <type> <user> <msg>", Placeholder.unparsed("type", event.getChannelType().name()), Placeholder.unparsed("user", event.getAuthor().getAsTag()), Placeholder.unparsed("msg", event.getMessage().getContentDisplay()))));
                 return;
             }
             if (code != null) {
+                Debug.log(Lang.parse("<red>Code is <bold>not</bold> null").appendNewline().append(MiniMessage.miniMessage().deserialize("From type <type> <user> <msg>", Placeholder.unparsed("type", event.getChannelType().name()), Placeholder.unparsed("user", event.getAuthor().getAsTag()), Placeholder.unparsed("msg", event.getMessage().getContentDisplay()))));
                 UUID linkedAccountUUID = DiscordSRV.getPlugin().getAccountLinkManager().getUuid(event.getAuthor().getId());
                 if (linkedAccountUUID == null || linkedAccountUUID.equals(UUID.fromString("00000000-0000-0000-0000-000000000000"))) {
                     event.getMessage().reply(":warning: | You must link your discord account to your minecraft account before attempting to give the code. Or maybe, you've stolen the code from the town owner? Shame on you.").queue();
@@ -87,11 +88,11 @@ public class DiscordSRVChannelCreator {
 
                 Resident resident = TownyUniverse.getInstance().getResident(UUID.fromString(code.getCreatedBy()));
                 Town residentTown = resident.getTownOrNull();
+                // Sanity checks
                 if (residentTown == null) {
                     event.getMessage().reply(":warning: | You must be in a town to redeem a code.").complete();
                     return;
                 }
-                // Sanity checks
                 if (!residentTown.isMayor(resident)) {
                     event.getMessage().reply(":warning: | Only Town Mayors may redeem code, skrub.").complete();
                     return;
@@ -102,15 +103,18 @@ public class DiscordSRVChannelCreator {
                 String logsCate = "Logs";
                 if (guild.getCategoriesByName(category, true).size() == 0) {
                     guild.createCategory(category).complete();
+                    Debug.log("Created category " + category + " for discord guild " + guild.getName());
                 }
                 if (guild.getCategoriesByName(logsCate, true).size() == 0) {
                     guild.createCategory(logsCate).complete();
+                    Debug.log("Created category " + logsCate + " for discord guild " + guild.getName());
                 }
                 Category townyCategory = guild.getCategoriesByName(category, true).get(0);
                 Category logsCategory = guild.getCategoriesByName(logsCate, true).get(0);
 
                 if (guild.getTextChannelsByName("town-chat", true).size() == 0) {
                     guild.createTextChannel("town-chat", townyCategory).complete();
+                    Debug.log("Created channel town-chat in category " + category + " for town " + residentTown.getName() + "for discord guild " + guild.getName());
                 }
                 TextChannel townChat = guild.getTextChannelsByName("town-chat", true).get(0);
                 townChat.createWebhook(plugin.getName()).complete();
@@ -119,54 +123,78 @@ public class DiscordSRVChannelCreator {
 
                 if (guild.getTextChannelsByName("towny-info", true).size() == 0) {
                     guild.createTextChannel("towny-info", townyCategory).complete();
+                    Debug.log("Created channel towny-info in category " + category + " for town " + residentTown.getName() + "for discord guild " + guild.getName());
                 }
 
 
                 TextChannel townyInfo = guild.getTextChannelsByName("towny-info", true).get(0);
 
                 String townyInfoChannelId = townyInfo.getId();
-                if (townyInfo.retrieveWebhooks().complete().stream().filter(webhook -> webhook.getName() == plugin.getName()).toList().size() == 0)
-                townyInfo.createWebhook(plugin.getName()).complete();
+                if (townyInfo.retrieveWebhooks().complete().stream().filter(webhook -> webhook.getName().equalsIgnoreCase(plugin.getName())).toList().size() == 0) {
+                    townyInfo.createWebhook(plugin.getName()).complete();
+                    Debug.log("Created webhook for towny-info in category " + category + " for town " + residentTown.getName() + "for discord guild " + guild.getName());
+                }
                 String createdTownyInfoWebhook = townyInfo.retrieveWebhooks().complete().get(0).getUrl();
 
                 if (guild.getTextChannelsByName("nation-chat", true).size() == 0) {
                     guild.createTextChannel("nation-chat", townyCategory).complete();
+                    Debug.log("Created channel nation-chat in category " + category + " for town " + residentTown.getName() + "for discord guild " + guild.getName());
                 }
 
                 TextChannel nationChat = guild.getTextChannelsByName("nation-chat", true).get(0);
 
                 String nationChatChannelId = nationChat.getId();
-                if (nationChat.retrieveWebhooks().complete().stream().filter(webhook -> webhook.getName() == plugin.getName()).toList().size() == 0)
+                if (nationChat.retrieveWebhooks().complete().stream().filter(webhook -> webhook.getName().equalsIgnoreCase(plugin.getName())).toList().size() == 0) {
                     nationChat.createWebhook(plugin.getName()).complete();
+                    Debug.log("Created webhook for nation-chat in category " + category + " for town " + residentTown.getName() + "for discord guild " + guild.getName());
+                }
                 String createdNationChatWebhook = nationChat.retrieveWebhooks().complete().get(0).getUrl();
 
                 if (guild.getTextChannelsByName("ally-chat", true).size() == 0) {
                     guild.createTextChannel("ally-chat", townyCategory).complete();
+                    Debug.log("Created channel ally-chat in category " + category + " for town " + residentTown.getName() + "for discord guild " + guild.getName());
                 }
                 TextChannel allyChat = guild.getTextChannelsByName("ally-chat", true).get(0);
                 String allyChatChannelId = allyChat.getId();
-                if (allyChat.retrieveWebhooks().complete().stream().filter(webhook -> webhook.getName() == plugin.getName()).toList().size() == 0) allyChat.createWebhook(plugin.getName()).complete();
+                if (allyChat.retrieveWebhooks().complete().stream().filter(webhook -> webhook.getName().equalsIgnoreCase(plugin.getName())).toList().size() == 0) {
+                    allyChat.createWebhook(plugin.getName()).complete();
+                    Debug.log("Created webhook for ally-chat in category " + category + " for town " + residentTown.getName() + "for discord guild " + guild.getName());
+                }
                 String createdAllyChatWebhook = allyChat.retrieveWebhooks().complete().get(0).getUrl();
 
-                if (guild.getTextChannelsByName("towny-logs", true).size() == 0)
-                guild.createTextChannel("towny-logs", logsCategory).complete();
-
+                if (guild.getTextChannelsByName("towny-logs", true).size() == 0) {
+                    guild.createTextChannel("towny-logs", logsCategory).complete();
+                    Debug.log("Created channel towny-logs in category " + logsCate + " for town " + residentTown.getName() + "for discord guild " + guild.getName());
+                }
                 TextChannel townyLogs = guild.getTextChannelsByName("towny-logs", true).get(0);
-                if (townyLogs.retrieveWebhooks().complete().stream().filter(webhook -> webhook.getName() == plugin.getName()).toList().size() == 0) townyLogs.createWebhook(plugin.getName()).complete();
+                if (townyLogs.retrieveWebhooks().complete().stream().filter(webhook -> webhook.getName().equalsIgnoreCase(plugin.getName())).toList().size() == 0) {
+                    townyLogs.createWebhook(plugin.getName()).complete();
+                    Debug.log("Created webhook for towny-logs in category " + logsCate + " for town " + residentTown.getName() + "for discord guild " + guild.getName());
+                }
                 String townyLogsChannelId = townyLogs.getId();
                 String createdTownyLogsWebhook = townyLogs.retrieveWebhooks().complete().get(0).getUrl();
 
-                event.getMessage().reply(String.format(":white_check_mark:  | Created channels for town %s", residentTown.getFormattedName())).complete();
-                event.getMessage().reply("From now on, all town chat in MC or Discord will be sent to their respective channels.").complete();
+                event.getMessage().reply(String.format(":white_check_mark:  | Created channels for town %s\n\n" + "From now on, all town chat in MC or Discord will be sent to their respective channels.", residentTown.getFormattedName())).complete();
                 plugin.database.deleteCode(code);
                 plugin.logger.info(Lang.parse("<user> Redeemed code for <town_formatted> <code>", Placeholder.unparsed("user", event.getAuthor().getAsTag()), Placeholder.unparsed("town_formatted", residentTown.getFormattedName()), Placeholder.unparsed("code", code.getCode())));
-                Message msg = townyInfo.sendMessage(new EmbedBuilder().addField("Members", residentTown.getResidents().stream().map((res) -> res.getFormattedName()).toString(), true).setDescription(String.format("Towny Info channel for %s", residentTown.getFormattedName())).build()).complete();
+                List<Resident> residentList = residentTown.getResidents();
+                String formattedResidentList = String.join(", ", residentList.stream().map(Resident::getFormattedName).collect(Collectors.toList()));
+                Message msg = townyInfo.sendMessage(new EmbedBuilder().addField("Members", formattedResidentList, true).setDescription(String.format("Towny Info channel for %s", residentTown.getFormattedName())).build()).complete();
                 String mayorRoleName = residentTown.getName() + " | Mayor";
                 String assistantRoleName = residentTown.getName() + " | Assistant";
                 String residentRoleName = residentTown.getName() + " | Member";
-               if (guild.getRolesByName(mayorRoleName, true).size() == 0)  guild.createRole().setName(mayorRoleName).complete();
-                if (guild.getRolesByName(assistantRoleName, true).size() == 0) guild.createRole().setName(assistantRoleName).complete();
-                if (guild.getRolesByName(residentRoleName, true).size() == 0)  guild.createRole().setName(residentRoleName).complete();
+               if (guild.getRolesByName(mayorRoleName, true).size() == 0) {
+                   guild.createRole().setName(mayorRoleName).complete();
+                   Debug.log("Created role " + mayorRoleName + " for town " + residentTown.getName() + "for discord guild " + guild.getName());
+               }
+                if (guild.getRolesByName(assistantRoleName, true).size() == 0) {
+                    guild.createRole().setName(assistantRoleName).complete();
+                    Debug.log("Created role " + assistantRoleName + " for town " + residentTown.getName() + "for discord guild " + guild.getName());
+                }
+                if (guild.getRolesByName(residentRoleName, true).size() == 0)  {
+                    guild.createRole().setName(residentRoleName).complete();
+                    Debug.log("Created role " + residentRoleName + " for town " + residentTown.getName() + "for discord guild " + guild.getName());
+                }
                 Role mayorRole = guild.getRolesByName(mayorRoleName, true).get(0);
                 Role assistantRole = guild.getRolesByName(assistantRoleName, true).get(0);
                 Role residentRole = guild.getRolesByName(residentRoleName, true).get(0);
@@ -175,6 +203,7 @@ public class DiscordSRVChannelCreator {
                 roles.put("assistant", assistantRole.getId());
                 roles.put("resident", residentRole.getId());
                 String rolesString = TownyPlusMain.JSONMapper.writeValueAsString(roles);
+                Debug.log("Roles:\n\n" + rolesString);
                 try {
                     plugin.database.createTownData(new SavedTownData(residentTown.getName(), guild.getId(), townChatChannelId, createdTownChatWebhook, nationChatChannelId, townyLogsChannelId, createdTownyLogsWebhook, townyInfoChannelId, createdTownyInfoWebhook, msg.getId(), rolesString));
                 } catch (SQLException e) {

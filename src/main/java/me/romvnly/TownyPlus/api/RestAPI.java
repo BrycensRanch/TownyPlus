@@ -25,6 +25,8 @@ import static me.romvnly.TownyPlus.api.Gson.isJSONValid;
 
 import java.util.function.Supplier;
 
+import me.romvnly.TownyPlus.configuration.Lang;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.eclipse.jetty.server.Server;
 
 
@@ -60,7 +62,7 @@ public class RestAPI {
             ctx.attribute("body", requestJSONBody);
         });
         server.exception(Exception.class, (e, ctx) -> {
-            plugin.getLogger().warning("The REST API threw a exception!");
+            plugin.logger.error(Lang.parse(Lang.LOG_INTERNAL_WEB_STOP_ERROR));
             plugin.getLogger().warning(e.toString());
             ctx.status(500);
             ctx.json(new Gson()
@@ -79,14 +81,14 @@ public class RestAPI {
             .toJson(new StandardResponse(StatusResponse.SUCCESS, "Root of TownyPlus REST API...")));
         });
         server.events(event -> {
-        event.serverStarting(() -> { this.plugin.getLogger().info(String.format("The REST API is starting on port %d", server.port())); });
-        event.serverStartFailed(() -> { this.plugin.getLogger().info(String.format("The REST API failed to start")); });
-        event.serverStopping(() -> { this.plugin.getLogger().info("Rest API is stopping..."); });
-        event.serverStopped(() -> { this.plugin.getLogger().info("Rest API has stopped."); });
+        event.serverStarting(() -> { this.plugin.logger.info(Lang.parse(Lang.LOG_INTERNAL_WEB_STARTING)); });
+        event.serverStartFailed(() -> { this.plugin.logger.error(Lang.parse(Lang.LOG_INTERNAL_WEB_START_ERROR)); });
+        event.serverStopping(() -> { this.plugin.logger.info(Lang.parse(Lang.LOG_INTERNAL_WEB_STOPPING)); });
+        event.serverStopped(() -> { this.plugin.logger.info(Lang.parse(Lang.LOG_INTERNAL_WEB_STOPPED)); });
         });
         new ChannelController(this.plugin, this.server);
         server.start(host, port);
-        plugin.getLogger().info(String.format("REST API started on http://%s:%s", host, server.port()));
+        this.plugin.logger.info(Lang.parse(Lang.LOG_INTERNAL_WEB_STARTED, Placeholder.unparsed("bind", host), Placeholder.unparsed("port", String.valueOf(server.port()))));
         this.active = true;
     }
 
