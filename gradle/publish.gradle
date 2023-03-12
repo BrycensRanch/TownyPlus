@@ -5,14 +5,17 @@ java {
     withSourcesJar()
 }
 
-signing {
-    def signingKeyId = System.getenv("signingKeyId")
-    def signingKey = System.getenv("signingKey")
-    def signingPassword = System.getenv("signingPassword")
-    useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
-    useGpgCmd()
-    sign publishing.publications
-}
+// Commented out because it requires a GPG key
+// and JitPack doesn't support it
+
+//signing {
+//    def signingKeyId = System.getenv("signingKeyId")
+//    def signingKey = System.getenv("signingKey")
+//    def signingPassword = System.getenv("signingPassword")
+//    useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+//    useGpgCmd()
+//    sign publishing.publications
+//}
 
 jar {
     manifest {

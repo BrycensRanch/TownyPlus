@@ -31,7 +31,7 @@ plugins {
     id 'jacoco'
     id 'idea'
     id 'checkstyle'
-    id 'signing'
+//    id 'signing'
 }
 
 // Thanks BanManager, but your log message is now my property
