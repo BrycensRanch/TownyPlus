@@ -21,6 +21,7 @@ import me.romvnly.TownyPlus.api.ChannelManager;
 import me.romvnly.TownyPlus.api.StandardResponse;
 import me.romvnly.TownyPlus.api.StatusResponse;
 import me.romvnly.TownyPlus.api.entities.Channel;
+import me.romvnly.TownyPlus.util.Debug;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
@@ -48,8 +49,8 @@ public class ChannelController extends CrudHandler {
             server.get("/channels/{id}", ctx -> new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, new Gson().toJsonTree(channelManager.getChannel(ctx.pathParam("id"))))));
             server.post("/channels/{channel}/new/message", ctx -> {
                 JsonObject body = ctx.attribute("body");
-                plugin.getLogger().info("Response body for new message");
-                plugin.getLogger().info(body.toString());
+                Debug.log("Response body for new message");
+                Debug.log(body.toString());
     
                 OfflinePlayer player;
                 try {
@@ -74,7 +75,7 @@ public class ChannelController extends CrudHandler {
                         .content(message)
                         .color(TextColor.color(0x443344))
                         .build();
-                plugin.getLogger().info("Forward " + channel + " Message: " + message);
+                Debug.log("Forward " + channel + " Message: " + message);
                 plugin.chatHook.broadcastMessageToChannel(channel, inGameMessage, resident.getTownOrNull());
                 ctx.status(200);
                 ctx.json(new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, "Success! Handled message!")));
