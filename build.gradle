@@ -22,7 +22,7 @@ plugins {
 
     id 'name.remal.common-ci' version '1.5.0'
       id "com.github.spotbugs" version "5.0.13"
-        id "com.diffplug.spotless" version "6.16.0"
+        id "com.diffplug.spotless" version "6.17.0"
 
 
 
