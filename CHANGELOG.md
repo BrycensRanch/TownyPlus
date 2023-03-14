@@ -1,3 +1,20 @@
+## [1.1.0-alpha.12](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.11...v1.1.0-alpha.12) (2023-03-14)
+
+
+### 🔨  Misc.
+
+* apply repos to all projects ([69ac7b4](https://github.com/BrycensRanch/TownyPlus/commit/69ac7b49c99fa127817b28313afe119e6029c362))
+* **deps:** update plugin com.diffplug.spotless to v6.17.0 ([#70](https://github.com/BrycensRanch/TownyPlus/issues/70)) ([6e7839a](https://github.com/BrycensRanch/TownyPlus/commit/6e7839a0621f25eeb71667cd21ec41589f628252))
+* update renovate config ([40ae0c6](https://github.com/BrycensRanch/TownyPlus/commit/40ae0c696f591db995fd04ae53329ef03866c9d3))
+
+
+### 🐛 Bugfix 🐛
+
+* **deps:** update dependency com.palmergames.bukkit.towny:towny to v0.98.6.18 ([#69](https://github.com/BrycensRanch/TownyPlus/issues/69)) ([d60efd6](https://github.com/BrycensRanch/TownyPlus/commit/d60efd67564d2fc126881a03016880df1ffc3554))
+* **deps:** update dependency net.kyori:adventure-api to v4.13.0 ([#71](https://github.com/BrycensRanch/TownyPlus/issues/71)) ([f908c23](https://github.com/BrycensRanch/TownyPlus/commit/f908c23717bcc024645e2a3b6c8f110d20a308b8))
+* **deps:** update dependency net.kyori:adventure-text-logger-slf4j to v4.13.0 ([#72](https://github.com/BrycensRanch/TownyPlus/issues/72)) ([d00b8f6](https://github.com/BrycensRanch/TownyPlus/commit/d00b8f642b1342ef5b74a9370f47028e7215f21e))
+* **deps:** update dependency net.kyori:adventure-text-minimessage to v4.13.0 ([#73](https://github.com/BrycensRanch/TownyPlus/issues/73)) ([97e572b](https://github.com/BrycensRanch/TownyPlus/commit/97e572bb8cdd1ecbca7f3852da95b39f0c4f9271))
+
 ## [1.1.0-alpha.11](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.10...v1.1.0-alpha.11) (2023-03-12)
 
 
