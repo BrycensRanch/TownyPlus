@@ -1,3 +1,10 @@
+## [1.1.0-alpha.13](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.12...v1.1.0-alpha.13) (2023-03-15)
+
+
+### 🐛 Bugfix 🐛
+
+* **deps:** update dependency com.palmergames.bukkit.towny:towny to v0.98.6.19 ([e6853ca](https://github.com/BrycensRanch/TownyPlus/commit/e6853ca6ab3af2de66c9356fbad79e0994c261b6))
+
 ## [1.1.0-alpha.12](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.11...v1.1.0-alpha.12) (2023-03-14)
 
 
