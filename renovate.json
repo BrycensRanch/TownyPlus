@@ -25,8 +25,53 @@
   "baseBranches": ["alpha", "beta"],
   "branchPrefix": "dep/",
   "branchPrefixOld": "renovate/",
-  "timezone": "America/New_York"
+  "timezone": "America/New_York",
 
-
+  "packageRules": [
+    {
+      "matchPackagePrefixes": [
+        "cloud.commandframework:"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "semanticCommitType": "fix",
+      "groupName": "Cloud Command Framework",
+      "groupSlug": "cloud-command-framework"
+    },
+    {
+      "matchPackagePrefixes": [
+        "com.fasterxml.jackson:"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "groupName": "FasterXML Jackson",
+      "groupSlug": "fasterxml-jackson"
+    },
+    {
+      "matchPackagePrefixes": [
+        "net.kyori:"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "groupName": "Kyori Adventure",
+      "semanticCommitType": "fix",
+      "groupSlug": "kyori-adventure"
+    },
+    {
+      "matchDepTypes": [
+        "action"
+      ],
+      "labels": [
+        "actions"
+      ],
+      "pinDigests": true
+    }
+  ]
 
 }
