@@ -1,3 +1,10 @@
+## [1.1.0-alpha.15](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.14...v1.1.0-alpha.15) (2023-03-17)
+
+
+### 🐛 Bugfix 🐛
+
+* **deps:** update dependency cloud.commandframework:cloud-core to v1.8.3 ([c46c71e](https://github.com/BrycensRanch/TownyPlus/commit/c46c71e09f80b2030395f2ab3248148871ead638))
+
 ## [1.1.0-alpha.14](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.13...v1.1.0-alpha.14) (2023-03-17)
 
 
