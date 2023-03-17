@@ -1,3 +1,23 @@
+## [1.1.0-alpha.14](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.13...v1.1.0-alpha.14) (2023-03-17)
+
+
+### 🧪 Code Test
+
+* **server:** use 1.19.4 ([c20c608](https://github.com/BrycensRanch/TownyPlus/commit/c20c60837210ddebd6dc7277c786128aa1e30cef))
+
+
+### 🔨  Misc.
+
+* add advanced dependency management ([b51e484](https://github.com/BrycensRanch/TownyPlus/commit/b51e4841a71af15fa1ab07e0e3891f0134667366))
+* **deps:** update dependency cloud.commandframework:cloud-paper to v1.8.3 ([#79](https://github.com/BrycensRanch/TownyPlus/issues/79)) ([5a45454](https://github.com/BrycensRanch/TownyPlus/commit/5a45454f6981a9c609ec02956340375dfdfaf843))
+* **deps:** update dependency net.kyori:adventure-platform-bukkit to v4.3.0 ([#75](https://github.com/BrycensRanch/TownyPlus/issues/75)) ([7b345e5](https://github.com/BrycensRanch/TownyPlus/commit/7b345e5636e6b1749a8749832c35a062ce338ca0))
+* **deps:** update dependency typescript to v5 ([#80](https://github.com/BrycensRanch/TownyPlus/issues/80)) ([03372f2](https://github.com/BrycensRanch/TownyPlus/commit/03372f2346b53761bd8e93a429adec4615a8c0e7))
+
+
+### 🐛 Bugfix 🐛
+
+* **deps:** update dependency cloud.commandframework:cloud-annotations to v1.8.3 ([de2b03b](https://github.com/BrycensRanch/TownyPlus/commit/de2b03b8d9665961d1cb609fe8fb1e851042e6d2))
+
 ## [1.1.0-alpha.13](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.12...v1.1.0-alpha.13) (2023-03-15)
 
 
