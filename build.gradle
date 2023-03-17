@@ -250,7 +250,7 @@ dependencies {
     // We went from 5MB to 1.4MB, so it's a win-win.
 
     // Command Handling! https://commandframework.cloud
-    library 'cloud.commandframework:cloud-core:1.8.2'
+    library 'cloud.commandframework:cloud-core:1.8.3'
     library 'cloud.commandframework:cloud-annotations:1.8.3'
     annotationProcessor('cloud.commandframework:cloud-annotations:1.8.3')
     library 'cloud.commandframework:cloud-paper:1.8.3'
