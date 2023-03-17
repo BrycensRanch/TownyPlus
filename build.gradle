@@ -317,7 +317,7 @@ dependencies {
     library 'com.zaxxer:HikariCP:5.0.1'
     library 'com.h2database:h2:2.1.214'
     library 'org.xerial:sqlite-jdbc:3.41.0.0'
-    library 'org.postgresql:postgresql:42.5.4'
+    library 'org.postgresql:postgresql:42.6.0'
 //    compileOnly 'org.h2.Driver:Driver:1.4.200'
 //    compileOnly 'com.mysql.jdbc.Driver:Driver:8.0.26'
 
