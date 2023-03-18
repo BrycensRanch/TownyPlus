@@ -206,6 +206,15 @@ jobs:
           git_push_gpgsign: false
       - name: Update license headers if necessary
         run: ./gradlew licenseFormat
+      - uses: madhead/read-java-properties@latest
+        name: Read version from gradle.properties before possible version bump by semantic-release
+        id: before
+        with:
+          file: gradle.properties
+          property: version
+          default: 0.0.1
+
+      - run: echo ${{ steps.version.outputs.value }} # Project's version from gradle.properties or 0.0.1 if it is not defined there
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -227,9 +236,19 @@ jobs:
         uses: ocavue/changelog-parser-action@v1
         with:
           removeMarkdown: false
+      - uses: madhead/read-java-properties@latest
+        name: Read version from gradle.properties
+        id: version
+        with:
+          file: gradle.properties
+          property: version
+          default: 0.0.1
+      - run: echo ${{ steps.before.outputs.value }}
+      - run: echo ${{ steps.version.outputs.value }} # Project's version from gradle.properties or 0.0.1 if it is not defined there
 
       - name: Publish to Modrinth
         uses: BrycensRanch/plugin-publish@e05c1775fc218fe4d24eb51543cd305f84b3342e
+        if: ${{ steps.before.outputs.value }} != ${{ steps.version.outputs.value }}
         with: 
           modrinth-id: jVlopSkZ
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
@@ -246,6 +265,7 @@ jobs:
           version-type: ${{ github.head_ref || github.ref_name }}
       - name: Publish to CurseForge (Bukkit)
         uses: BrycensRanch/plugin-publish@e05c1775fc218fe4d24eb51543cd305f84b3342e
+        if: ${{ steps.before.outputs.value }} != ${{ steps.version.outputs.value }}
         with:
           curseforge-id: 832361
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
@@ -267,6 +287,7 @@ jobs:
           fail-mode: warn
       - name: Publish to Polymart
         uses: BrycensRanch/plugin-publish@e05c1775fc218fe4d24eb51543cd305f84b3342e
+        if: ${{ steps.before.outputs.value }} != ${{ steps.version.outputs.value }}
         with: 
           polymart-id: 2057
           polymart-token: ${{ secrets.POLYMART_TOKEN }}
