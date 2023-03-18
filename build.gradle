@@ -95,10 +95,21 @@ task downloadMultiplePlugins(type: Download) {
             'https://github.com/DiscordSRV/DiscordSRV/releases/download/v1.26.1/DiscordSRV-Build-1.26.1.jar',
             'https://download.luckperms.net/1477/bukkit/loader/LuckPerms-Bukkit-5.4.66.jar',
             // its not a good idea to use lastSuccessfulBuild as it can break due to version numbers changing
-            'https://ci.extendedclip.com/job/PlaceholderAPI/173/artifact/build/libs/PlaceholderAPI-2.11.3.jar'
+            'https://ci.extendedclip.com/job/PlaceholderAPI/173/artifact/build/libs/PlaceholderAPI-2.11.3.jar',
+            'https://github.com/ViaVersion/ViaVersion/releases/download/4.6.1/ViaVersion-4.6.1.jar',
+            'https://ci.viaversion.com/view/ViaBackwards/job/ViaBackwards/308/artifact/build/libs/ViaBackwards-4.6.2-SNAPSHOT.jar',
     ])
     dest rootDir.relativePath(file('run/plugins'))
 }
+task downloadPlaceholderExtensions(type: Download) {
+    println "Downloading Placeholder Extensions..."
+    src([
+            'https://api.extendedclip.com/media/PAPI-Expansion-Player_xY7OUz3.jar',
+            'https://api.extendedclip.com/media/PAPI-Expansion-Vault_UL8mSu2.jar'
+    ])
+    dest rootDir.relativePath(file('run/plugins/PlaceholderAPI/expansions'))
+}
+tasks.downloadMultiplePlugins.dependsOn(tasks.downloadPlaceholderExtensions)
 tasks.runServer.dependsOn(tasks.downloadMultiplePlugins)
 tasks.runServer.doLast {
     println "(4) after  (run in execution phase as last statement)"
