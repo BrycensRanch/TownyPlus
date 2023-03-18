@@ -34,6 +34,8 @@ public class SavedTownData {
      private String townChatWebhookURL;
         @JsonProperty("nation_chat_id")
      private String nationChatDiscordID;
+        @JsonProperty("nation_chat_webhook_url")
+        private String nationChatWebhookURL;
         @JsonProperty("towny_log_channel_id")
      private String townyLogChannelDiscordID;
         @JsonProperty("towny_log_webhook_url")

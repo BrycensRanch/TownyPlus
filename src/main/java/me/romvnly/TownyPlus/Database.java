@@ -73,7 +73,7 @@ public class Database {
 
         // I smell a SQL injection here
         // SOMEONE PLEASE FIX THIS ASAP OMG
-        String sql = "CREATE TABLE IF NOT EXISTS " + townTable + " (name varchar(36) primary key, discord_server varchar(36), town_chat_id varchar(36), town_chat_webhook_url varchar(1000),nation_chat_id varchar(36), towny_log_channel_id varchar(36), towny_log_webhook_url varchar(1000), towny_info_channel_id varchar(36), towny_info_channel_webhook varchar(1000), town_info_channel_message_id varchar(36), town_discord_roles varchar(4000))";
+        String sql = "CREATE TABLE IF NOT EXISTS " + townTable + " (name varchar(36) primary key, discord_server varchar(36), town_chat_id varchar(36), town_chat_webhook_url varchar(1000),nation_chat_id varchar(36), nation_chat_webhook_url varchar(1000), towny_log_channel_id varchar(36), towny_log_webhook_url varchar(1000), towny_info_channel_id varchar(36), towny_info_channel_webhook varchar(1000), town_info_channel_message_id varchar(36), town_discord_roles varchar(4000))";
 
         statement.execute(sql);
 
@@ -105,12 +105,13 @@ public class Database {
         return getSavedTownData(name, statement);
     }
     public SavedTownData createTownData(SavedTownData savedTownData) throws SQLException {
-        PreparedStatement statement = getConnection().prepareStatement("INSERT INTO "+townTable+" (name, discord_server, town_chat_id, town_chat_webhook_url, nation_chat_id, towny_log_channel_id, towny_log_webhook_url, towny_info_channel_id, towny_info_channel_webhook, town_info_channel_message_id, town_discord_roles) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        PreparedStatement statement = getConnection().prepareStatement("INSERT INTO "+townTable+" (name, discord_server, town_chat_id, town_chat_webhook_url, nation_chat_id, nation_chat_webhook_url, towny_log_channel_id, towny_log_webhook_url, towny_info_channel_id, towny_info_channel_webhook, town_info_channel_message_id, town_discord_roles) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         // name,
         // discord_server,
         // town_chat_id,
         // town_chat_webhook_url,
         // nation_chat_id,
+        // nation_chat_webhook_url,
         // towny_log_channel_id,
         // towny_log_webhook_url,
         // towny_info_channel_id,
@@ -122,12 +123,13 @@ public class Database {
         statement.setString(3, savedTownData.getTownChatDiscordID());
         statement.setString(4, savedTownData.getTownChatWebhookURL());
         statement.setString(5, savedTownData.getNationChatDiscordID());
-        statement.setString(6, savedTownData.getTownyLogChannelDiscordID());
-        statement.setString(7, savedTownData.getTownyLogChannelWebhookURL());
-        statement.setString(8, savedTownData.getTownInfoChannelDiscordID());
-        statement.setString(9, savedTownData.getTownInfoChannelWebhookURL());
-        statement.setString(10, savedTownData.getTownInfoChannelMessageID());
-        statement.setString(11, savedTownData.getTownDiscordRoles());
+        statement.setString(6, savedTownData.getNationChatWebhookURL());
+        statement.setString(7, savedTownData.getTownyLogChannelDiscordID());
+        statement.setString(8, savedTownData.getTownyLogChannelWebhookURL());
+        statement.setString(9, savedTownData.getTownInfoChannelDiscordID());
+        statement.setString(10, savedTownData.getTownInfoChannelWebhookURL());
+        statement.setString(11, savedTownData.getTownInfoChannelMessageID());
+        statement.setString(12, savedTownData.getTownDiscordRoles());
         statement.execute();
         statement.close();
         return savedTownData;
@@ -151,7 +153,7 @@ public class Database {
 
         if(resultSet.next()){
 
-            savedTownData = new SavedTownData(resultSet.getString("name"), resultSet.getString("discord_server"), resultSet.getString("town_chat_id"), resultSet.getString("town_chat_webhook_url"), resultSet.getString("nation_chat_id"), resultSet.getString("towny_log_channel_id"), resultSet.getString("towny_log_webhook_url"), resultSet.getString("towny_info_channel_id"), resultSet.getString("towny_info_channel_webhook"), resultSet.getString("town_info_channel_message_id"),  resultSet.getString("town_discord_roles"));
+            savedTownData = new SavedTownData(resultSet.getString("name"), resultSet.getString("discord_server"), resultSet.getString("town_chat_id"), resultSet.getString("town_chat_webhook_url"), resultSet.getString("nation_chat_id"), resultSet.getString("nation_chat_webhook_url"),resultSet.getString("towny_log_channel_id"), resultSet.getString("towny_log_webhook_url"), resultSet.getString("towny_info_channel_id"), resultSet.getString("towny_info_channel_webhook"), resultSet.getString("town_info_channel_message_id"),  resultSet.getString("town_discord_roles"));
 
             statement.close();
 
