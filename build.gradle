@@ -309,7 +309,7 @@ dependencies {
     compileOnly 'com.palmergames.bukkit:TownyChat:0.45'
 
     // PlaceholderAPI
-    compileOnly 'me.clip:placeholderapi:2.11.2'
+    compileOnly 'me.clip:placeholderapi:2.11.3'
 
     // Towny's implementation of CommentedConfiguration, which we use for our config.yml and lang_en.yml
     implementation 'io.github.townyadvanced.commentedconfiguration:CommentedConfiguration:1.0.1'
