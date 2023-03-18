@@ -16,7 +16,8 @@
 # You can add permission to a rank/group using the                                          #
 # /ta townyperms group [name] addperm [node] command.                                       #
 #                                                                                           #
-# You may change the names of any of the ranks except: nomad, default, mayor, king, ranks.  #
+# You may change the names of any of the ranks except: nomad, default, mayor, king, ranks,  #
+# peaceful.                                                                                 #
 #                                                                                           #
 # If you want to, you can negate permissions nodes from nodes by doing the following:       #
 # Ex:                                                                                       #

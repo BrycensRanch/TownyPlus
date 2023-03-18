@@ -1,9 +1,9 @@
   
 version:
   # This is the current version of Towny.  Please do not edit.
-  version: '0.101'
+  version: '0.103'
   # This is for showing the changelog on updates.  Please do not edit.
-  last_run_version: '0.101'
+  last_run_version: '0.103'
   
 ############################################################
 # +------------------------------------------------------+ #
@@ -115,3 +115,6 @@ modify_chat:
   
 # If true players will see You have joined channel {channel} message on joining the server.
 display_channel_join_message_on_joining_the_server: 'true'
+  
+# If true players that say !somewords will have their message sent to a global type channel with unlimited range (usually your general chat.)
+allow_exclamation_point_to_shout: 'true'

@@ -23,10 +23,12 @@ plugins {
     id 'name.remal.common-ci' version '1.5.0'
       id "com.github.spotbugs" version "5.0.13"
         id "com.diffplug.spotless" version "6.17.0"
+    id "de.undercouch.download" version "5.4.0"
 
 
 
-   id 'org.gradle.crypto.checksum' version '1.4.0'
+
+    id 'org.gradle.crypto.checksum' version '1.4.0'
     id 'java'
     id 'jacoco'
     id 'idea'
@@ -91,6 +93,33 @@ gitProperties {
 generateGitProperties.outputs.upToDateWhen { false } // make sure the generateGitProperties task always executes (even when git.properties is not changed)
 
 
+task downloadMultiplePlugins(type: Download) {
+    println "Downloading dependent plugins..."
+    src([
+            'https://github.com/MilkBowl/Vault/releases/download/1.7.3/Vault.jar',
+            'https://github.com/Aust1n46/VentureChat/releases/download/v3.5.0/VentureChat-3.5.0.jar',
+            'https://github.com/TownyAdvanced/Towny/releases/download/0.98.6.20/towny-0.98.6.20.jar',
+            'https://github.com/TownyAdvanced/TownyChat/releases/download/0.103/TownyChat-0.103.jar',
+            'https://github.com/TheNewEconomy/TNE-Bukkit/releases/download/TNE-0.1.1.17-PRE-2/TNE-0.1.1.17-PRE-2.jar',
+            'https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/target/ProtocolLib.jar',
+            'https://github.com/DiscordSRV/DiscordSRV/releases/download/v1.26.1/DiscordSRV-Build-1.26.1.jar',
+            'https://download.luckperms.net/1477/bukkit/loader/LuckPerms-Bukkit-5.4.66.jar',
+            // its not a good idea to use lastSuccessfulBuild as it can break due to version numbers changing
+            'https://ci.extendedclip.com/job/PlaceholderAPI/173/artifact/build/libs/PlaceholderAPI-2.11.3.jar'
+    ])
+    dest rootDir.relativePath(file('run/plugins'))
+}
+tasks.runServer.dependsOn(tasks.downloadMultiplePlugins)
+tasks.runServer.doLast {
+    println "(4) after  (run in execution phase as last statement)"
+}
+
+tasks.runServer.doFirst {
+    println "(3) after  (run in execution phase as FORST statement - before doLast/<<)"
+    println "As per the plugin license, agree to respect the license before using these plugins."
+    println "What I mean by that is, don't redistribute them, don't claim them as your own, etc."
+    println "If you don't agree, you can remove the plugins from the run/plugins folder."
+}
 ext {
     mcVersion = project.property("mcVersion")
 }

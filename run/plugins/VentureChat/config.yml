@@ -257,7 +257,7 @@ alias:
 # Enables the creation of special Towny channels: Town and Nation
 # To create these channels, simply name two channels below "Town" and "Nation"
 # Bungeecord must be set to false for these channels! 
-enable_towny_channel: true
+enable_towny_channel: false
 
 # Enables the creation of a special faction only channel using the Factions plugin
 # To create this channel, simply name a channel below "Faction"
@@ -364,36 +364,6 @@ channels:
     permissions: donatorchannel
     speak_permissions: None
     channel_prefix: '&f[&dDonator&f]'
-    format: '{venturechat_channel_prefix} {vault_prefix}{player_displayname}&d:'
-  Town:
-    color: light_purple
-    chatcolor: light_purple
-    mutable: true
-    filter: true
-    autojoin: true
-    default: false
-    distance: 0
-    cooldown: 0
-    bungeecord: false
-    alias: townc
-    permissions: None
-    speak_permissions: None
-    channel_prefix: '&f[&dTown&f]'
-    format: '{venturechat_channel_prefix} {vault_prefix}{player_displayname}&d:'
-  Nation:
-    color: light_purple
-    chatcolor: light_purple
-    mutable: true
-    filter: true
-    autojoin: true
-    default: false
-    distance: 0
-    cooldown: 0
-    bungeecord: false
-    alias: nationc
-    permissions: None
-    speak_permissions: None
-    channel_prefix: '&f[&dNation&f]'
     format: '{venturechat_channel_prefix} {vault_prefix}{player_displayname}&d:'
   Help:
     color: aqua

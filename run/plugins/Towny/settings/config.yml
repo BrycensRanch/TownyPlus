@@ -1,9 +1,9 @@
   
 version:
   # This is the current version of Towny. Please do not edit.
-  version: 0.98.6.0
+  version: 0.98.6.20
   # This is for showing the changelog on updates. Please do not edit.
-  last_run_version: 0.98.6.0
+  last_run_version: 0.98.6.20
   
 language:
   # The language file you wish to use for your default locale. Your default locale is what
@@ -58,105 +58,132 @@ levels:
   
   # Guide On How to Configure: https://github.com/TownyAdvanced/Towny/wiki/How-Towny-Works#configuring-town_level-and-nation_level
   town_level:
-  - numResidents: 0
+  - townBlockTypeLimits: {}
+    upkeepModifier: 1.0
+    townOutpostLimit: 0
+    numResidents: 0
     debtCapModifier: 1.0
     namePostfix: ' Ruins'
+    bankCapModifier: 1.0
     mayorPrefix: 'Spirit '
     townBlockBuyBonusLimit: 0
     namePrefix: ''
     mayorPostfix: ''
-    townBlockTypeLimits: {}
+    peacefulCostMultiplier: 1.0
     townBlockLimit: 1
+    resourceProductionModifier: 1.0
+  - townBlockTypeLimits: {}
     upkeepModifier: 1.0
     townOutpostLimit: 0
-  - numResidents: 1
+    numResidents: 1
     debtCapModifier: 1.0
     namePostfix: ' (Settlement)'
+    bankCapModifier: 1.0
     mayorPrefix: 'Hermit '
     townBlockBuyBonusLimit: 0
     namePrefix: ''
     mayorPostfix: ''
-    townBlockTypeLimits: {}
+    peacefulCostMultiplier: 1.0
     townBlockLimit: 16
+    resourceProductionModifier: 1.0
+  - townBlockTypeLimits: {}
     upkeepModifier: 1.0
-    townOutpostLimit: 0
-  - numResidents: 2
+    townOutpostLimit: 1
+    numResidents: 2
     debtCapModifier: 1.0
     namePostfix: ' (Hamlet)'
+    bankCapModifier: 1.0
     mayorPrefix: 'Chief '
     townBlockBuyBonusLimit: 0
     namePrefix: ''
     mayorPostfix: ''
-    townBlockTypeLimits: {}
+    peacefulCostMultiplier: 1.0
     townBlockLimit: 32
+    resourceProductionModifier: 1.0
+  - townBlockTypeLimits: {}
     upkeepModifier: 1.0
     townOutpostLimit: 1
-  - numResidents: 6
+    numResidents: 6
     debtCapModifier: 1.0
     namePostfix: ' (Village)'
+    bankCapModifier: 1.0
     mayorPrefix: 'Baron Von '
     townBlockBuyBonusLimit: 0
     namePrefix: ''
     mayorPostfix: ''
-    townBlockTypeLimits: {}
+    peacefulCostMultiplier: 1.0
     townBlockLimit: 96
+    resourceProductionModifier: 1.0
+  - townBlockTypeLimits: {}
     upkeepModifier: 1.0
-    townOutpostLimit: 1
-  - numResidents: 10
+    townOutpostLimit: 2
+    numResidents: 10
     debtCapModifier: 1.0
     namePostfix: ' (Town)'
+    bankCapModifier: 1.0
     mayorPrefix: 'Viscount '
     townBlockBuyBonusLimit: 0
     namePrefix: ''
     mayorPostfix: ''
-    townBlockTypeLimits: {}
+    peacefulCostMultiplier: 1.0
     townBlockLimit: 160
+    resourceProductionModifier: 1.0
+  - townBlockTypeLimits: {}
     upkeepModifier: 1.0
     townOutpostLimit: 2
-  - numResidents: 14
+    numResidents: 14
     debtCapModifier: 1.0
     namePostfix: ' (Large Town)'
+    bankCapModifier: 1.0
     mayorPrefix: 'Count Von '
     townBlockBuyBonusLimit: 0
     namePrefix: ''
     mayorPostfix: ''
-    townBlockTypeLimits: {}
+    peacefulCostMultiplier: 1.0
     townBlockLimit: 224
+    resourceProductionModifier: 1.0
+  - townBlockTypeLimits: {}
     upkeepModifier: 1.0
-    townOutpostLimit: 2
-  - numResidents: 20
+    townOutpostLimit: 3
+    numResidents: 20
     debtCapModifier: 1.0
     namePostfix: ' (City)'
+    bankCapModifier: 1.0
     mayorPrefix: 'Earl '
     townBlockBuyBonusLimit: 0
     namePrefix: ''
     mayorPostfix: ''
-    townBlockTypeLimits: {}
+    peacefulCostMultiplier: 1.0
     townBlockLimit: 320
+    resourceProductionModifier: 1.0
+  - townBlockTypeLimits: {}
     upkeepModifier: 1.0
     townOutpostLimit: 3
-  - numResidents: 24
+    numResidents: 24
     debtCapModifier: 1.0
     namePostfix: ' (Large City)'
+    bankCapModifier: 1.0
     mayorPrefix: 'Duke '
     townBlockBuyBonusLimit: 0
     namePrefix: ''
     mayorPostfix: ''
-    townBlockTypeLimits: {}
+    peacefulCostMultiplier: 1.0
     townBlockLimit: 384
+    resourceProductionModifier: 1.0
+  - townBlockTypeLimits: {}
     upkeepModifier: 1.0
-    townOutpostLimit: 3
-  - numResidents: 28
+    townOutpostLimit: 4
+    numResidents: 28
     debtCapModifier: 1.0
     namePostfix: ' (Metropolis)'
+    bankCapModifier: 1.0
     mayorPrefix: 'Lord '
     townBlockBuyBonusLimit: 0
     namePrefix: ''
     mayorPostfix: ''
-    townBlockTypeLimits: {}
+    peacefulCostMultiplier: 1.0
     townBlockLimit: 448
-    upkeepModifier: 1.0
-    townOutpostLimit: 4
+    resourceProductionModifier: 1.0
   
   # Guide On How to Configure: https://github.com/TownyAdvanced/Towny/wiki/How-Towny-Works#configuring-town_level-and-nation_level
   nation_level:
@@ -168,8 +195,10 @@ levels:
     numResidents: 0
     nationBonusOutpostLimit: 0
     namePostfix: ' (Nation)'
+    bankCapModifier: 1.0
     townBlockLimitBonus: 10
     namePrefix: 'Land of '
+    peacefulCostMultiplier: 1.0
     nationZonesSize: 1
     nationTownUpkeepModifier: 1.0
   - kingPostfix: ''
@@ -180,8 +209,10 @@ levels:
     numResidents: 10
     nationBonusOutpostLimit: 1
     namePostfix: ' (Nation)'
+    bankCapModifier: 1.0
     townBlockLimitBonus: 20
     namePrefix: 'Federation of '
+    peacefulCostMultiplier: 1.0
     nationZonesSize: 1
     nationTownUpkeepModifier: 1.0
   - kingPostfix: ''
@@ -192,8 +223,10 @@ levels:
     numResidents: 20
     nationBonusOutpostLimit: 2
     namePostfix: ' (Nation)'
+    bankCapModifier: 1.0
     townBlockLimitBonus: 40
     namePrefix: 'Dominion of '
+    peacefulCostMultiplier: 1.0
     nationZonesSize: 1
     nationTownUpkeepModifier: 1.0
   - kingPostfix: ''
@@ -204,8 +237,10 @@ levels:
     numResidents: 30
     nationBonusOutpostLimit: 3
     namePostfix: ' (Nation)'
+    bankCapModifier: 1.0
     townBlockLimitBonus: 60
     namePrefix: 'Kingdom of '
+    peacefulCostMultiplier: 1.0
     nationZonesSize: 2
     nationTownUpkeepModifier: 1.0
   - kingPostfix: ''
@@ -216,8 +251,10 @@ levels:
     numResidents: 40
     nationBonusOutpostLimit: 4
     namePostfix: ' Empire'
+    bankCapModifier: 1.0
     townBlockLimitBonus: 100
     namePrefix: 'The '
+    peacefulCostMultiplier: 1.0
     nationZonesSize: 2
     nationTownUpkeepModifier: 1.0
   - kingPostfix: ''
@@ -228,8 +265,10 @@ levels:
     numResidents: 60
     nationBonusOutpostLimit: 5
     namePostfix: ' Realm'
+    bankCapModifier: 1.0
     townBlockLimitBonus: 140
     namePrefix: 'The '
+    peacefulCostMultiplier: 1.0
     nationZonesSize: 3
     nationTownUpkeepModifier: 1.0
   
@@ -370,6 +409,11 @@ town:
   # Each cell is (town_block_size * town_block_size * height-of-the-world) in size, with height-of-the-world
   # being from the bottom to the top of the build-able world.
   town_block_size: '16'
+  
+  # The minimum adjacent town blocks required to expand.
+  # This can prevent long lines and snake-like patterns.
+  # Set to -1 to disable. Set to 3 to force wider expansions of towns.
+  min_adjacent_blocks: '-1'
   
   
 ############################################################
@@ -627,6 +671,10 @@ global_town_settings:
   
   # When set to true both nation and ally spawn travel will also require the target town to have their status set to public.
   is_nation_ally_spawning_requiring_public_status: 'false'
+  
+  # When set to true, a player that is trusted by a town is allowed to spawn to the town as if they were a resident.
+  # Allows allows the residents of entire an town when that town is trusted by the town.
+  do_trusted_residents_count_as_residents: 'false'
   
   # If non zero it delays any spawn request by x seconds.
   teleport_warmup_time: '0'
@@ -1224,6 +1272,10 @@ protection:
   # Protect living entities within a town's boundaries from being killed by players or mobs.
   mob_types: Animals,WaterMob,NPC,Snowman,ArmorStand,Villager,Hanging
   
+  # When set to true, the above mob_types will be protected when they are in a town, from being able to enter empty boats.
+  # This protects the mobs from being stolen using boats.
+  mob_types_protected_from_boat_theft: 'false'
+  
   # Setting this to false will allow non-player entities to harm the above protected mobs.
   # This would include withers damaging protected mobs, and can be quite harmful.
   are_mob_types_protected_against_mobs: 'true'
@@ -1550,6 +1602,9 @@ resident_settings:
     # When true only residents who have no town will be deleted.
     delete_only_townless: 'false'
   
+    # When true players will be removed from their town and become a nomad instead of being fully deleted.
+    only_remove_town: 'false'
+  
   # The name of the town a resident will automatically join when he first registers.
   default_town_name: ''
   
@@ -1613,11 +1668,21 @@ economy:
     town_spawn_cost_paid_to_town: 'true'
   
   # The daily upkeep to remain neutral, paid by the Nation bank. If unable to pay, neutral/peaceful status is lost.
+  # This cost is multiplied by the nation_level peacefulCostMultiplier.
   # Neutrality will exclude you from a war event, as well as deterring enemies.
   price_nation_neutrality: '100.0'
   
+  # When it is true, the peaceful cost is multiplied by the nation's number of towns.
+  # Note that the base peacful cost is calculated by the price_nation_neutrality X nation_level peacefulCostMultiplier.
+  price_nation_neutrality_charges_per_town: 'false'
+  
   # The daily upkeep to remain neutral, paid by the Town bank. If unable to pay, neutral/peaceful status is lost.
+  # This cost is multiplied by the town_level peacefulCostMultiplier.
   price_town_neutrality: '25.0'
+  
+  # When it is true, the peaceful cost is multiplied by the town's number of claimed townblocks.
+  # Note that the base peacful cost is calculated by the price_town_neutrality X town_level peacefulCostMultiplier.
+  price_town_neutrality_charges_per_plot: 'false'
   
   new_expand:
   
@@ -1678,15 +1743,15 @@ economy:
     # If True, only charge death prices for pvp kills. Not monsters/environmental deaths.
     price_death_pvp_only: 'false'
   
-    # The price that a player pays when they die. If this is a PVP death, the amount is paid to the killed.
+    # The price that a player pays when they die. If this is a PVP death, the amount is paid to the killer.
     # Either a flat rate or a percentage according to the price_death_type setting.
     price_death: '1.0'
   
-    # The price that a player's town pays when they die. If this is a PVP death, the amount is paid to the killed.
+    # The price that a player's town pays when they die. If this is a PVP death, the amount is paid to the killer.
     # Either a flat rate or a percentage according to the price_death_type setting.
     price_death_town: '0.0'
   
-    # The price that a player's nation pays when they die. If this is a PVP death, the amount is paid to the killed.
+    # The price that a player's nation pays when they die. If this is a PVP death, the amount is paid to the killer.
     # Either a flat rate or a percentage according to the price_death_type setting.
     price_death_nation: '0.0'
   
@@ -2004,11 +2069,9 @@ townblocktypes:
 jail:
   
   # If true attacking players who die on enemy-town land will be placed into the defending town's jail if it exists.
-  # Requires town_respawn to be true in order to work.
   is_jailing_attacking_enemies: 'false'
   
   # If true attacking players who are considered an outlaw, that are killed inside town land will be placed into the defending town's jail if it exists.
-  # Requires town_respawn to be true in order to work.
   is_jailing_attacking_outlaws: 'false'
   
   # How many hours an attacking outlaw will be jailed for.
@@ -2076,6 +2139,10 @@ jail:
   
   # How long do new players have to be on the server before they can be jailed?
   new_player_immunity: 1h
+  
+  # Most types of unjailing result in a player being teleported when they are freed.
+  # Setting this to false will prevent that teleporting, resulting in the player not being teleported when they are freed.
+  unjailed_players_get_teleported: 'true'
   
   
 ############################################################

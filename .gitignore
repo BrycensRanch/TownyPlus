@@ -40,7 +40,14 @@ run/plugins/Towny/backup/
 run/crash-reports/
 run/world/
 run/world_nether/
+# Don't save jar files, it introduces potential legal issues
+# We download them from the internet later, so it's fine
+run/plugins/*.jar
 run/world_the_end/
+
+# never include database files in git
+run/**/*.db
+run/**/*.mv.db
 
 # No uploading Discord bot tokens to GitHub, alright?!
 run/plugins/DiscordSRV/

@@ -18,6 +18,10 @@ database:
     password: ''
     flags: ?verifyServerCertificate=false&useSSL=false&useUnicode=true&characterEncoding=utf-8
   
+    # Disables the warning when a backup is made about not all Towny data being backed up when mysql is in use.
+    # Set this to true when you fully understand what not having flatfile backups means, if your mysql database were to become unusable and you have not configured your own backup solution.
+    disable_backup_warning: 'false'
+  
     # Modifiable settings to control the connection pooling.
     # Unless you actually know what you're doing and how Towny uses its mysql connection,
     # it is strongly recommended you do not change these settings.
