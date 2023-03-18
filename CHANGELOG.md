@@ -1,3 +1,16 @@
+## [1.1.0-alpha.16](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.15...v1.1.0-alpha.16) (2023-03-18)
+
+
+### 🔨  Misc.
+
+* **deps:** update dependency cloud.commandframework:cloud-minecraft-extras to v1.8.3 ([#78](https://github.com/BrycensRanch/TownyPlus/issues/78)) ([966f814](https://github.com/BrycensRanch/TownyPlus/commit/966f814de0c3d55157950f7092dee39a29d5ff99))
+* **deps:** update dependency com.palmergames.bukkit.towny:towny to v0.98.6.20 ([#81](https://github.com/BrycensRanch/TownyPlus/issues/81)) ([f4c721f](https://github.com/BrycensRanch/TownyPlus/commit/f4c721f77c6e68294be19c0d3842c71909333214))
+
+
+### 🐛 Bugfix 🐛
+
+* **deps:** update dependency org.postgresql:postgresql to v42.6.0 ([ddbbb49](https://github.com/BrycensRanch/TownyPlus/commit/ddbbb499a3f0b97fe04a3444aead3f59754a900d))
+
 ## [1.1.0-alpha.15](https://github.com/BrycensRanch/TownyPlus/compare/v1.1.0-alpha.14...v1.1.0-alpha.15) (2023-03-17)
 
 
