@@ -49,6 +49,9 @@ public final class Lang {
     @LangKey("no-permission")
     public static String NO_PERMISSION = "<red>You do not have permission to use this command.";
 
+    @LangKey("log.telemetry-failed-to-load")
+    public static String LOG_METRICS_FAILED_TO_LOAD = "<red>Failed to load telemetry.";
+
     @LangKey("command.bypass-description")
     public static String COMMAND_BYPASS_DESCRIPTION = "Bypass towny restrictions temporarily";
 
@@ -95,37 +98,37 @@ public final class Lang {
     public static String LINK_DISCORD_TO_TOWN = "<green>Invite the Discord bot to your town's Discord server (<town>) and say <code> in the server anywhere the bot can see it. You have <time> to do this.";
     @LangKey("town-already-linked")
     public static String TOWN_ALREADY_LINKED = "<red>Your town is already linked to a Discord server.";
-    @LangKey("render-not-in-progress")
-    public static String RENDER_NOT_IN_PROGRESS = "<red>No renders running for <world>";
-    @LangKey("cancelled-render")
-    public static String CANCELLED_RENDER = "<green>Render cancelled for <world>";
-    @LangKey("successfully-reset-map")
-    public static String SUCCESSFULLY_RESET_MAP = "<green>Successfully reset map for <world>";
-    @LangKey("paused-renders")
-    public static String PAUSED_RENDER = "<green>Paused renders for <world>";
-    @LangKey("unpaused-renders")
-    public static String UNPAUSED_RENDER = "<green>Unpaused renders for <world>";
+//    @LangKey("render-not-in-progress")
+//    public static String RENDER_NOT_IN_PROGRESS = "<red>No renders running for <world>";
+//    @LangKey("cancelled-render")
+//    public static String CANCELLED_RENDER = "<green>Render cancelled for <world>";
+//    @LangKey("successfully-reset-map")
+//    public static String SUCCESSFULLY_RESET_MAP = "<green>Successfully reset map for <world>";
+//    @LangKey("paused-renders")
+//    public static String PAUSED_RENDER = "<green>Paused renders for <world>";
+//    @LangKey("unpaused-renders")
+//    public static String UNPAUSED_RENDER = "<green>Unpaused renders for <world>";
     @LangKey("command.message.not-an-valid-toggle")
     public static String NOT_AN_VALID_TOGGLE = "<red><bold><toggles></bold>Not is not a valid toggle. Valid toggles: <toggles>";
     @LangKey("command.message.console-must-specify-player")
     public static String CONSOLE_MUST_SPECIFY_PLAYER = "<red>You must specify a target player when running this command from console";
     @LangKey("command.message.player-not-found-for-input")
     public static String PLAYER_NOT_FOUND_FOR_INPUT = "<red>No player found for input '<input>'";
-    @LangKey("command.message.console-must-specify-world")
-    public static String CONSOLE_MUST_SPECIFY_WORLD = "<red>You must specify the world when running this command from console";
-    @LangKey("command.message.no-such-world")
-    public static String NO_SUCH_WORLD = "<red>No such world '<world>'";
-    @LangKey("command.message.map-not-enabled-for-world")
-    public static String MAP_NOT_ENABLED_FOR_WORLD = "<red>Map is not enabled for world '<world>'";
+//    @LangKey("command.message.console-must-specify-world")
+//    public static String CONSOLE_MUST_SPECIFY_WORLD = "<red>You must specify the world when running this command from console";
+//    @LangKey("command.message.no-such-world")
+//    public static String NO_SUCH_WORLD = "<red>No such world '<world>'";
+//    @LangKey("command.message.map-not-enabled-for-world")
+//    public static String MAP_NOT_ENABLED_FOR_WORLD = "<red>Map is not enabled for world '<world>'";
     @LangKey("command.message.confirmation-required")
     public static String CONFIRMATION_REQUIRED_MESSAGE = "<red>Confirmation required. Confirm using /<command> confirm.";
     @LangKey("command.message.no-pending-commands")
     public static String NO_PENDING_COMMANDS_MESSAGE = "<red>You don't have any pending commands.";
 
-    @LangKey("click-for-help")
-    public static String CLICK_FOR_HELP = "Click for help";
-    @LangKey("click-to-confirm")
-    public static String CLICK_TO_CONFIRM = "Click to confirm";
+//    @LangKey("click-for-help")
+//    public static String CLICK_FOR_HELP = "Click for help";
+//    @LangKey("click-to-confirm")
+//    public static String CLICK_TO_CONFIRM = "Click to confirm";
 
     // @LangKey("command.prefix")
     // public static String COMMAND_PREFIX = "<white>[<gradient:#C028FF:#5B00FF>Pl3xMap</gradient>]</white> ";

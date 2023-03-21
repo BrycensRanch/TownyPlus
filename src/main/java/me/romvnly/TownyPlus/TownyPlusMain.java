@@ -10,19 +10,21 @@
 
 package me.romvnly.TownyPlus;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import com.fasterxml.jackson.dataformat.yaml.YAMLParser;
+import com.jeff_media.updatechecker.UpdateCheckSource;
 import com.jeff_media.updatechecker.UpdateChecker;
 import com.jeff_media.updatechecker.UserAgentBuilder;
-import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
-
 import com.vdurmont.semver4j.Semver;
 import github.scarsz.discordsrv.DiscordSRV;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.TextChannel;
@@ -42,18 +44,11 @@ import me.romvnly.TownyPlus.util.GitProperties;
 import me.romvnly.TownyPlus.util.WebUtils;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.logger.slf4j.ComponentLoggerProvider;
+import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.BooleanUtils;
-import org.bstats.bukkit.Metrics;
-import org.bstats.charts.DrilldownPie;
-import org.bstats.charts.SimplePie;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -62,26 +57,15 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
-
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jeff_media.updatechecker.UpdateCheckSource;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static me.romvnly.TownyPlus.util.Constants.UPDATE_NOTIFICATIONS_PERMISSION;
 
@@ -109,10 +93,10 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
             .configure(SerializationFeature.FAIL_ON_SELF_REFERENCES, false)
     .enable(JsonParser.Feature.ALLOW_SINGLE_QUOTES);
     public static final ObjectMapper YAMLMapper = new ObjectMapper(new YAMLFactory().disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER).enable(YAMLParser.Feature.EMPTY_STRING_AS_NULL).enable(YAMLGenerator.Feature.MINIMIZE_QUOTES)).configure(SerializationFeature.FAIL_ON_SELF_REFERENCES, false);
-    final int metricsId = 14161;
     public CommandManager commandManager;
     public ChatHook chatHook;
     public UpdateChecker updateChecker;
+    public Telemetry telemetry;
     public DiscordSRVChannelCreator discordSRVChannelCreator;
     public RestAPI restAPI;
     public ComponentLogger logger = ComponentLogger.logger(getName());
@@ -120,6 +104,7 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
     public Database database;
     public TownyPlusExpansion expansion;
     public String githubRepo;
+    public DependencyLoader dependencyLoader = new DependencyLoader();
     public @NonNull
     BukkitAudiences adventure() {
         if (this.adventure == null) {
@@ -136,6 +121,7 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
     }
 
     public void onEnable() {
+        dependencyLoader.load(this);
         PluginManager pluginManager = getServer().getPluginManager();
         // Order of operations is important here
         // Look mom, I'm using math terms in my code!
@@ -204,31 +190,14 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
                 }
             });
         }
-        if (!unitTest) {
-            if (Config.METRICS_ENABLED) {
-                Metrics metrics = new Metrics(this, metricsId);
-                metrics.addCustomChart(new SimplePie("language_used", () ->
-                        Config.LANGUAGE_FILE.replace("lang-", "").replace(".yml", "")
-                ));
-                metrics.addCustomChart(new SimplePie("internal_web_server", () ->
-                        BooleanUtils.toStringTrueFalse(Config.HTTPD_ENABLED)
-                ));
-                metrics.addCustomChart(new SimplePie("branch", () ->
-                    GitProperties.getGitProperty("git.branch")
-                ));
-                metrics.addCustomChart(new SimplePie("database_type", () ->
-                Config.DB_TYPE
-            ));
-            metrics.addCustomChart(new SimplePie("checking_for_updates", () ->
-            BooleanUtils.toStringTrueFalse(Config.CHECK_FOR_UPDATES)
-        ));
-        metrics.addCustomChart(new SimplePie("auto_updating", () ->
-        BooleanUtils.toStringTrueFalse(Config.AUTO_UPDATE_PLUGIN)
-    ));
-    metrics.addCustomChart(new SimplePie("discordsrv_integration", () ->
-    BooleanUtils.toStringTrueFalse(Config.DISCORDSRV_ENABLED)
-));
-            }
+        try {
+            telemetry = new Telemetry(this);
+            telemetry.load();
+        }
+        catch (NoClassDefFoundError | Exception e) {
+            logger.error(Lang.parse(Lang.LOG_METRICS_FAILED_TO_LOAD));
+            e.printStackTrace();
+        }
             if (Config.CHECK_FOR_UPDATES) {
                 this.updateChecker = new UpdateChecker(this, UpdateCheckSource.GITHUB_RELEASE_TAG, githubRepo)
                         .setChangelogLink(String.format("https://github.com/%s/blob/%s/CHANGELOG.md", githubRepo, GitProperties.getGitProperty("git.branch")))
@@ -257,7 +226,6 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
                 };
                 runnable.runTaskTimer(this, 0, 20 * 60 * 60 * 12);
             }
-        }
         try {
             this.commandManager = new CommandManager(this);
         } catch (Exception e) {
@@ -419,7 +387,7 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
                 return;
             }
                 String downloadLink = releasePluginGitHubAsset.get("browser_download_url").asText();
-                URL downloadURL = null;
+                URL downloadURL;
                 try {
                     downloadURL = new URL(downloadLink);
                     Component message = Component.text().content(String.format("Downloading %s %s ...", plugin.getName(), latestVersionName)).build();
@@ -442,6 +410,7 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
              e.printStackTrace();
          }
     }
+    @SuppressWarnings("unused")
     public void processChatMessage(Player player, String providedMessage, String channel, ChatHook hook) {
         // Don't process messages if DiscordSRV isn't ready or in the classpath.
         if (this.discordSRVListener == null) return;
@@ -482,7 +451,7 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
                 else {
                     apiURL = Config.externalAPIToUse;
                 }
-                if (externalAPIURL == null || externalAPIURL.isBlank()) throw new IOException("You didn't provide a VALID URL in your configuration file");
+                if (externalAPIURL.isBlank()) throw new IOException("You didn't provide a VALID URL in your configuration file");
                 Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
 
                 try {
