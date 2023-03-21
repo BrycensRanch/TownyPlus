@@ -322,7 +322,7 @@ dependencies {
     // better http server than spark
     library "io.javalin:javalin-bundle:5.4.2"
     // DiscordSRV, optional dependency
-    compileOnly 'com.discordsrv:discordsrv:1.24.0'
+    compileOnly 'com.discordsrv:discordsrv:1.26.2'
 
     // Semver version parsing for auto updating
     library 'com.vdurmont:semver4j:3.1.0'
