@@ -20,7 +20,7 @@ plugins {
     id "com.moonlitdoor.git-version" version "0.1.1"
 
     id 'name.remal.common-ci' version '1.5.0'
-      id "com.github.spotbugs" version "5.0.13"
+      id "com.github.spotbugs" version "5.0.14"
         id "com.diffplug.spotless" version "6.17.0"
     id "de.undercouch.download" version "5.4.0"
 
@@ -306,7 +306,7 @@ dependencies {
     // Just a reminder: compileOnly means that we're not shading this dependency into our jar. This is usually when we're using a dependency that is already provided by the server. Aka, when it's already in the server's classpath.
     // implementation means that we're shading this dependency into our jar. This is usually when we're using a dependency that is not provided by the server. Aka, when it's not in the server's classpath.
     // Towny
-    compileOnly 'com.palmergames.bukkit.towny:towny:0.98.6.20'
+    compileOnly 'com.palmergames.bukkit.towny:towny:0.98.6.23'
     compileOnly 'com.palmergames.bukkit:TownyChat:0.45'
 
     // PlaceholderAPI
@@ -346,7 +346,7 @@ dependencies {
     // Database stuff
     library 'com.zaxxer:HikariCP:5.0.1'
     library 'com.h2database:h2:2.1.214'
-    library 'org.xerial:sqlite-jdbc:3.41.0.0'
+    library 'org.xerial:sqlite-jdbc:3.41.0.1'
     library 'org.postgresql:postgresql:42.6.0'
 //    compileOnly 'org.h2.Driver:Driver:1.4.200'
 //    compileOnly 'com.mysql.jdbc.Driver:Driver:8.0.26'
