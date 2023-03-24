@@ -380,7 +380,6 @@ shadowJar {
         include(dependency('org.bstats::'))
             include(dependency('net.byteflux::'))
             include(dependency('io.github.townyadvanced.commentedconfiguration::'))
-            include(dependency('com.github.stefvanschie.inventoryframework::'))
             // include(dependency('com.zaxxer::'))
             // include(dependency('com.h2database::'))
         include(dependency('com.jeff_media::'))
