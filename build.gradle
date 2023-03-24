@@ -1,7 +1,6 @@
 //file:noinspection SpellCheckingInspection
 //file:noinspection GroovyAssignabilityCheck
 import com.github.spotbugs.snom.SpotBugsTask
-import java.text.SimpleDateFormat
 import org.gradle.crypto.checksum.Checksum
 buildscript {
     repositories {
@@ -33,17 +32,17 @@ plugins {
     id 'jacoco'
     id 'idea'
     id 'checkstyle'
-//    id 'signing'
+    id 'signing'
 }
 
 // Thanks BanManager, but your log message is now my property
 logger.lifecycle("""
 *******************************************
- You are building TownyPlus!
+ You are building ${rootProject.name}!
  If you encounter trouble:
  1) Try running 'build' in a separate Gradle run
  2) Use gradlew and not gradle
- 3) If you still need help, ask on Discord #tickets! https://2v1.me/discord
+ 3) If you still need help, ask on GitHub/Discord
  Output files will be in /build/libs
 *******************************************
 """)
@@ -54,31 +53,22 @@ apply from: "$rootDir/gradle/publish.gradle"
 if (project.hasProperty("local_script")) {
     apply from: file(local_script + "/build.local.gradle")
 }
-static def getTime() {
-    SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd-HHmm")
-    sdf.setTimeZone(TimeZone.getTimeZone("UTC"))
-    return sdf.format(new Date()).toString()
-}
 
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
+ext {
+    mcVersion = project.property("mcVersion")
+}
 
 group project.property("group")
 //def details = versionDetails()
 
-//spotbugs {
-//    ignoreFailures = false
-//    showStackTraces = true
-//    showProgress = true
-//    effort = "max"
-//    reportLevel = 'default'
-//}
 spotbugs {
     ignoreFailures = true
     showStackTraces = true
     showProgress = true
-    effort = 'default'
+    effort = "max"
     reportLevel = 'default'
 }
 
@@ -146,7 +136,7 @@ println("Version: " + version)
 // Doesn't mean anything, just a nice to have.
 println("Git Version: " + gitVersion)
 println("Branch: " + gitBranchName)
-println("Is CI detected? " + System.getenv("CI") != null)
+println("Is CI detected? " + System.getenv("CI"))
 
 task generateFiles {
   // Generates some files.
@@ -162,6 +152,7 @@ checkstyle {
     // toolVersion '10.6.0'
     // maxWarnings = 0
 }
+
 
 tasks.withType(Checkstyle) {
     reports {
@@ -236,27 +227,26 @@ assemble {
         dependsOn(shadowJar)
 }
 archivesBaseName = project.property("pluginName")
-allprojects {
 
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        maven { url = 'https://jitpack.io' }
-        maven {
-            name 'm2-dv8tion'
-            url 'https://m2.dv8tion.net/releases'
-        }
-        maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
-        maven { url 'https://repo.papermc.io/repository/maven-public/' }
-        maven { url = 'https://hub.jeff-media.com/nexus/repository/jeff-media-public/' }
-        maven { url = 'https://libraries.minecraft.net/' }
-        maven { url = 'https://repo.dmulloy2.net/repository/public/' }
-        maven { url = 'https://oss.sonatype.org/content/repositories/snapshots/' }
-        maven { url = 'https://repo.spongepowered.org/maven/' }
-        maven { url = 'https://nexus.scarsz.me/content/groups/public/' }
-        maven { url = 'https://repo.glaremasters.me/repository/towny/' }
-        maven { url 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url = 'https://jitpack.io' }
+    maven {
+        name = 'm2-dv8tion'
+        url = 'https://m2.dv8tion.net/releases'
     }
+    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url 'https://repo.papermc.io/repository/maven-public/' }
+    maven { url = 'https://hub.jeff-media.com/nexus/repository/jeff-media-public/' }
+    maven { url = 'https://libraries.minecraft.net/' }
+    // This repo is a problem child
+//    maven { url = 'https://repo.dmulloy2.net/repository/public/' }
+    maven { url = 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    maven { url = 'https://repo.spongepowered.org/maven/' }
+    maven { url = 'https://nexus.scarsz.me/content/groups/public/' }
+    maven { url = 'https://repo.glaremasters.me/repository/towny/'}
+    maven { url 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
 }
 
 dependencies {
@@ -329,9 +319,9 @@ dependencies {
 
 //    // JDA for DiscordSRV
 // Apparently, this is already included in DiscordSRV.
-    // implementation("net.dv8tion:JDA:5.0.0-beta.5") {
-    //     exclude module: 'opus-java'
-    // }
+    implementation("net.dv8tion:JDA:5.0.0-alpha.4") {
+        exclude module: 'opus-java'
+    }
     // VentureChat support for chat listening
     compileOnly("mineverse.aust1n46:venturechat:3.5.0")
     // ProtocolLib (required by venturechat)
@@ -416,7 +406,7 @@ license {
     }
 }
 
-sourcesJar.enabled = true
+sourcesJar.enabled = true;
 tasks.build.dependsOn(shadowJar)
 // tasks.test.dependsOn(shadowJar)
 
@@ -426,7 +416,6 @@ runServer {
     // Your plugin's jar (or shadowJar if present) will be used automatically.
     minecraftVersion(project.property("testServerMCVersion"))
 }
-
 processResources {
     project.properties.put("version", version)
     expand project.properties
