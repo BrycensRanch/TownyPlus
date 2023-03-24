@@ -257,6 +257,7 @@ repositories {
     maven { url = 'https://repo.spongepowered.org/maven/' }
     maven { url = 'https://nexus.scarsz.me/content/groups/public/' }
     maven { url = 'https://repo.glaremasters.me/repository/towny/'}
+    maven { url = 'https://repo.alessiodp.com/releases/' }
     maven { url 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
 }
 
@@ -302,6 +303,7 @@ dependencies {
     // library "org.spongepowered:configurate-yaml:4.1.2"
     // Spigot/GitHub Releases Update checker. Am I that lazy? Yes.
     implementation 'com.jeff_media:SpigotUpdateChecker:3.0.2'
+    implementation 'net.byteflux:libby-bukkit:1.1.5'
 
     // Just a reminder: compileOnly means that we're not shading this dependency into our jar. This is usually when we're using a dependency that is already provided by the server. Aka, when it's already in the server's classpath.
     // implementation means that we're shading this dependency into our jar. This is usually when we're using a dependency that is not provided by the server. Aka, when it's not in the server's classpath.
@@ -316,7 +318,7 @@ dependencies {
     implementation 'io.github.townyadvanced.commentedconfiguration:CommentedConfiguration:1.0.1'
 
     // Inventory Framework we use for our GUIs /tplus chest
-    implementation 'com.github.stefvanschie.inventoryframework:IF:0.10.8'
+    compileOnly 'com.github.stefvanschie.inventoryframework:IF:0.10.8'
 
     // Telemetry
     implementation 'org.bstats:bstats-bukkit:3.0.1'
@@ -330,7 +332,7 @@ dependencies {
 
 //    // JDA for DiscordSRV
 // Apparently, this is already included in DiscordSRV.
-    implementation("net.dv8tion:JDA:5.0.0-alpha.4") {
+    compileOnly("net.dv8tion:JDA:4.4.0_352.fix-3") {
         exclude module: 'opus-java'
     }
     // VentureChat support for chat listening
@@ -340,7 +342,7 @@ dependencies {
    compileOnly 'com.github.spotbugs:spotbugs-annotations:4.7.3'
 //    library 'org.hibernate:hibernate-core:5.6.5.Final'
 
-    implementation 'dev.vankka:mcdiscordreserializer:4.3.0'
+    library 'dev.vankka:mcdiscordreserializer:4.3.0'
 
 
     // Database stuff
