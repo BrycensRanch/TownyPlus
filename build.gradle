@@ -378,11 +378,11 @@ shadowJar {
         // These are sorted by internal dependencies to ones for compatability/functionatlity related to other plugins
         // include(dependency('net.kyori::'))
         include(dependency('org.bstats::'))
+            include(dependency('net.byteflux::'))
             include(dependency('io.github.townyadvanced.commentedconfiguration::'))
             include(dependency('com.github.stefvanschie.inventoryframework::'))
             // include(dependency('com.zaxxer::'))
             // include(dependency('com.h2database::'))
-            include(dependency('dev.vankka::'))
         include(dependency('com.jeff_media::'))
 //        include(dependency('me.lucko::'))
 //        include(dependency('cloud.commandframework::'))
@@ -392,18 +392,11 @@ shadowJar {
         // include(dependency('mineverse.aust1n46::'))
         // include(dependency('com.comphenix.protocol::'))
     }
-//    relocate 'cloud.commandframework', "${packageName}.libs.commands"
-//    relocate 'me.lucko', "${packageName}.libs.lucko"
     relocate 'com.jeff_media', "${packageName}.libs.jeff_media"
     relocate 'org.bstats', "${packageName}.libs.bstats"
-    // relocate 'net.kyori', "${packageName}.libs.kyori"
-    relocate 'mineverse.aust1n46', "${packageName}.libs.aust1n46"
-    relocate 'com.comphenix.protocol', "${packageName}.libs.protocol"
-    relocate 'com.discordsrv', "${packageName}.libs.discordsrv"
     relocate 'io.github.townyadvanced.commentedconfiguration', "${packageName}.libs.commentedconfiguration"
-    relocate 'com.github.stefvanschie.inventoryframework', "${packageName}.inventoryframework"
-    // relocate 'com.zaxxer', "${packageName}.libs.zaxxer"
-    relocate 'dev.vankka', "${packageName}.libs.vankka"
+    relocate 'com.github.stefvanschie.inventoryframework', "${packageName}.libs.inventoryframework"
+    relocate 'net.byteflux', "${packageName}.libs.byteflux"
     // Exclude signatures, maven/ and proguard/ from META-INF
     exclude("META-INF/*.SF")
     exclude("META-INF/*.DSA")
