@@ -332,7 +332,7 @@ dependencies {
 
 //    // JDA for DiscordSRV
 // Apparently, this is already included in DiscordSRV.
-    compileOnly("net.dv8tion:JDA:4.4.0_352.fix-3") {
+    compileOnly("net.dv8tion:JDA:4.4.1_353") {
         exclude module: 'opus-java'
     }
     // VentureChat support for chat listening
