@@ -206,7 +206,7 @@ jobs:
           git_push_gpgsign: false
       - name: Update license headers if necessary
         run: ./gradlew licenseFormat
-      - uses: madhead/read-java-properties@latest
+      - uses: BrycensRanch/read-properties-action@v1
         name: Read version from gradle.properties before possible version bump by semantic-release
         id: before
         with:
@@ -236,7 +236,7 @@ jobs:
         uses: ocavue/changelog-parser-action@v1
         with:
           removeMarkdown: false
-      - uses: madhead/read-java-properties@latest
+      - uses: BrycensRanch/read-properties-action@v1
         name: Read version from gradle.properties
         id: version
         with:
