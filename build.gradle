@@ -321,7 +321,7 @@ dependencies {
     compileOnly 'com.github.stefvanschie.inventoryframework:IF:0.10.9'
 
     // Telemetry
-    implementation 'org.bstats:bstats-bukkit:3.0.1'
+    implementation 'org.bstats:bstats-bukkit:3.0.2'
     // better http server than spark
     library "io.javalin:javalin-bundle:5.4.2"
     // DiscordSRV, optional dependency
