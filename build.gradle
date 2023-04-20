@@ -87,17 +87,17 @@ task downloadMultiplePlugins(type: Download) {
     println "Downloading dependent plugins..."
     src([
             'https://github.com/MilkBowl/Vault/releases/download/1.7.3/Vault.jar',
-            'https://github.com/Aust1n46/VentureChat/releases/download/v3.5.0/VentureChat-3.5.0.jar',
-            'https://github.com/TownyAdvanced/Towny/releases/download/0.98.6.20/towny-0.98.6.20.jar',
+            // 'https://github.com/Aust1n46/VentureChat/releases/download/v3.5.0/VentureChat-3.5.0.jar',
+            'https://github.com/TownyAdvanced/Towny/releases/download/0.99.0.4/towny-0.99.0.4.jar',
             'https://github.com/TownyAdvanced/TownyChat/releases/download/0.103/TownyChat-0.103.jar',
             'https://github.com/TheNewEconomy/TNE-Bukkit/releases/download/TNE-0.1.1.17-PRE-2/TNE-0.1.1.17-PRE-2.jar',
-            'https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/target/ProtocolLib.jar',
-            'https://github.com/DiscordSRV/DiscordSRV/releases/download/v1.26.1/DiscordSRV-Build-1.26.1.jar',
-            'https://download.luckperms.net/1477/bukkit/loader/LuckPerms-Bukkit-5.4.66.jar',
+            'https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/build/libs/ProtocolLib.jar',
+            'https://github.com/DiscordSRV/DiscordSRV/releases/download/v1.26.2/DiscordSRV-Build-1.26.2.jar',
+            'https://download.luckperms.net/1483/bukkit/loader/LuckPerms-Bukkit-5.4.71.jar',
             // its not a good idea to use lastSuccessfulBuild as it can break due to version numbers changing
             'https://ci.extendedclip.com/job/PlaceholderAPI/173/artifact/build/libs/PlaceholderAPI-2.11.3.jar',
-            'https://github.com/ViaVersion/ViaVersion/releases/download/4.6.1/ViaVersion-4.6.1.jar',
-            'https://ci.viaversion.com/view/ViaBackwards/job/ViaBackwards/308/artifact/build/libs/ViaBackwards-4.6.2-SNAPSHOT.jar',
+            'https://github.com/ViaVersion/ViaVersion/releases/download/4.6.2/ViaVersion-4.6.2.jar',
+            'https://github.com/ViaVersion/ViaBackwards/releases/download/4.6.1/ViaBackwards-4.6.1.jar',
     ])
     dest rootDir.relativePath(file('run/plugins'))
 }

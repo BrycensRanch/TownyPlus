@@ -1,9 +1,9 @@
   
 version:
   # This is the current version of Towny. Please do not edit.
-  version: 0.98.6.20
+  version: 0.99.0.4
   # This is for showing the changelog on updates. Please do not edit.
-  last_run_version: 0.98.6.20
+  last_run_version: 0.99.0.4
   
 language:
   # The language file you wish to use for your default locale. Your default locale is what
@@ -343,6 +343,24 @@ town:
   # and it will allow claiming 9x9 (80 plots) at once.
   max_claim_radius_value: '4'
   
+  
+  overclaiming:
+  
+    # A feature that allows towns which have too many townblocks claimed (overclaimed) ie: 120/100 TownBlocks, 
+    # to have their land stolen by other towns which are not overclaimed. Using this incentivises Towns to keep
+    # their residents from leaving, and will mean that mayors will be more careful about which land they choose
+    # to claim.
+    # Overclaiming does not allow a town to be split into two separate parts, requiring the Town that is stealing
+    # land to work from the outside inwards.
+    # It is highly recommended to only use this on servers where outposts are disabled, and requiring 
+    # a number of adjacent claims over 1 is enabled.
+    # Towns take land using /t takeoverclaim.
+    being_overclaimed_allows_other_towns_to_steal_land: 'false'
+  
+    # While true, overclaiming is stopped by the min_distance_from_town_homeblock setting below.
+    # This prevents a town from having townblocks stolen surrounding their homeblocks.
+    overclaiming_prevented_by_homeblock_radius: 'true'
+  
   # Maximum number of towns allowed on the server.
   town_limit: '3000'
   
@@ -675,6 +693,10 @@ global_town_settings:
   # When set to true, a player that is trusted by a town is allowed to spawn to the town as if they were a resident.
   # Allows allows the residents of entire an town when that town is trusted by the town.
   do_trusted_residents_count_as_residents: 'false'
+  
+  # When a resident joins a town, should they be prompted to use spawn to the town?
+  # This requires them to not already be standing in the town, and also to be able to use /t spawn and whatever costs may be associated with it.
+  are_new_residents_prompted_to_town_spawn: 'false'
   
   # If non zero it delays any spawn request by x seconds.
   teleport_warmup_time: '0'
@@ -1644,6 +1666,12 @@ economy:
   # The cost of renaming a nation.
   nation_rename_cost: '0'
   
+  # The cost of setting a town's mapcolour.
+  town_set_mapcolour_cost: '0'
+  
+  # The cost of setting a nation's mapcolour.
+  nation_set_mapcolour_cost: '0'
+  
   spawn_travel:
   
     # Cost to use /town spawn.
@@ -1729,6 +1757,12 @@ economy:
   
     # The maximum price that bonus townblocks can cost to purchase. Set to -1.0 to deactivate this maxium.
     price_purchased_bonus_townblock_max_price: '-1.0'
+  
+  
+  takeoverclaim:
+  
+    # The price to use /t takeoverclaim, when it has been enabled in the config at town.being_overclaimed_allows_other_towns_to_steal_land
+    price: '100.0'
   
   death:
   
@@ -2213,6 +2247,9 @@ ascii_map_symbols:
   
   # The character used for the home symbol.
   home: H
+  
+  # The character used for the outpost symbol.
+  outpost: O
   
   # The character used for plots which are forsale.
   forsale: $
