@@ -302,7 +302,7 @@ dependencies {
     // For handling multi platform configuration, simply amazing
     // library "org.spongepowered:configurate-yaml:4.1.2"
     // Spigot/GitHub Releases Update checker. Am I that lazy? Yes.
-    implementation 'com.jeff_media:SpigotUpdateChecker:3.0.2'
+    implementation 'com.jeff_media:SpigotUpdateChecker:3.0.3'
     implementation 'net.byteflux:libby-bukkit:1.2.0'
 
     // Just a reminder: compileOnly means that we're not shading this dependency into our jar. This is usually when we're using a dependency that is already provided by the server. Aka, when it's already in the server's classpath.
