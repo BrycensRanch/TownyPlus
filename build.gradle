@@ -298,7 +298,7 @@ dependencies {
     annotationProcessor('org.projectlombok:lombok:1.18.26')
     annotationProcessor('com.fasterxml.jackson.core:jackson-annotations:2.15.1')
     library 'com.fasterxml.jackson.dataformat:jackson-dataformat-properties:2.15.1'
-    library 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.0'
+    library 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.1'
     // For handling multi platform configuration, simply amazing
     // library "org.spongepowered:configurate-yaml:4.1.2"
     // Spigot/GitHub Releases Update checker. Am I that lazy? Yes.
