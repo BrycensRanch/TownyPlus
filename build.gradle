@@ -308,7 +308,7 @@ dependencies {
     // Just a reminder: compileOnly means that we're not shading this dependency into our jar. This is usually when we're using a dependency that is already provided by the server. Aka, when it's already in the server's classpath.
     // implementation means that we're shading this dependency into our jar. This is usually when we're using a dependency that is not provided by the server. Aka, when it's not in the server's classpath.
     // Towny
-    compileOnly 'com.palmergames.bukkit.towny:towny:0.99.0.7'
+    compileOnly 'com.palmergames.bukkit.towny:towny:0.99.0.8'
     compileOnly 'com.palmergames.bukkit:TownyChat:0.45'
 
     // PlaceholderAPI
