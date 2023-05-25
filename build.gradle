@@ -289,13 +289,13 @@ dependencies {
     // Dependency for our way of command handling
     library 'me.lucko:commodore:2.2'
 
-    library 'org.projectlombok:lombok:1.18.26'
+    library 'org.projectlombok:lombok:1.18.28'
     library 'com.fasterxml.jackson.core:jackson-annotations:2.15.1'
     library 'com.fasterxml.jackson.core:jackson-databind:2.15.1'
     // The following is required for the @Command annotation to work, probably...
     // I just got errors without it.
     library 'io.leangen.geantyref:geantyref:1.3.14'
-    annotationProcessor('org.projectlombok:lombok:1.18.26')
+    annotationProcessor('org.projectlombok:lombok:1.18.28')
     annotationProcessor('com.fasterxml.jackson.core:jackson-annotations:2.15.1')
     library 'com.fasterxml.jackson.dataformat:jackson-dataformat-properties:2.15.1'
     library 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.1'
