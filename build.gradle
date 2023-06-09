@@ -318,7 +318,7 @@ dependencies {
     implementation 'io.github.townyadvanced.commentedconfiguration:CommentedConfiguration:1.0.1'
 
     // Inventory Framework we use for our GUIs /tplus chest
-    compileOnly 'com.github.stefvanschie.inventoryframework:IF:0.10.9'
+    compileOnly 'com.github.stefvanschie.inventoryframework:IF:0.10.10'
 
     // Telemetry
     implementation 'org.bstats:bstats-bukkit:3.0.2'
