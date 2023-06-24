@@ -247,7 +247,7 @@ jobs:
       - run: echo ${{ steps.version.outputs.value }} # Project's version from gradle.properties or 0.0.1 if it is not defined there
 
       - name: Publish to Modrinth
-        uses: BrycensRanch/plugin-publish@e05c1775fc218fe4d24eb51543cd305f84b3342e
+        uses: BrycensRanch/plugin-publish@fc861911f56c6ea9c28e3caa4360c4e4cba6369c
         if: ${{ steps.before.outputs.value }} != ${{ steps.version.outputs.value }}
         with: 
           modrinth-id: jVlopSkZ
@@ -264,7 +264,7 @@ jobs:
           java: 17
           version-type: ${{ github.head_ref || github.ref_name }}
       - name: Publish to CurseForge (Bukkit)
-        uses: BrycensRanch/plugin-publish@e05c1775fc218fe4d24eb51543cd305f84b3342e
+        uses: BrycensRanch/plugin-publish@fc861911f56c6ea9c28e3caa4360c4e4cba6369c
         if: ${{ steps.before.outputs.value }} != ${{ steps.version.outputs.value }}
         with:
           curseforge-id: 832361
@@ -286,7 +286,7 @@ jobs:
           version-type: ${{ github.head_ref || github.ref_name }}
           fail-mode: warn
       - name: Publish to Polymart
-        uses: BrycensRanch/plugin-publish@e05c1775fc218fe4d24eb51543cd305f84b3342e
+        uses: BrycensRanch/plugin-publish@fc861911f56c6ea9c28e3caa4360c4e4cba6369c
         if: ${{ steps.before.outputs.value }} != ${{ steps.version.outputs.value }}
         with: 
           polymart-id: 2057
