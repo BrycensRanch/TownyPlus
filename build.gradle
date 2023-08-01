@@ -20,7 +20,7 @@ plugins {
     id "com.moonlitdoor.git-version" version "0.1.1"
 
     id 'name.remal.common-ci' version '1.5.0'
-      id "com.github.spotbugs" version "5.0.14"
+      id "com.github.spotbugs" version "5.1.0"
         id "com.diffplug.spotless" version "6.19.0"
     id "de.undercouch.download" version "5.4.0"
 
