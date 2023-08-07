@@ -338,7 +338,7 @@ dependencies {
     // VentureChat support for chat listening
     compileOnly("mineverse.aust1n46:venturechat:3.5.0")
     // ProtocolLib (required by venturechat)
-    compileOnly "com.comphenix.protocol:ProtocolLib:5.0.0"
+    compileOnly "com.comphenix.protocol:ProtocolLib:5.1.0"
    compileOnly 'com.github.spotbugs:spotbugs-annotations:4.7.3'
 //    library 'org.hibernate:hibernate-core:5.6.5.Final'
 
