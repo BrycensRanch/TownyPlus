@@ -18,7 +18,7 @@
   "license": "ISC",
   "dependencies": {
     "concurrently": "^7.6.0",
-    "execa": "^7.0.0",
+    "execa": "^8.0.0",
     "jest": "^29.5.0",
     "minecraft-data": "^3.30.0",
     "minecraft-query": "^1.0.13",
