@@ -284,7 +284,7 @@ dependencies {
     library 'cloud.commandframework:cloud-core:1.8.4'
     library 'cloud.commandframework:cloud-annotations:1.8.4'
     annotationProcessor('cloud.commandframework:cloud-annotations:1.8.4')
-    library 'cloud.commandframework:cloud-paper:1.8.3'
+    library 'cloud.commandframework:cloud-paper:1.8.4'
     library 'cloud.commandframework:cloud-minecraft-extras:1.8.4'
     // Dependency for our way of command handling
     library 'me.lucko:commodore:2.2'
