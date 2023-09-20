@@ -18,6 +18,13 @@ working/*
 bin/
 
 # Test server, only save plugins folder
+run/server.properties
+run/usercache.json
+run/version_history.json
+run/whitelist.json
+run/spigot.yml
+run/config
+run/plugins/TheNewEconomy/data.yml
 run/cache/
 run/libraries/
 run/logs/
@@ -29,7 +36,6 @@ run/plugins/WorldEdit/
 run/plugins/WorldGuard/
 run/plugins/WorldGuardExtraFlags/
 run/plugins/WorldGuardPomaFlags/
-run/plugins/WorldGuardTweaks/
 run/plugins/WorldGuardTweaks/
 run/plugins/TownyPlus/
 run/plugins/TownyChat/
