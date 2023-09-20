@@ -347,7 +347,7 @@ dependencies {
 
     // Database stuff
     library 'com.zaxxer:HikariCP:5.0.1'
-    library 'com.h2database:h2:2.1.214'
+    library 'com.h2database:h2:2.2.224'
     library 'org.xerial:sqlite-jdbc:3.42.0.0'
     library 'org.postgresql:postgresql:42.6.0'
 //    compileOnly 'org.h2.Driver:Driver:1.4.200'
