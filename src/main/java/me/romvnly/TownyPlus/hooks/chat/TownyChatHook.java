@@ -14,22 +14,17 @@ import com.palmergames.bukkit.TownyChat.Chat;
 import com.palmergames.bukkit.TownyChat.channels.Channel;
 import com.palmergames.bukkit.TownyChat.events.AsyncChatHookEvent;
 import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 
 import me.romvnly.TownyPlus.TownyPlusMain;
 import github.scarsz.discordsrv.util.LangUtil;
 import github.scarsz.discordsrv.util.PlayerUtil;
-import github.scarsz.discordsrv.util.PluginUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.plugin.Plugin;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -83,7 +78,7 @@ public class TownyChatHook implements ChatHook {
     public void onMessage(AsyncChatHookEvent event) {
         // make sure message isn't blank
 
-        if (StringUtils.isBlank(event.getMessage())) {
+        if (event.getMessage().isBlank()) {
             return;
         }
         TownyPlusMain.plugin.getLogger().info("processing town msg");

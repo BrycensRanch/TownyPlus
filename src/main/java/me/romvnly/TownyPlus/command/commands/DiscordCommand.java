@@ -11,19 +11,12 @@
 package me.romvnly.TownyPlus.command.commands;
 
 
-import cloud.commandframework.arguments.standard.EnumArgument;
-import cloud.commandframework.arguments.standard.IntegerArgument;
-import cloud.commandframework.arguments.standard.StringArgument;
-import cloud.commandframework.bukkit.parsers.MaterialArgument;
 import cloud.commandframework.context.CommandContext;
-import cloud.commandframework.meta.CommandMeta;
 import cloud.commandframework.minecraft.extras.MinecraftExtrasMetaKeys;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import github.scarsz.discordsrv.DiscordSRV;
-import github.scarsz.discordsrv.dependencies.jda.api.JDA;
-import github.scarsz.discordsrv.dependencies.jda.api.entities.User;
 import github.scarsz.discordsrv.util.DiscordUtil;
 import me.romvnly.TownyPlus.TownyPlusMain;
 import me.romvnly.TownyPlus.command.BaseCommand;
@@ -32,32 +25,20 @@ import me.romvnly.TownyPlus.configuration.Config;
 import me.romvnly.TownyPlus.configuration.Lang;
 import me.romvnly.TownyPlus.model.SavedCode;
 import me.romvnly.TownyPlus.model.SavedTownData;
-import me.romvnly.TownyPlus.util.Constants;
 import me.romvnly.TownyPlus.util.RandomString;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.User;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.units.qual.C;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Properties;
 
 // This whole implementation is inspired from https://github.com/GeyserMC/Geyser/blob/master/core/src/main/java/org/geysermc/geyser/command/defaults/VersionCommand.java
 public final class DiscordCommand extends BaseCommand {

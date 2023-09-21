@@ -9,25 +9,24 @@ buildscript {
 }
 
 plugins {
-    id 'com.github.johnrengelman.shadow' version '8.1.1'
-    id 'net.minecrell.plugin-yml.bukkit' version '0.6.0'
-    id "org.cadixdev.licenser" version "0.6.1"
-//    id "com.github.sherter.google-java-format" version "0.9"
-    id 'xyz.jpenilla.run-paper' version '2.1.0'
-//    id "com.github.spotbugs" version "5.0.13"
-    id 'com.gorylenko.gradle-git-properties' version '2.4.1'
-//    id 'com.palantir.git-version' version '1.0.0'
-    id "com.moonlitdoor.git-version" version "0.1.1"
+    id 'com.github.johnrengelman.shadow'
+    id 'net.minecrell.plugin-yml.bukkit'
+    id "org.cadixdev.licenser"
+//    id "com.github.sherter.google-java-format"
+    id 'xyz.jpenilla.run-paper'
+//    id "com.github.spotbugs"
+    id 'com.gorylenko.gradle-git-properties'
+//    id 'com.palantir.git-version'
+    id "com.moonlitdoor.git-version"
 
-    id 'name.remal.common-ci' version '1.5.0'
-      id "com.github.spotbugs" version "5.1.3"
-        id "com.diffplug.spotless" version "6.19.0"
-    id "de.undercouch.download" version "5.5.0"
-
-
+    id 'name.remal.common-ci'
+      id "com.github.spotbugs"
+        id "com.diffplug.spotless"
+    id "de.undercouch.download"
 
 
-    id 'org.gradle.crypto.checksum' version '1.4.0'
+
+    id 'org.gradle.crypto.checksum'
     id 'java'
     id 'jacoco'
     id 'idea'
@@ -268,9 +267,9 @@ dependencies {
 
     // using spigot-api
     // notice how we arent using bukkit-api. i honestly think the plugin won't work with bukkit-api due to the shitload of opinionated dependencies we use
-    compileOnly "org.spigotmc:spigot-api:${mcVersion}-R0.1-SNAPSHOT" // The Spigot API with no shadowing. Requires the OSS repo.
+    compileOnly libs.spigot.api // The Spigot API with no shadowing. Requires the OSS repo.
     // or using paper-api
-//    compileOnly "io.papermc.paper:paper-api:${mcVersion}-R0.1-SNAPSHOT"
+//    compileOnly "io.papermc.paper:paper-api:_"
 
     // Library dependencies mean they're loaded on server boot instead of being in the jar
     //
@@ -281,96 +280,96 @@ dependencies {
     // We went from 5MB to 1.4MB, so it's a win-win.
 
     // Command Handling! https://commandframework.cloud
-    library 'cloud.commandframework:cloud-core:1.8.4'
-    library 'cloud.commandframework:cloud-annotations:1.8.4'
-    annotationProcessor('cloud.commandframework:cloud-annotations:1.8.4')
-    library 'cloud.commandframework:cloud-paper:1.8.4'
-    library 'cloud.commandframework:cloud-minecraft-extras:1.8.4'
+    library libs.cloud.core
+    library libs.cloud.annotations
+    annotationProcessor(libs.cloud.annotations)
+    library libs.cloud.paper
+    library libs.cloud.minecraft.extras
     // Dependency for our way of command handling
-    library 'me.lucko:commodore:2.2'
+    library libs.commodore
 
-    library 'org.projectlombok:lombok:1.18.30'
-    library 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
-    library 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    library libs.lombok
+    library libs.jackson.annotations
+    library libs.jackson.databind
     // The following is required for the @Command annotation to work, probably...
     // I just got errors without it.
-    library 'io.leangen.geantyref:geantyref:1.3.14'
-    annotationProcessor('org.projectlombok:lombok:1.18.30')
-    annotationProcessor('com.fasterxml.jackson.core:jackson-annotations:2.15.2')
-    library 'com.fasterxml.jackson.dataformat:jackson-dataformat-properties:2.15.2'
-    library 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.2'
+    library libs.geantyref
+    annotationProcessor(libs.lombok)
+    annotationProcessor(libs.jackson.annotations)
+    library libs.jackson.dataformat.properties
+    library libs.jackson.dataformat.yaml
     // For handling multi platform configuration, simply amazing
-    // library "org.spongepowered:configurate-yaml:4.1.2"
+    // library "org.spongepowered:configurate-yaml:_"
     // Spigot/GitHub Releases Update checker. Am I that lazy? Yes.
-    implementation 'com.jeff_media:SpigotUpdateChecker:3.0.3'
-    implementation 'net.byteflux:libby-bukkit:1.3.0'
+    implementation libs.spigotupdatechecker
+    implementation libs.libby.bukkit
 
     // Just a reminder: compileOnly means that we're not shading this dependency into our jar. This is usually when we're using a dependency that is already provided by the server. Aka, when it's already in the server's classpath.
     // implementation means that we're shading this dependency into our jar. This is usually when we're using a dependency that is not provided by the server. Aka, when it's not in the server's classpath.
     // Towny
-    compileOnly 'com.palmergames.bukkit.towny:towny:0.99.5.15'
-    compileOnly 'com.palmergames.bukkit:TownyChat:0.45'
+    compileOnly libs.towny
+    compileOnly libs.townychat
 
     // PlaceholderAPI
-    compileOnly 'me.clip:placeholderapi:2.11.3'
+    compileOnly libs.placeholderapi
 
     // Towny's implementation of CommentedConfiguration, which we use for our config.yml and lang_en.yml
-    implementation 'io.github.townyadvanced.commentedconfiguration:CommentedConfiguration:1.0.1'
+    implementation libs.commentedconfiguration
 
     // Inventory Framework we use for our GUIs /tplus chest
-    compileOnly 'com.github.stefvanschie.inventoryframework:IF:0.10.11'
+    compileOnly libs.if
 
     // Telemetry
-    implementation 'org.bstats:bstats-bukkit:3.0.2'
+    implementation libs.bstats.bukkit
     // better http server than spark
-    library "io.javalin:javalin-bundle:5.6.1"
+    library libs.javalin.bundle
     // DiscordSRV, optional dependency
-    compileOnly 'com.discordsrv:discordsrv:1.24.0'
+    compileOnly libs.discordsrv
 
     // Semver version parsing for auto updating
-    library 'com.vdurmont:semver4j:3.1.0'
+    library libs.semver4j
 
 //    // JDA for DiscordSRV
 // Apparently, this is already included in DiscordSRV.
-    compileOnly("net.dv8tion:JDA:4.4.0_352.fix-3") {
+    compileOnly(libs.jda) {
         exclude module: 'opus-java'
     }
     // VentureChat support for chat listening
-    compileOnly("mineverse.aust1n46:venturechat:3.5.0")
+    compileOnly(libs.venturechat)
     // ProtocolLib (required by venturechat)
-    compileOnly "com.comphenix.protocol:ProtocolLib:5.1.0"
-   compileOnly 'com.github.spotbugs:spotbugs-annotations:4.7.3'
-//    library 'org.hibernate:hibernate-core:5.6.5.Final'
+    compileOnly libs.protocollib
+   compileOnly libs.spotbugs.annotations
+//    library 'org.hibernate:hibernate-core:_'
 
-    library 'dev.vankka:mcdiscordreserializer:4.3.0'
+    library libs.mcdiscordreserializer
 
 
     // Database stuff
-    library 'com.zaxxer:HikariCP:5.0.1'
-    library 'com.h2database:h2:2.1.214'
-    library 'org.xerial:sqlite-jdbc:3.42.0.0'
-    library 'org.postgresql:postgresql:42.6.0'
-//    compileOnly 'org.h2.Driver:Driver:1.4.200'
-//    compileOnly 'com.mysql.jdbc.Driver:Driver:8.0.26'
+    library libs.hikaricp
+    library libs.h2
+    library libs.sqlite.jdbc
+    library libs.postgresql
+//    compileOnly 'org.h2.Driver:Driver:_'
+//    compileOnly 'com.mysql.jdbc.Driver:Driver:_'
 
     // Adventure
-    library "net.kyori:adventure-api:4.14.0"
-    library "net.kyori:adventure-platform-bukkit:4.3.0"
-    library "net.kyori:adventure-text-minimessage:4.14.0"
+    library libs.adventure.api
+    library libs.adventure.platform.bukkit
+    library libs.adventure.text.minimessage
     // Adventure logger that takes advantage of Adventure's text components
-    library "net.kyori:adventure-text-logger-slf4j:4.14.0"
+    library libs.adventure.text.logger.slf4j
 
     // Test dependencies
-   spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.12.0'
-//    testCompileOnly 'com.github.spotbugs:spotbugs-annotations:4.7.3'
-//    testImplementation("org.projectlombok:lombok:1.18.26")
-//    testImplementation("com.fasterxml.jackson.core:jackson-annotations:2.14.2")
-//    testImplementation("com.fasterxml.jackson.core:jackson-databind:2.14.2")
-//    testImplementation("io.javalin:javalin-bundle:5.3.2")
-//    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
-//    testImplementation 'org.mockito:mockito-core:5.1.1'
-//    testImplementation 'com.github.seeseemelk:MockBukkit-v1.19:2.145.0'
-//    testImplementation 'org.assertj:assertj-core:3.24.2'
+   spotbugsPlugins libs.findsecbugs.plugin
+//    testCompileOnly libs.spotbugs.annotations
+//    testImplementation(libs.lombok)
+//    testImplementation(libs.jackson.annotations)
+//    testImplementation(libs.jackson.databind)
+//    testImplementation(libs.javalin.bundle)
+//    testImplementation Testing.junit.jupiter
+//    testImplementation Testing.mockito.core
+//    testImplementation 'com.github.seeseemelk:MockBukkit-v1.19:_'
+//    testImplementation Testing.assertj.core
 }
 shadowJar {
         archiveClassifier.set("")
