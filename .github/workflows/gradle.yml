@@ -214,7 +214,7 @@ jobs:
           property: version
           default: 0.0.1
 
-      - run: echo ${{ steps.version.outputs.value }} # Project's version from gradle.properties or 0.0.1 if it is not defined there
+      - run: echo ${{ steps.version.outputs.version }} # Project's version from gradle.properties or 0.0.1 if it is not defined there
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -226,7 +226,7 @@ jobs:
           signingKey: ${{ secrets.GPG_PRIVATE_KEY }}
           signingPassword: ${{ secrets.PASSPHRASE }}
           GH_URL: "https://api.github.com/"
-        run: npx --legacy-peer-deps -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p @romvnly/gradle-semantic-release-plugin -p @semantic-release/release-notes-generator -p conventional-changelog-conventionalcommits -p semantic-release semantic-release
+        run: npx --legacy-peer-deps -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p gradle-semantic-release-plugin -p @semantic-release/release-notes-generator -p conventional-changelog-conventionalcommits -p semantic-release-major-tag -p semantic-release semantic-release
 
       - name: Run snapshot action
         uses: mikepenz/gradle-dependency-submission@v0.9.0

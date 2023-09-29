@@ -1,5 +1,4 @@
 {
-  "$schema": "https://raw.githubusercontent.com/semantic-release/semantic-release/master/docs/usage/configuration.md",
   "branches": [
     "master",
     "+([0-9])?(.{+([0-9]),x}).x",
@@ -15,16 +14,7 @@
     }
   ],
   "plugins": [
-    [
       "@semantic-release/commit-analyzer",
-    {
-      "preset": "conventionalcommits",
-      "parserOpts": {
-        "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"]
-      }
-    }
-    ],
-    "@romvnly/gradle-semantic-release-plugin",
     [
       "@semantic-release/release-notes-generator",
       {
@@ -48,18 +38,26 @@
         }
       }
     ],
+    "@semantic-release/changelog",
+    [
+      "semantic-release-major-tag",
+      {
+        "customTags": ["v${major}", "v${major}.${minor}", "v${major}.x", "v${major}.${minor}.x"]
+      }
+    ],
+    "gradle-semantic-release-plugin",
     ["@semantic-release/exec", {
       "publishCmd": "node ./update-versions.js ${nextRelease.version}"
     }
     ],
-    "@semantic-release/changelog",
     [
       "@semantic-release/git",
       {
         "assets": [
           "gradle.properties",
           "CHANGELOG.md"
-        ]
+        ],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }
     ],
     [
