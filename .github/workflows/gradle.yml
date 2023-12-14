@@ -82,7 +82,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifacts
           path: "**/build/libs"
@@ -317,7 +317,7 @@ jobs:
 #           signingPassword: ${{ secrets.PASSPHRASE }}
       - name: Upload release artifacts
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: release-artifacts
           path: build/libs
