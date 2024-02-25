@@ -31,12 +31,12 @@ dependencies:
   prismarine-viewer: 1.24.0
   rcon-client: 4.2.4
   shx: 0.3.4
-  ts-jest: 29.0.5_44ttdtjaknnkcgzh5px4h2qxl4
-  ts-node: 10.9.1_fstsn4glgdfgivrdek2hmdtej4
+  ts-jest: 29.0.5_vxyxq5aj45erssw7lq5dnjnfkm
+  ts-node: 10.9.1_aehgi7jjmmj3bt4higstlibq6i
 
 devDependencies:
   '@types/node': 20.11.20
-  typescript: 5.0.2
+  typescript: 5.3.3
 
 packages:
 
@@ -2015,7 +2015,7 @@ packages:
       pretty-format: 29.5.0
       slash: 3.0.0
       strip-json-comments: 3.1.1
-      ts-node: 10.9.1_fstsn4glgdfgivrdek2hmdtej4
+      ts-node: 10.9.1_aehgi7jjmmj3bt4higstlibq6i
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -3685,7 +3685,7 @@ packages:
     hasBin: true
     dev: false
 
-  /ts-jest/29.0.5_44ttdtjaknnkcgzh5px4h2qxl4:
+  /ts-jest/29.0.5_vxyxq5aj45erssw7lq5dnjnfkm:
     resolution: {integrity: sha512-PL3UciSgIpQ7f6XjVOmbi96vmDHUqAyqDr8YxzopDqX3kfgYtX1cuNeBjP+L9sFXi6nzsGGA6R3fP3DDDJyrxA==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     hasBin: true
@@ -3714,11 +3714,11 @@ packages:
       lodash.memoize: 4.1.2
       make-error: 1.3.6
       semver: 7.3.8
-      typescript: 5.0.2
+      typescript: 5.3.3
       yargs-parser: 21.1.1
     dev: false
 
-  /ts-node/10.9.1_fstsn4glgdfgivrdek2hmdtej4:
+  /ts-node/10.9.1_aehgi7jjmmj3bt4higstlibq6i:
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -3744,7 +3744,7 @@ packages:
       create-require: 1.1.1
       diff: 4.0.2
       make-error: 1.3.6
-      typescript: 5.0.2
+      typescript: 5.3.3
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
     dev: false
@@ -3785,9 +3785,9 @@ packages:
     hasBin: true
     dev: false
 
-  /typescript/5.0.2:
-    resolution: {integrity: sha512-wVORMBGO/FAs/++blGNeAVdbNKtIh1rbBL2EyQ1+J9lClJ93KiiKe8PmFIVdXhHcyv44SL9oglmfeSsndo0jRw==}
-    engines: {node: '>=12.20'}
+  /typescript/5.3.3:
+    resolution: {integrity: sha512-pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==}
+    engines: {node: '>=14.17'}
     hasBin: true
 
   /uint4/0.1.2:
