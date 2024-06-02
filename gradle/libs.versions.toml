@@ -10,7 +10,7 @@ org-cadixdev-licenser = { id = "org.cadixdev.licenser", version = "0.6.1" }
 
 xyz-jpenilla-run-paper = { id = "xyz.jpenilla.run-paper", version = "2.3.0" }
 
-com-gorylenko-gradle-git-properties = { id = "com.gorylenko.gradle-git-properties", version = "2.4.1" }
+com-gorylenko-gradle-git-properties = { id = "com.gorylenko.gradle-git-properties", version = "2.4.2" }
 
 com-moonlitdoor-git-version = { id = "com.moonlitdoor.git-version", version = "0.1.1" }
 
