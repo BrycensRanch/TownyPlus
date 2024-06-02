@@ -229,7 +229,7 @@ jobs:
         run: npx --legacy-peer-deps -p @semantic-release/changelog -p @semantic-release/git -p @semantic-release/exec -p gradle-semantic-release-plugin -p @semantic-release/release-notes-generator -p conventional-changelog-conventionalcommits -p semantic-release-major-tag -p semantic-release semantic-release
 
       - name: Run snapshot action
-        uses: mikepenz/gradle-dependency-submission@v0.9.2
+        uses: mikepenz/gradle-dependency-submission@v1.0.0
 
       - name: Parse Changelog
         id: changelog
