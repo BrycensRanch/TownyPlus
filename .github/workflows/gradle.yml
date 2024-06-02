@@ -297,7 +297,7 @@ jobs:
           fail-mode: warn
       - name: 🔃 Merge master back into alpha
         if: ${{ github.ref == 'refs/heads/master' }}
-        uses: peter-evans/rebase@v2
+        uses: peter-evans/rebase@v3
         with:
           base: master
 #      - name: 🔃 Merge master back into alpha
