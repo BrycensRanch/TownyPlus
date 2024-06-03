@@ -52,7 +52,7 @@ jobs:
 
       - name: Gradle Wrapper Validation
         if: ${{ needs.changes.outputs.gradle == 'true' }}
-        uses: gradle/wrapper-validation-action@v1
+        uses: gradle/wrapper-validation-action@v3
 
       - name: Grant execute permission to gradlew
         run: chmod +x gradlew
@@ -180,7 +180,7 @@ jobs:
 
       - name: Gradle Wrapper Validation
         if: needs.changes.outputs.gradle == 'true'
-        uses: gradle/wrapper-validation-action@v1
+        uses: gradle/wrapper-validation-action@v3
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
