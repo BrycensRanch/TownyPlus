@@ -20,7 +20,7 @@ specifiers:
 
 dependencies:
   concurrently: 7.6.0
-  execa: 9.2.0
+  execa: 9.3.0
   jest: 29.5.0_dlt7tiwvs6czosypxsa2jpjw2a
   minecraft-data: 3.66.0
   minecraft-query: 1.0.13
@@ -1544,8 +1544,8 @@ packages:
       strip-final-newline: 2.0.0
     dev: false
 
-  /execa/9.2.0:
-    resolution: {integrity: sha512-vpOyYg7UAVKLAWWtRS2gAdgkT7oJbCn0me3gmUmxZih4kd3MF/oo8kNTBTIbkO3yuuF5uB4ZCZfn8BOolITYhg==}
+  /execa/9.3.0:
+    resolution: {integrity: sha512-l6JFbqnHEadBoVAVpN5dl2yCyfX28WoBAGaoQcNmLLSedOxTxcn2Qa83s8I/PA5i56vWru2OHOtrwF7Om2vqlg==}
     engines: {node: ^18.19.0 || >=20.5.0}
     dependencies:
       '@sindresorhus/merge-streams': 4.0.0
