@@ -33,7 +33,7 @@
             { "type": "feat", "section": "✨ Feature ✨", "hidden": false },
             { "type": "fix", "section": "🐛 Bugfix 🐛", "hidden": false },
             { "type": "docs", "section": "📝  Documentation", "hidden": true },
-            { "type": "chore", "section": "📝  Misc", "hidden": true 
+            { "type": "chore", "section": "📝  Misc", "hidden": true },
             { "type": "refactor", "section": "📝  Refactor", "hidden": true },
             { "type": "ci", "section": "📝  CI", "hidden": true },
             { "type": "HOTFIX", "section": "🔥 Hotfix 🔥", "hidden": false }
