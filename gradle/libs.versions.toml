@@ -28,6 +28,8 @@ org-gradle-crypto-checksum = { id = "org.gradle.crypto.checksum", version = "1.4
 
 cloud-annotations = "cloud.commandframework:cloud-annotations:_"
 
+commons = "commons-io:commons-io:_"
+
 lombok = "org.projectlombok:lombok:_"
 
 jackson-annotations = "com.fasterxml.jackson.core:jackson-annotations:_"

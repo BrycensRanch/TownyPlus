@@ -49,6 +49,9 @@ logger.lifecycle("""
 apply from: "$rootDir/gradle/jacoco.gradle"
 apply from: "$rootDir/gradle/publish.gradle"
 
+tasks.withType(Javadoc).all { enabled = false } // non ascii characters make it crash
+
+
 if (project.hasProperty("local_script")) {
     apply from: file(local_script + "/build.local.gradle")
 }
@@ -248,7 +251,10 @@ repositories {
     }
     maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
     maven { url 'https://repo.papermc.io/repository/maven-public/' }
-    maven { url = 'https://repo.jeff-media.com/public/' }
+    maven {
+        name = "jeff-media-public"
+        url = 'https://repo.jeff-media.com/public/'
+    }
     maven { url = 'https://libraries.minecraft.net/' }
     // This repo is a problem child
 //    maven { url = 'https://repo.dmulloy2.net/repository/public/' }
@@ -270,7 +276,7 @@ dependencies {
     compileOnly libs.spigot.api // The Spigot API with no shadowing. Requires the OSS repo.
     // or using paper-api
 //    compileOnly "io.papermc.paper:paper-api:_"
-
+    library libs.commons
     // Library dependencies mean they're loaded on server boot instead of being in the jar
     //
 
