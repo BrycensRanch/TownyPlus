@@ -248,7 +248,7 @@ repositories {
     }
     maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
     maven { url 'https://repo.papermc.io/repository/maven-public/' }
-    maven { url = 'https://hub.jeff-media.com/nexus/repository/jeff-media-public/' }
+    maven { url = 'https://repo.jeff-media.com/public/' }
     maven { url = 'https://libraries.minecraft.net/' }
     // This repo is a problem child
 //    maven { url = 'https://repo.dmulloy2.net/repository/public/' }
