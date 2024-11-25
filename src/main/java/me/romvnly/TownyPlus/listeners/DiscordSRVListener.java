@@ -34,7 +34,7 @@ import me.romvnly.TownyPlus.configuration.Lang;
 import me.romvnly.TownyPlus.model.SavedCode;
 import me.romvnly.TownyPlus.model.SavedTownData;
 import me.romvnly.TownyPlus.util.Debug;
-import net.dv8tion.jda.api.entities.ChannelType;
+import net.dv8tion.jda.api.entities.channel.ChannelType;
 import net.dv8tion.jda.api.events.guild.GuildUnavailableEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;

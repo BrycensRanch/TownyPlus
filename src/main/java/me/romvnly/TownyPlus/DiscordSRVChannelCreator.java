@@ -18,18 +18,17 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import dev.vankka.mcdiscordreserializer.minecraft.MinecraftSerializer;
 import github.scarsz.discordsrv.DiscordSRV;
-import github.scarsz.discordsrv.util.DiscordUtil;
 import me.romvnly.TownyPlus.configuration.Lang;
 import me.romvnly.TownyPlus.model.SavedCode;
 import me.romvnly.TownyPlus.model.SavedTownData;
 import me.romvnly.TownyPlus.util.Debug;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Category;
+import net.dv8tion.jda.api.entities.channel.concrete.Category;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -204,7 +203,7 @@ public class DiscordSRVChannelCreator {
             Debug.log("No member found for this discord server");
             return;
         }
-        final Role topRole = DiscordUtil.getTopRole(member);
+        final Role topRole = !member.getRoles().isEmpty() ? member.getRoles().get(0) : null;
         Component discordMessageComponent = MinecraftSerializer.INSTANCE.serialize(event.getMessage().getContentDisplay());
         final TextComponent textComponent = Component.text()
                 .content("[" + town.getName() + " Discord" + "] ").color(NamedTextColor.GOLD)
