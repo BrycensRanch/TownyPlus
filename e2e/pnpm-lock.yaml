@@ -29,7 +29,7 @@ dependencies:
   mineflayer-pvp: 1.3.2
   node-dev: 8.0.0
   prismarine-viewer: 1.28.0
-  rcon-client: 4.2.4
+  rcon-client: 4.2.5
   shx: 0.3.4
   ts-jest: 29.0.5_z2lj3ib7wcrlxhwmrfefsx3qlq
   ts-node: 10.9.1_camoxlydgbntdmdeb2mop62rvq
@@ -3314,8 +3314,8 @@ packages:
       unpipe: 1.0.0
     dev: false
 
-  /rcon-client/4.2.4:
-    resolution: {integrity: sha512-sTHYLbcu2qrrOX4TOD3rvcLZNs7xiAhTsnZZIvxviSpa0yeV63sPAVI0PeScn5IvhKOCMURGt1NmnQ8h/GxjtA==}
+  /rcon-client/4.2.5:
+    resolution: {integrity: sha512-AnX1GU/ZTlwtYup3H6h0J1hwfP3OYltXVe+8ReBzmNEepX3xGH8nDg7gYqT5Y9rpAS/LmQ48h0BKINt1YGd8bA==}
     dependencies:
       typed-emitter: 0.1.0
     dev: false
