@@ -108,7 +108,7 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
     public @NonNull
     BukkitAudiences adventure() {
         if (this.adventure == null) {
-            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
+            plugin.logger.error("Tried to access Adventure when the plugin was disabled!");
         }
         return this.adventure;
     }

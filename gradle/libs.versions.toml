@@ -26,19 +26,21 @@ org-gradle-crypto-checksum = { id = "org.gradle.crypto.checksum", version = "1.4
 
 [libraries]
 
-cloud-annotations = "cloud.commandframework:cloud-annotations:_"
+cloud-annotations = "org.incendo:cloud-annotations:_"
 
 commons = "commons-io:commons-io:_"
+
+commons-lang3 = "org.apache.commons:commons-lang3:_"
 
 lombok = "org.projectlombok:lombok:_"
 
 jackson-annotations = "com.fasterxml.jackson.core:jackson-annotations:_"
 
-cloud-core = "cloud.commandframework:cloud-core:_"
+cloud-core = "org.incendo:cloud-core:_"
 
-cloud-paper = "cloud.commandframework:cloud-paper:_"
+cloud-paper = "org.incendo:cloud-paper:_"
 
-cloud-minecraft-extras = "cloud.commandframework:cloud-minecraft-extras:_"
+cloud-minecraft-extras = "org.incendo:cloud-minecraft-extras:_"
 
 commodore = "me.lucko:commodore:_"
 

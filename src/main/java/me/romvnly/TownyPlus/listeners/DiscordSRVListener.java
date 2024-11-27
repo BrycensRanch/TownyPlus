@@ -13,14 +13,14 @@ package me.romvnly.TownyPlus.listeners;
 import github.scarsz.discordsrv.api.ListenerPriority;
 import github.scarsz.discordsrv.api.Subscribe;
 import github.scarsz.discordsrv.api.events.DiscordReadyEvent;
+import github.scarsz.discordsrv.dependencies.jda.api.entities.ChannelType;
+import github.scarsz.discordsrv.dependencies.jda.api.events.guild.GuildUnavailableEvent;
+import github.scarsz.discordsrv.dependencies.jda.api.events.message.MessageReceivedEvent;
+import github.scarsz.discordsrv.dependencies.jda.api.hooks.ListenerAdapter;
 import github.scarsz.discordsrv.util.DiscordUtil;
 import me.romvnly.TownyPlus.TownyPlusMain;
 import me.romvnly.TownyPlus.command.CommandManager;
 import me.romvnly.TownyPlus.util.Debug;
-import net.dv8tion.jda.api.entities.channel.ChannelType;
-import net.dv8tion.jda.api.events.guild.GuildUnavailableEvent;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
@@ -42,15 +42,13 @@ public class DiscordSRVListener extends ListenerAdapter {
         DiscordUtil.getJda().addEventListener(this);
 
         // ... we can also do anything other than listen for events with JDA now,
-        plugin.getLogger().info("Chatting on Discord with " + DiscordUtil.getJda().getUsers().size() + " users!");
+        plugin.logger.info("Chatting on Discord with " + DiscordUtil.getJda().getUsers().size() + " users!");
         // see https://ci.dv8tion.net/job/JDA/javadoc/ for JDA's javadoc
         // see https://github.com/DV8FromTheWorld/JDA/wiki for JDA's wiki
     }
-    @Override // we can use any of JDA's events through ListenerAdapter, just by overriding the methods
     public void onGuildUnavailable(@NotNull GuildUnavailableEvent event) {
-        plugin.getLogger().severe("Oh no " + event.getGuild().getName() + " went unavailable :(");
+        plugin.logger.warn("Oh no " + event.getGuild().getName() + " went unavailable :(");
     }
-    @Override
     public void onMessageReceived(@Nonnull final MessageReceivedEvent event) {
 //        if (event.getAuthor().isBot()) return;
 //        Guild guild = event.getGuild();

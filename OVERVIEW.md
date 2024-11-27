@@ -15,7 +15,7 @@
 <a href="https://github.com/semantic-release/semantic-release"><img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=for-the-badge" alt="semantic-release"></a>
 <a href="https://discord.gg/cX89RdaF32"><img src="https://img.shields.io/discord/557529166644510731?logo=discord&amp;style=for-the-badge" alt="Support Server"></a></p>
 
-> This plugin requires Towny to be installed on your server. It will not work without it. It also requires Java 17 or higher.
+> This plugin requires Towny to be installed on your server. It will not work without it. It also requires Java 21 or higher.
 
 > This plugin is still in development and is not ready for production use.
 

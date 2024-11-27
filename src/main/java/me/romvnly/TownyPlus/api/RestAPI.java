@@ -93,7 +93,7 @@ public class RestAPI {
     }
 
     public void stopServer() {
-        server.close();
+        server.stop();
         this.active = false;
     }
 }

@@ -1,11 +1,11 @@
 jdk:
-  - openjdk17
+  - openjdk21
 before_install:
   - echo "Before Install"
-  - bash ensure-java-17.sh install
+  - bash ensure-java-21.sh install
 install:
   - echo "Install"
-  - if ! bash ensure-java-17.sh use; then source ~/.sdkman/bin/sdkman-init.sh; fi
+  - if ! bash ensure-java-21.sh use; then source ~/.sdkman/bin/sdkman-init.sh; fi
   - java -version
   - chmod +x ./gradlew
   - ./gradlew publishToMavenLocal

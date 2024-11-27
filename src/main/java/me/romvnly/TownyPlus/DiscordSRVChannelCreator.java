@@ -18,18 +18,13 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import dev.vankka.mcdiscordreserializer.minecraft.MinecraftSerializer;
 import github.scarsz.discordsrv.DiscordSRV;
+import github.scarsz.discordsrv.dependencies.jda.api.EmbedBuilder;
+import github.scarsz.discordsrv.dependencies.jda.api.entities.*;
+import github.scarsz.discordsrv.dependencies.jda.api.events.message.MessageReceivedEvent;
 import me.romvnly.TownyPlus.configuration.Lang;
 import me.romvnly.TownyPlus.model.SavedCode;
 import me.romvnly.TownyPlus.model.SavedTownData;
 import me.romvnly.TownyPlus.util.Debug;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.channel.concrete.Category;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -59,13 +54,13 @@ public class DiscordSRVChannelCreator {
         }
     }
     public void createChannelIfNotExistInCategory(@Nonnull final Category category, @Nonnull String channelName) {
-        if (category.getTextChannels().stream().filter(channel -> channel.getName().equalsIgnoreCase(channelName)).toList().size() == 0) {
+        if (category.getTextChannels().stream().filter(channel -> channel.getName().equalsIgnoreCase(channelName)).toList().isEmpty()) {
             category.createTextChannel(channelName).complete();
             Debug.log("Created channel " + channelName + " for discord category " + category.getName());
         }
     }
     public void createRoleIfNotExist(@Nonnull final Guild guild, @Nonnull String roleName) {
-        if (guild.getRolesByName(roleName, true).size() == 0) {
+        if (guild.getRolesByName(roleName, true).isEmpty()) {
             guild.createRole().setName(roleName).complete();
             Debug.log("Created role " + roleName + " for discord guild " + guild.getName());
         }

@@ -1,7 +1,6 @@
 apply plugin: 'maven-publish'
 java {
     shadowJar
-    withJavadocJar()
     withSourcesJar()
 }
 

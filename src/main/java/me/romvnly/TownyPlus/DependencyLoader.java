@@ -29,7 +29,7 @@ public class DependencyLoader {
         Library IF = Library.builder()
                 .groupId(ifGroupId) // "{}" is replaced with ".", useful to avoid unwanted changes made by maven-shade-plugin
                 .artifactId("IF")
-                .version("0.10.8")
+                .version("0.10.18")
                 .relocate(ifGroupId, ifRelocation) // "{}" is replaced with ".", useful to avoid unwanted changes made by maven-shade-plugin
                 .build();
         libraryManager.loadLibrary(IF);

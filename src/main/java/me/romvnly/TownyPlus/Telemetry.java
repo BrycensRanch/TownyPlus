@@ -10,9 +10,9 @@
 
 package me.romvnly.TownyPlus;
 
+import github.scarsz.discordsrv.dependencies.commons.lang3.BooleanUtils;
 import me.romvnly.TownyPlus.configuration.Config;
 import me.romvnly.TownyPlus.util.GitProperties;
-import org.apache.commons.lang.BooleanUtils;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SimplePie;
 

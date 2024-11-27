@@ -45,7 +45,7 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin' # See 'Supported distributions' for available options
+          distribution: 'temurin' 
           java-version: 17
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v3
@@ -100,11 +100,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up JDK 17
+      - name: Set up JDK 22
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin' # See 'Supported distributions' for available options
-          java-version: 17
+          distribution: 'temurin' 
+          java-version: 22
           
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v3
@@ -169,11 +169,11 @@ jobs:
           name: build-artifacts
       - name: Display structure of downloaded files
         run: ls -R
-      - name: Set up JDK 17
+      - name: Set up JDK 22
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin' # See 'Supported distributions' for available options
-          java-version: 17
+          distribution: 'temurin' 
+          java-version: 22
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v3
@@ -259,9 +259,8 @@ jobs:
             paper
             purpur
           game-versions: |
-            1.18.2
-            1.19
-          java: 17
+            1.21
+          java: 22
           version-type: ${{ github.head_ref || github.ref_name }}
       - name: Publish to CurseForge (Bukkit)
         uses: BrycensRanch/plugin-publish@6d935dac049b98162f4e818dadf3f9ce4a7bf28b
@@ -278,10 +277,8 @@ jobs:
             paper
             purpur
           game-versions: |
-            1.17
-            1.18
-            1.19
-          java: 17
+            1.21
+          java: 22
           version-resolver: latest
           version-type: ${{ github.head_ref || github.ref_name }}
           fail-mode: warn
@@ -292,7 +289,7 @@ jobs:
           polymart-id: 2057
           polymart-token: ${{ secrets.POLYMART_TOKEN }}
           changelog: ${{ steps.changelog.outputs.latestBody }}
-          java: 17
+          java: 22
           version-type: ${{ github.head_ref || github.ref_name }}
           fail-mode: warn
       - name: 🔃 Merge master back into alpha

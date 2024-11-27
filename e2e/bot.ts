@@ -30,6 +30,7 @@ async function runConsoleCommand(command, rcon) {
 }
 
 
+// @ts-ignore
 async function bot(commands: string[] = []) {
 
 process.stdin.resume();
@@ -91,12 +92,10 @@ function main() {
     port: 25565
   })
   console.log(await q.fullStat())
-    // @ts-expect-error
   const bot = mineflayer.createBot({
   host: 'localhost', // minecraft server ip
-//   username: 'email@example.com', // minecraft username
-//   username: 'OldestAnarchy', // minecraft username
-  auth: 'microsoft', // only set if you need microsoft auth, then set to 'microsoft'
+  username: 'OldestAnarchy', // minecraft username
+//   auth: 'microsoft', // only set if you need microsoft auth, then set to 'microsoft'
        disableChatSigning: true
   // port: 25565,                // only set if you need a port that isn't 25565
   // version: false,             // only set if you need a specific version or snapshot (ie: "1.8.9" or "1.16.5"), otherwise it's set automatically
@@ -113,7 +112,7 @@ bot.once('spawn', async() => {
     // Make sure the bot is operator
     await runConsoleCommand(`op ${bot.username}`, rcon);
     console.log(`The bot has logged in as: ${bot.username}. Ping is ${bot.player.ping}ms.` ) 
-    console.log(`The bot is in the world: ${bot.world.name} and is at coordinates: ${bot.entity.position} `)
+    console.log(`The bot is in the world: ${bot.world} and is at coordinates: ${bot.entity.position} `)
     console.log(`Joined using Minecraft version ${bot.version}`)
     const loadedCommands = (await bot.tabComplete("/")).map((loadedCmd) => loadedCmd.match);
     console.log(`The bot has loaded the following commands: ${loadedCommands}`)
@@ -125,8 +124,8 @@ bot.once('spawn', async() => {
         console.log("The bot has access to the townyplus plugin")
     }
     for (const command of commands) {
-        // await bot.tabComplete(command, true)
-        await bot.chat(command)
+        await bot.tabComplete(command, true)
+        bot.chat(command)
         await bot.awaitMessage(/(.*townyplus|reload|version|opened|done|showing|toggled|successfully|uploaded|town.*)/gi)
     }
     // Does the bot need to exit out mof the dist folder?
