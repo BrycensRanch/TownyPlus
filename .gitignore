@@ -43,12 +43,14 @@ run/plugins/Towny/settings/lang
 run/plugins/Towny/logs/
 run/plugins/Towny/data/
 run/plugins/Towny/backup/
+run/plugins/.paper-remapped
 run/crash-reports/
 run/world/
 run/world_nether/
 # Don't save jar files, it introduces potential legal issues
 # We download them from the internet later, so it's fine
-run/plugins/*.jar
+run/plugins/**/*.jar
+
 run/world_the_end/
 
 # never include database files in git

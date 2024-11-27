@@ -24,6 +24,8 @@ settings:
   restart-script: ./start.sh
   netty-threads: 4
   attribute:
+    maxAbsorption:
+      max: 2048.0
     maxHealth:
       max: 2048.0
     movementSpeed:
@@ -59,6 +61,9 @@ players:
   disable-saving: false
 world-settings:
   default:
+    unload-frozen-chunks: false
+    seed-trailruins: 83469867
+    seed-trialchambers: 94251327
     hopper-can-load-chunks: false
     seed-ancientcity: 20083232
     seed-buriedtreasure: 10387320
@@ -70,6 +75,7 @@ world-settings:
       exp: 3.0
       item: 2.5
     growth:
+      pitcherplant-modifier: 100
       torchflower-modifier: 100
       cactus-modifier: 100
       cane-modifier: 100

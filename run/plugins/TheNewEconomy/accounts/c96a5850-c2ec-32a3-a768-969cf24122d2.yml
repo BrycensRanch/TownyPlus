@@ -1,0 +1,13 @@
+Info:
+  ID: c96a5850-c2ec-32a3-a768-969cf24122d2
+  Name: Romvnly
+  Type: player
+  Status: normal
+  CreationDate: 1732575647635
+  Pin: ''
+  LastOnline: 1732575647635
+Holdings:
+  Main Server:
+    world:
+      c2eadede-4692-45c1-abb3-5207c9fff164:
+        tne:VIRTUAL_HOLDINGS: '200.0'

@@ -17,7 +17,7 @@
 # /ta townyperms group [name] addperm [node] command.                                       #
 #                                                                                           #
 # You may change the names of any of the ranks except: nomad, default, mayor, king, ranks,  #
-# peaceful.                                                                                 #
+# peaceful, conquered, unconquered.                                                         #
 #                                                                                           #
 # If you want to, you can negate permissions nodes from nodes by doing the following:       #
 # Ex:                                                                                       #
@@ -68,6 +68,8 @@ nomad:
 - towny.town.spawn.public
 - towny.chat.general
 - towny.command.towny.war.hud
+- towny.command.resident.set.about
+- towny.command.resident.outlawlist
   
 # This section of permissions covers players who are members of a town.
 towns:

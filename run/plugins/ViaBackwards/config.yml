@@ -21,12 +21,12 @@ fix-formatted-inventory-titles: true
 # This only takes effect for ids in the short range. Useful for anticheat compatibility.
 handle-pings-as-inv-acknowledgements: false
 #
-# 1.19.1 chat type formats.
-chat-types-1_19_1:
-  chat.type.text: <%s> %s
-  chat.type.announcement: '[%s] %s'
-  commands.message.display.incoming: '%s whispers to you: %s'
-  commands.message.display.outgoing: 'You whisper to %s: %s'
-  chat.type.team.text: '%s <%s> %s'
-  chat.type.team.sent: -> %s <%s> %s
-  chat.type.emote: '* %s %s'
+# Adds bedrock blocks at y=0 for sub 1.17 clients. This may allow for weird interactions due to sending fake blocks.
+bedrock-at-y-0: false
+#
+# Shows sculk shriekers as crying obsidian for 1.18.2 clients on 1.19+ servers. This fixes collision and block breaking issues.
+# If disabled, the client will see them as end portal frames.
+sculk-shriekers-to-crying-obsidian: true
+#
+# Suppresses warnings of missing emulations for certain features that are not supported (e.g. world height in 1.17+).
+suppress-emulation-warnings: false
