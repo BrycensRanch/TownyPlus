@@ -2,7 +2,7 @@
 
 [plugins]
 
-com-github-johnrengelman-shadow = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }
+com-gradleup-shadow = { id = "com.gradleup.shadow", version = "8.3.5" }
 
 net-minecrell-plugin-yml-bukkit = { id = "net.minecrell.plugin-yml.bukkit", version = "0.6.0" }
 
@@ -36,6 +36,8 @@ lombok = "org.projectlombok:lombok:_"
 
 jackson-annotations = "com.fasterxml.jackson.core:jackson-annotations:_"
 
+cloud-processors-confirmation = "org.incendo:cloud-processors-confirmation:_"
+
 cloud-core = "org.incendo:cloud-core:_"
 
 cloud-paper = "org.incendo:cloud-paper:_"
@@ -43,6 +45,8 @@ cloud-paper = "org.incendo:cloud-paper:_"
 cloud-minecraft-extras = "org.incendo:cloud-minecraft-extras:_"
 
 commodore = "me.lucko:commodore:_"
+
+jackson-core = "com.fasterxml.jackson.core:jackson-core:_"
 
 jackson-databind = "com.fasterxml.jackson.core:jackson-databind:_"
 

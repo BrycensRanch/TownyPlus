@@ -5,11 +5,12 @@ import org.gradle.crypto.checksum.Checksum
 buildscript {
     repositories {
         mavenCentral()
+        gradlePluginPortal()
     }
 }
 
 plugins {
-    id 'com.github.johnrengelman.shadow'
+    id 'com.gradleup.shadow'
     id 'net.minecrell.plugin-yml.bukkit'
     id "org.cadixdev.licenser"
 //    id "com.github.sherter.google-java-format"
@@ -56,12 +57,9 @@ if (project.hasProperty("local_script")) {
     apply from: file(local_script + "/build.local.gradle")
 }
 
-//sourceCompatibility = JavaVersion.VERSION_21
-//targetCompatibility = JavaVersion.VERSION_21
+sourceCompatibility = JavaVersion.VERSION_21
+targetCompatibility = JavaVersion.VERSION_21
 
-ext {
-    mcVersion = project.property("mcVersion")
-}
 
 group project.property("group")
 //def details = versionDetails()
@@ -82,25 +80,6 @@ gitProperties {
 }
 generateGitProperties.outputs.upToDateWhen { false } // make sure the generateGitProperties task always executes (even when git.properties is not changed)
 
-
-task downloadMultiplePlugins(type: Download) {
-    println "Downloading dependent plugins..."
-    src([
-            'https://github.com/MilkBowl/Vault/releases/download/1.7.3/Vault.jar',
-            // 'https://github.com/Aust1n46/VentureChat/releases/download/v3.5.0/VentureChat-3.5.0.jar',
-            'https://github.com/TownyAdvanced/Towny/releases/download/0.100.4.14/towny-0.100.4.14.jar',
-            'https://github.com/TownyAdvanced/TownyChat/releases/download/0.117/TownyChat-0.117.jar',
-            'https://github.com/TheNewEconomy/EconomyCore/releases/download/0.1.3.4/TNE-Paper-0.1.3.4-Release-1.jar',
-            'https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/build/libs/ProtocolLib.jar',
-            'https://github.com/DiscordSRV/DiscordSRV/releases/download/v1.29.0/DiscordSRV-Build-1.29.0.jar',
-            'https://download.luckperms.net/1561/bukkit/loader/LuckPerms-Bukkit-5.4.146.jar',
-            // its not a good idea to use lastSuccessfulBuild as it can break due to version numbers changing
-            'https://ci.extendedclip.com/job/PlaceholderAPI/lastSuccessfulBuild/artifact/build/libs/PlaceholderAPI-2.11.7-DEV-200.jar',
-            'https://github.com/ViaVersion/ViaVersion/releases/download/5.1.1/ViaVersion-5.1.1.jar',
-            'https://github.com/ViaVersion/ViaBackwards/releases/download/5.1.1/ViaBackwards-5.1.1.jar',
-    ])
-    dest rootDir.relativePath(file('run/plugins'))
-}
 task downloadPlaceholderExtensions(type: Download) {
     println "Downloading Placeholder Extensions..."
     src([
@@ -109,18 +88,7 @@ task downloadPlaceholderExtensions(type: Download) {
     ])
     dest rootDir.relativePath(file('run/plugins/PlaceholderAPI/expansions'))
 }
-tasks.downloadMultiplePlugins.dependsOn(tasks.downloadPlaceholderExtensions)
-tasks.runServer.dependsOn(tasks.downloadMultiplePlugins)
-tasks.runServer.doLast {
-    println "(4) after  (run in execution phase as last statement)"
-}
-
-tasks.runServer.doFirst {
-    println "(3) after  (run in execution phase as FORST statement - before doLast/<<)"
-    println "As per the plugin license, agree to respect the license before using these plugins."
-    println "What I mean by that is, don't redistribute them, don't claim them as your own, etc."
-    println "If you don't agree, you can remove the plugins from the run/plugins folder."
-}
+tasks.runServer.dependsOn(tasks.downloadPlaceholderExtensions)
 ext {
     mcVersion = project.property("mcVersion")
 }
@@ -288,25 +256,21 @@ dependencies {
     // Any dependencies that don't complain about being loaded dynamically shaded into the jar instead.
     // We went from 5MB to 1.4MB, so it's a win-win.
 
-    // Command Handling! https://commandframework.cloud
     library libs.cloud.core
     library libs.cloud.annotations
     annotationProcessor(libs.cloud.annotations)
+    library libs.cloud.processors.confirmation
     library libs.cloud.paper
     library libs.cloud.minecraft.extras
     // Dependency for our way of command handling
     library libs.commodore
 
     library libs.lombok
-    library libs.jackson.annotations
-    library libs.jackson.databind
     // The following is required for the @Command annotation to work, probably...
     // I just got errors without it.
     library libs.geantyref
     annotationProcessor(libs.lombok)
     annotationProcessor(libs.jackson.annotations)
-    library libs.jackson.dataformat.properties
-    library libs.jackson.dataformat.yaml
     // For handling multi platform configuration, simply amazing
     // library "org.spongepowered:configurate-yaml:_"
     // Spigot/GitHub Releases Update checker. Am I that lazy? Yes.
@@ -347,7 +311,7 @@ dependencies {
     compileOnly(libs.venturechat)
     // ProtocolLib (required by venturechat)
     compileOnly libs.protocollib
-   compileOnly libs.spotbugs.annotations
+    compileOnly libs.spotbugs.annotations
 //    library 'org.hibernate:hibernate-core:_'
 
     library libs.mcdiscordreserializer
@@ -367,9 +331,13 @@ dependencies {
     library libs.adventure.text.minimessage
     // Adventure logger that takes advantage of Adventure's text components
     library libs.adventure.text.logger.slf4j
-
+    library libs.jackson.core
+    library libs.jackson.annotations
+    library libs.jackson.databind
+    library libs.jackson.dataformat.properties
+    library libs.jackson.dataformat.yaml
     // Test dependencies
-   spotbugsPlugins libs.findsecbugs.plugin
+    spotbugsPlugins libs.findsecbugs.plugin
 //    testCompileOnly libs.spotbugs.annotations
 //    testImplementation(libs.lombok)
 //    testImplementation(libs.jackson.annotations)
@@ -391,7 +359,6 @@ shadowJar {
             // include(dependency('com.zaxxer::'))
             // include(dependency('com.h2database::'))
         include(dependency('com.jeff_media::'))
-//        include(dependency('me.lucko::'))
 //        include(dependency('cloud.commandframework::'))
         // include(dependency('com.palmergames.bukkit::'))
         // include(dependency('com.discordsrv::'))
@@ -401,6 +368,7 @@ shadowJar {
     }
     relocate 'com.jeff_media', "${packageName}.libs.jeff_media"
     relocate 'org.bstats', "${packageName}.libs.bstats"
+
     relocate 'io.github.townyadvanced.commentedconfiguration', "${packageName}.libs.commentedconfiguration"
     relocate 'com.github.stefvanschie.inventoryframework', "${packageName}.libs.inventoryframework"
     relocate 'net.byteflux', "${packageName}.libs.byteflux"
@@ -428,6 +396,18 @@ runServer {
     // This is the only required configuration besides applying the plugin.
     // Your plugin's jar (or shadowJar if present) will be used automatically.
     minecraftVersion(project.property("testServerMCVersion"))
+    args("-o false -Xms1024M -Xmx1024M")
+    downloadPlugins {
+        github("MilkBowl", "Vault", "1.7.3", "Vault.jar")
+        github("TownyAdvanced", "Towny", "0.100.4.14", "towny-0.100.4.14.jar")
+        github("TheNewEconomy", "EconomyCore", "0.1.3.4", "TNE-Paper-0.1.3.4-Release-1.jar")
+        url("https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/build/libs/ProtocolLib.jar")
+        github("DiscordSRV", "DiscordSRV", "v1.29.0", "DiscordSRV-Build-1.29.0.jar")
+        url("https://download.luckperms.net/1561/bukkit/loader/LuckPerms-Bukkit-5.4.146.jar")
+        url("https://ci.extendedclip.com/job/PlaceholderAPI/lastSuccessfulBuild/artifact/build/libs/PlaceholderAPI-2.11.7-DEV-200.jar")
+        github("ViaVersion", "ViaVersion",  "5.1.1", "ViaVersion-5.1.1.jar")
+        github("ViaVersion", "ViaBackwards",  "5.1.1", "ViaBackwards-5.1.1.jar")
+    }
 }
 processResources {
     project.properties.put("version", version)

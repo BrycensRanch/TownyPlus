@@ -33,6 +33,11 @@ run/plugins/LuckPerms/
 run/plugins/PlaceholderAPI/
 run/plugins/ProtocolLib/
 run/plugins/WorldEdit/
+run/plugins/TheNewEconomy/accounts
+run/plugins/TheNewEconomy/transactions
+run/**.jar
+run/purpur.yml
+run/pufferfish.yml
 run/plugins/WorldGuard/
 run/plugins/WorldGuardExtraFlags/
 run/plugins/WorldGuardPomaFlags/
