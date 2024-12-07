@@ -1,16 +1,21 @@
 /*
  * This file is part of TownyPlus, licensed under the GPL v3 License.
- * Copyright (C) Romvnly <https://github.com/Romvnly-Gaming>
+ * Copyright (C) BrycensRanch <https://github.com/BrycensRanch>
  * Copyright (C) spigot-plugin-template team and contributors
  * Copyright (C) Pl3xmap team and contributors
  * Copyright (C) DiscordSRV team and contributors
+ * @author BrycensRanch
  * @author Romvnly
- * @link https://github.com/Romvnly-Gaming/TownyPlus
+ * @link https://github.com/BrycensRanch/TownyPlus
  */
 
 package me.romvnly.TownyPlus;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -104,6 +109,13 @@ public class Database {
         PreparedStatement statement = getConnection().prepareStatement("SELECT * FROM "+townTable+" WHERE town_chat_id = ?");
         return getSavedTownData(name, statement);
     }
+    public void deleteTownData(String nameOfTown) throws SQLException {
+        PreparedStatement statement = getConnection().prepareStatement("DELETE FROM "+townTable+" WHERE name = ?");
+        statement.setString(1, nameOfTown);
+        Debug.log(statement.toString());
+        statement.execute();
+        statement.close();
+    }
     public SavedTownData createTownData(SavedTownData savedTownData) throws SQLException {
         PreparedStatement statement = getConnection().prepareStatement("INSERT INTO "+townTable+" (name, discord_server, town_chat_id, town_chat_webhook_url, nation_chat_id, nation_chat_webhook_url, towny_log_channel_id, towny_log_webhook_url, towny_info_channel_id, towny_info_channel_webhook, town_info_channel_message_id, town_discord_roles) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         // name,
@@ -130,6 +142,7 @@ public class Database {
         statement.setString(10, savedTownData.getTownInfoChannelWebhookURL());
         statement.setString(11, savedTownData.getTownInfoChannelMessageID());
         statement.setString(12, savedTownData.getTownDiscordRoles());
+        Debug.log(statement.toString());
         statement.execute();
         statement.close();
         return savedTownData;
@@ -139,7 +152,13 @@ public class Database {
         statement.setString(1, name);
         ResultSet resultSet = statement.executeQuery();
         if(resultSet.next()){
-            return TownyPlusMain.JSONMapper.readValue(  resultSet.getString("town_discord_roles"), ObjectNode.class);
+            return new ObjectMapper()
+                .enable(JsonParser.Feature.IGNORE_UNDEFINED)
+                .enable(JsonParser.Feature.ALLOW_COMMENTS)
+                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                .enable(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES)
+                .configure(SerializationFeature.FAIL_ON_SELF_REFERENCES, false)
+                .enable(JsonParser.Feature.ALLOW_SINGLE_QUOTES).readValue(  resultSet.getString("town_discord_roles"), ObjectNode.class);
         }
         return null;
     }

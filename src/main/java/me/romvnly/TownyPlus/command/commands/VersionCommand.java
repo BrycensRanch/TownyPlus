@@ -1,18 +1,17 @@
 /*
  * This file is part of TownyPlus, licensed under the GPL v3 License.
- * Copyright (C) Romvnly <https://github.com/Romvnly-Gaming>
+ * Copyright (C) BrycensRanch <https://github.com/BrycensRanch>
  * Copyright (C) spigot-plugin-template team and contributors
  * Copyright (C) Pl3xmap team and contributors
  * Copyright (C) DiscordSRV team and contributors
+ * @author BrycensRanch
  * @author Romvnly
- * @link https://github.com/Romvnly-Gaming/TownyPlus
+ * @link https://github.com/BrycensRanch/TownyPlus
  */
 
 package me.romvnly.TownyPlus.command.commands;
 
 
-import cloud.commandframework.context.CommandContext;
-import cloud.commandframework.minecraft.extras.MinecraftExtrasMetaKeys;
 import me.romvnly.TownyPlus.TownyPlusMain;
 import me.romvnly.TownyPlus.command.BaseCommand;
 import me.romvnly.TownyPlus.command.CommandManager;
@@ -26,6 +25,8 @@ import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.incendo.cloud.context.CommandContext;
+import org.incendo.cloud.paper.util.sender.Source;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,14 +46,16 @@ public final class VersionCommand extends BaseCommand {
 
     @Override
     public void register() {
+//        this.commandManager.registerSubcommand(this.commandManager.commandManager.commandBuilder("version").permission(Constants.VERSION_PERMISSION).handler(this::execute));
+//        this.commandManager.command(this.commandManager.commandBuilder("version").permission(Constants.VERSION_PERMISSION).handler(this::execute));
         this.commandManager.registerSubcommand(builder ->
-                builder.literal("version").meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.miniMessage().deserialize("Check the plugin's version"))
+                builder.literal("version")
                         .permission(Constants.VERSION_PERMISSION)
                         .handler(this::execute));
     }
 
     private void execute(final @NonNull CommandContext<CommandSender> context) {
-        Audience sender = plugin.adventure().sender(context.getSender());
+        Audience sender = plugin.adventure().sender(context.sender());
         try (InputStream stream = getClass().getClassLoader().getResourceAsStream("git.properties")) {
             Properties gitProp = new Properties();
             gitProp.load(stream);
@@ -73,9 +76,9 @@ public final class VersionCommand extends BaseCommand {
                 ));
             }
             if (plugin.updateChecker != null)
-            plugin.updateChecker.checkNow(context.getSender());
+            plugin.updateChecker.checkNow(context.sender());
             if (Config.AUTO_UPDATE_PLUGIN) {
-                plugin.possiblyAutoUpdate(JavaPlugin.getPlugin(plugin.getClass()), plugin.adventure().sender(context.getSender()), plugin.updateChecker.getLatestVersion());
+                plugin.possiblyAutoUpdate(JavaPlugin.getPlugin(plugin.getClass()), plugin.adventure().sender(context.sender()), plugin.updateChecker.getLatestVersion());
             }
         } catch (IOException | AssertionError | NumberFormatException | NullPointerException e) {
             sender.sendMessage(MiniMessage.miniMessage().deserialize(

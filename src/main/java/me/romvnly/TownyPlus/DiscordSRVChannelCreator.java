@@ -1,16 +1,22 @@
 /*
  * This file is part of TownyPlus, licensed under the GPL v3 License.
- * Copyright (C) Romvnly <https://github.com/Romvnly-Gaming>
+ * Copyright (C) BrycensRanch <https://github.com/BrycensRanch>
  * Copyright (C) spigot-plugin-template team and contributors
  * Copyright (C) Pl3xmap team and contributors
  * Copyright (C) DiscordSRV team and contributors
+ * @author BrycensRanch
  * @author Romvnly
- * @link https://github.com/Romvnly-Gaming/TownyPlus
+ * @link https://github.com/BrycensRanch/TownyPlus
  */
 
 package me.romvnly.TownyPlus;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
@@ -21,6 +27,7 @@ import github.scarsz.discordsrv.DiscordSRV;
 import github.scarsz.discordsrv.dependencies.jda.api.EmbedBuilder;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.*;
 import github.scarsz.discordsrv.dependencies.jda.api.events.message.MessageReceivedEvent;
+import me.romvnly.TownyPlus.configuration.Config;
 import me.romvnly.TownyPlus.configuration.Lang;
 import me.romvnly.TownyPlus.model.SavedCode;
 import me.romvnly.TownyPlus.model.SavedTownData;
@@ -39,7 +46,6 @@ import java.util.stream.Collectors;
 
 public class DiscordSRVChannelCreator {
     private final TownyPlusMain plugin = TownyPlusMain.getInstance();
-    // public void initializeGuild(@Nonnull final MessageReceivedEvent event, @Nonnull Guild guild) {) {
 
     public void createWebhookIfNotExist(@Nonnull final TextChannel channel, @Nonnull String webhookName) {
         if (channel.retrieveWebhooks().complete().stream().filter(webhook -> webhook.getName().equalsIgnoreCase(plugin.getName())).toList().size() == 0) {
@@ -48,27 +54,67 @@ public class DiscordSRVChannelCreator {
         }
     }
     public void createCategoryIfNotExist(@Nonnull final Guild guild, @Nonnull String categoryName) {
-        if (guild.getCategoriesByName(categoryName, true).size() == 0) {
-            guild.createCategory(categoryName).complete();
-            Debug.log("Created category " + categoryName + " for discord guild " + guild.getName());
-        }
+        if (guild.getCategoriesByName(categoryName, true).size() != 0) return;
+        guild.createCategory(categoryName).complete();
+        Debug.log("Created category " + categoryName + " for discord guild " + guild.getName());
     }
     public void createChannelIfNotExistInCategory(@Nonnull final Category category, @Nonnull String channelName) {
-        if (category.getTextChannels().stream().filter(channel -> channel.getName().equalsIgnoreCase(channelName)).toList().isEmpty()) {
-            category.createTextChannel(channelName).complete();
-            Debug.log("Created channel " + channelName + " for discord category " + category.getName());
-        }
+        if (!category.getTextChannels().stream().filter(channel -> channel.getName().equalsIgnoreCase(channelName)).toList().isEmpty()) return;
+        category.createTextChannel(channelName).complete();
+        Debug.log("Created channel " + channelName + " for discord category " + category.getName());
+        
     }
     public void createRoleIfNotExist(@Nonnull final Guild guild, @Nonnull String roleName) {
-        if (guild.getRolesByName(roleName, true).isEmpty()) {
-            guild.createRole().setName(roleName).complete();
-            Debug.log("Created role " + roleName + " for discord guild " + guild.getName());
-        }
+        if (!guild.getRolesByName(roleName, true).isEmpty()) return;
+        guild.createRole().setName(roleName).complete();
+        Debug.log("Created role " + roleName + " for discord guild " + guild.getName());
     }
-    // }
-
-    public void handleDiscordMessageEvent(@Nonnull final MessageReceivedEvent event) {
+    public void listenForLinkedTownDiscordMessages(@Nonnull final MessageReceivedEvent event) {
+        var guild = event.getGuild();
+        SavedTownData savedTownData;
         try {
+            savedTownData = plugin.database.findTownByDiscordServerId(guild.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return;
+        }
+        if (savedTownData == null) {
+            Debug.log("No saved data found for this discord server");
+            return;
+        }
+        var townyAPI = TownyAPI.getInstance();
+        Town town = townyAPI.getTown(savedTownData.getName());
+        if (town == null) {
+            Debug.log("No Towny town found for this discord server");
+            return;
+        }
+        var nation = town.getNationOrNull();
+        final Member member = event.getMember();
+        if (member == null) {
+            Debug.log("No member found for this discord server");
+            return;
+        }
+        Debug.log("stage 4");
+        final Role topRole = !member.getRoles().isEmpty() ? member.getRoles().get(0) : null;
+        Component discordMessageComponent = MinecraftSerializer.INSTANCE.serialize(event.getMessage().getContentStripped());
+        final TextComponent textComponent = Component.text()
+                .content("[" + town.getName() + " Discord" + "] ").color(NamedTextColor.GOLD)
+                .append(Component.text().content("[" + event.getAuthor().getName() + topRole != null ? " | " + topRole.getName() + "]: " : "").color(NamedTextColor.RED).build())
+                .append(discordMessageComponent)
+                .hoverEvent(Component.text().content("This message came from " + town.getName() + "'s Discord Server").color(NamedTextColor.GRAY).build()).build();
+        var channel = event.getChannel();
+        var townDiscordChatId = savedTownData.getTownChatDiscordID();
+        var townNationChatId = savedTownData.getNationChatDiscordID();
+        if (townDiscordChatId.equals(channel.getId())) {
+            TownyPlusMain.plugin.chatHook.broadcastMessageToChannel("town", textComponent, town);
+            return;
+        } else if (townNationChatId.equals(channel.getId())) {
+            TownyPlusMain.plugin.chatHook.broadcastMessageToChannel("nation", textComponent, town);
+        } else return;
+    }
+
+    public void handleDiscordMessageEvent(@Nonnull final MessageReceivedEvent event) throws Exception {
+            listenForLinkedTownDiscordMessages(event);
             SavedCode code = plugin.database.findCodeByString(event.getMessage().getContentDisplay());
             if (code == null) {
                 Debug.log(Lang.parse("<red>Code is null").appendNewline().append(MiniMessage.miniMessage().deserialize("From type <type> <user> <msg>", Placeholder.unparsed("type", event.getChannelType().name()), Placeholder.unparsed("user", event.getAuthor().getAsTag()), Placeholder.unparsed("msg", event.getMessage().getContentDisplay()))));
@@ -78,7 +124,7 @@ public class DiscordSRVChannelCreator {
             Debug.log(Lang.parse("<red>Code is <bold>not</bold> null").appendNewline().append(MiniMessage.miniMessage().deserialize("From type <type> <user> <msg>", Placeholder.unparsed("type", event.getChannelType().name()), Placeholder.unparsed("user", event.getAuthor().getAsTag()), Placeholder.unparsed("msg", event.getMessage().getContentDisplay()))));
             UUID linkedAccountUUID = DiscordSRV.getPlugin().getAccountLinkManager().getUuid(event.getAuthor().getId());
             if (linkedAccountUUID == null || linkedAccountUUID.equals(UUID.fromString("00000000-0000-0000-0000-000000000000"))) {
-                event.getMessage().reply(":warning: | You must link your discord account to your minecraft account before attempting to give the code. Or maybe, you've stolen the code from the town owner? Shame on you.").queue();
+                event.getMessage().reply(":warning: | You must link your discord account to your minecraft account before attempting to give the code. (/discord link in-game) Or maybe, you've stolen the code from the town owner? Shame on you.").queue();
                 return;
             }
 
@@ -94,10 +140,9 @@ public class DiscordSRVChannelCreator {
                 event.getMessage().reply(":warning: | Only Town Mayors may redeem code, skrub.").complete();
                 return;
             }
-//            JDA jda = DiscordUtil.getJda();
-            Guild guild = event.getGuild();
-            String category = "Towny";
-            String logsCate = "Logs";
+            Guild guild = Config.MAIN_DISCORD_CREATE_ROLES ? event.getJDA().getGuildById(Config.MAIN_DISCORD_SERVER_ID): event.getGuild();
+            String category = Config.MAIN_DISCORD_CREATE_ROLES ? residentTown.getName() : "Towny";
+            String logsCate = Config.MAIN_DISCORD_CREATE_ROLES ? category : "Logs";
 
             // Create channels, categories, and webhooks if they don't exist
 
@@ -145,9 +190,16 @@ public class DiscordSRVChannelCreator {
 
             event.getMessage().reply(String.format(":white_check_mark:  | Created channels for town %s\n\n" + "From now on, all town chat in MC or Discord will be sent to their respective channels.", residentTown.getFormattedName())).complete();
             plugin.database.deleteCode(code);
-            plugin.logger.info(Lang.parse("<user> Redeemed code for <town_formatted> <code>", Placeholder.unparsed("user", event.getAuthor().getAsTag()), Placeholder.unparsed("town_formatted", residentTown.getFormattedName()), Placeholder.unparsed("code", code.getCode())));
-            List < Resident > residentList = residentTown.getResidents();
-            String formattedResidentList = String.join(", ", residentList.stream().map(Resident::getFormattedName).collect(Collectors.toList()));
+            // Just because the code is redeemed does NOT mean the player who created it is available and can be messaged to begin with.
+            var codeCreator = plugin.adventure().player(UUID.fromString(code.getCreatedBy()));
+            var offlineCodeCreator = plugin.getServer().getOfflinePlayer(UUID.fromString(code.getCreatedBy()));
+            try {
+                codeCreator.sendMessage(Lang.parse(Lang.TOWN_DISCORD_LINK_SUCCESS, Placeholder.unparsed("server", guild.getName())));
+            } catch(Exception e) {}
+
+            plugin.logger.info(Lang.parse("<user> (<discorduser>) Redeemed code for <town_formatted> <code>. It is linked to <server>", Placeholder.unparsed("user", offlineCodeCreator.getName()), Placeholder.unparsed("town_formatted", residentTown.getFormattedName()), Placeholder.unparsed("code", code.getCode()), Placeholder.unparsed("server", guild.getName()), Placeholder.unparsed("discorduser", event.getAuthor().getName())));
+            var residentList = residentTown.getResidents();
+            var formattedResidentList = String.join(", ", residentList.stream().map(Resident::getFormattedName).collect(Collectors.toList()));
             Message msg = townyInfo.sendMessageEmbeds(new EmbedBuilder().addField("Members", formattedResidentList, true).setDescription(String.format("Towny Info channel for %s", residentTown.getFormattedName())).build()).complete();
             String mayorRoleName = residentTown.getName() + " | Mayor";
             String assistantRoleName = residentTown.getName() + " | Assistant";
@@ -155,64 +207,37 @@ public class DiscordSRVChannelCreator {
             createRoleIfNotExist(guild, mayorRoleName);
             createRoleIfNotExist(guild, assistantRoleName);
             createRoleIfNotExist(guild, residentRoleName);
+            if (Config.MAIN_DISCORD_CREATE_ROLES) {
+                String globalTownMayorRoleName = "Town Mayor";
+                String globalTownAssistantRoleName = "Town Assistant";
+                String globalTownResidentRoleName = "Town Resident";
+                createRoleIfNotExist(guild, globalTownMayorRoleName);
+                createRoleIfNotExist(guild, globalTownAssistantRoleName);
+                createRoleIfNotExist(guild, globalTownResidentRoleName);
+            }
             Role mayorRole = guild.getRolesByName(mayorRoleName, true).get(0);
             Role assistantRole = guild.getRolesByName(assistantRoleName, true).get(0);
             Role residentRole = guild.getRolesByName(residentRoleName, true).get(0);
-            ObjectNode roles = TownyPlusMain.JSONMapper.createObjectNode();
+            ObjectMapper JSONMapper = new ObjectMapper()
+                .enable(JsonParser.Feature.IGNORE_UNDEFINED)
+                .enable(JsonParser.Feature.ALLOW_COMMENTS)
+                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                .enable(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES)
+                .configure(SerializationFeature.FAIL_ON_SELF_REFERENCES, false)
+                .enable(JsonParser.Feature.ALLOW_SINGLE_QUOTES);
+            ObjectNode roles = JSONMapper.createObjectNode();
             roles.put("mayor", mayorRole.getId());
             roles.put("assistant", assistantRole.getId());
             roles.put("resident", residentRole.getId());
-            String rolesString = TownyPlusMain.JSONMapper.writeValueAsString(roles);
+            String rolesString = JSONMapper.writeValueAsString(roles);
             Debug.log("Roles:\n\n" + rolesString);
             try {
                 plugin.database.createTownData(new SavedTownData(residentTown.getName(), guild.getId(), townChatChannelId, townChatWebhook, nationChatChannelId, nationChatWebhook, townyLogsChannelId, townyLogsWebhook, townyInfoChannelId, townyInfoWebhook, msg.getId(), rolesString));
             } catch (SQLException e) {
                 e.printStackTrace();
                 event.getMessage().reply(":warning: | Something went wrong while saving the data to the database. Please contact the server owner.").complete();
+                return;
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return;
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-        SavedTownData savedTownData;
-        try {
-            savedTownData = plugin.database.findTownByDiscordServerId(event.getGuild().getId());
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return;
-        }
-        if (savedTownData == null) {
-            Debug.log("No saved data found for this discord server");
-            return;
-        }
-        Town town = TownyAPI.getInstance().getTown(savedTownData.getName());
-        if (town == null) {
-            Debug.log("No Towny town found for this discord server");
-            return;
-        }
-        final Member member = event.getMember();
-        if (member == null) {
-            Debug.log("No member found for this discord server");
-            return;
-        }
-        final Role topRole = !member.getRoles().isEmpty() ? member.getRoles().get(0) : null;
-        Component discordMessageComponent = MinecraftSerializer.INSTANCE.serialize(event.getMessage().getContentDisplay());
-        final TextComponent textComponent = Component.text()
-                .content("[" + town.getName() + " Discord" + "] ").color(NamedTextColor.GOLD)
-                .append(Component.text().content("[" + event.getAuthor().getName() + " | " + topRole.getName() + "]: ").color(NamedTextColor.RED).build())
-                .append(discordMessageComponent)
-                .hoverEvent(Component.text().content("This message came from " + town.getName() + "'s Discord Server").color(NamedTextColor.GRAY).build()).build();
-
-        String channelName = event.getChannel().getName().substring("-chat".length());
-        if (
-                (channelName.contains("town") && savedTownData.getTownChatDiscordID().equalsIgnoreCase(event.getChannel().getId())) ||
-                        (channelName.contains("nation") && savedTownData.getNationChatDiscordID().equalsIgnoreCase(event.getChannel().getId()))
-        ) {
-            TownyPlusMain.plugin.chatHook.broadcastMessageToChannel(channelName, textComponent, town);
-        }
 
     }
 }

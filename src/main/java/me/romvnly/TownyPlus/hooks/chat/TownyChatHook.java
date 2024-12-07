@@ -1,11 +1,12 @@
 /*
  * This file is part of TownyPlus, licensed under the GPL v3 License.
- * Copyright (C) Romvnly <https://github.com/Romvnly-Gaming>
+ * Copyright (C) BrycensRanch <https://github.com/BrycensRanch>
  * Copyright (C) spigot-plugin-template team and contributors
  * Copyright (C) Pl3xmap team and contributors
  * Copyright (C) DiscordSRV team and contributors
+ * @author BrycensRanch
  * @author Romvnly
- * @link https://github.com/Romvnly-Gaming/TownyPlus
+ * @link https://github.com/BrycensRanch/TownyPlus
  */
 
 package me.romvnly.TownyPlus.hooks.chat;
@@ -17,6 +18,8 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 
 import me.romvnly.TownyPlus.TownyPlusMain;
+import me.romvnly.TownyPlus.util.Debug;
+import github.scarsz.discordsrv.util.DiscordUtil;
 import github.scarsz.discordsrv.util.LangUtil;
 import github.scarsz.discordsrv.util.PlayerUtil;
 import net.kyori.adventure.text.Component;
@@ -40,7 +43,7 @@ public class TownyChatHook implements ChatHook {
     }
 
     public void reload() {
-//        if (!isEnabled()) return;
+    //    if (!isEnabled()) return;
 
         Chat instance = (Chat) Bukkit.getPluginManager().getPlugin("TownyChat");
         if (instance == null) {
@@ -76,37 +79,43 @@ public class TownyChatHook implements ChatHook {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onMessage(AsyncChatHookEvent event) {
-        // make sure message isn't blank
 
         if (event.getMessage().isBlank()) {
             return;
         }
-        TownyPlusMain.plugin.getLogger().info("processing town msg");
+        Debug.log("processing town msg");
         TownyPlusMain.plugin.processChatMessage(event.getPlayer(), event.getMessage(), event.getChannel().getName(), this);
     }
 
     @Override
     public void broadcastMessageToChannel(String channel, Component message, Town town) {
-        // get instance of TownyChat plugin
         Chat instance = (Chat) Bukkit.getPluginManager().getPlugin("TownyChat");
+        Debug.log("broadcastMessageToChannel (TownyChatHook) called");
 
-        // return if TownyChat is disabled
-        if (instance == null) return;
+        if (instance == null) {
+            Debug.log("TownyChat is disabled. Not continuing");
+            return;
+        }
 
-        // get the destination channel
         Channel destinationChannel = getChannelByCaseInsensitiveName(channel);
 
-        // return if channel was not available
-        if (destinationChannel == null) return;
+        if (destinationChannel == null) {
+            Debug.log(String.format("No channel found for %s", channel));
+            return;
+        }
 
         String legacy = LegacyComponentSerializer
                 .legacySection()
                 .serialize(message);
 
-        String plainMessage = LangUtil.Message.CHAT_CHANNEL_MESSAGE.toString()
-                .replace("%channelcolor%", destinationChannel.getMessageColour() != null ? destinationChannel.getMessageColour() : "")
+        var plainMessage = LangUtil.Message.CHAT_CHANNEL_MESSAGE.toString()
+                .replace("%channelcolor%", destinationChannel.getMessageColour())
                 .replace("%channelname%", destinationChannel.getName())
-                .replace("%channelnickname%", destinationChannel.getChannelTag() != null ? destinationChannel.getChannelTag() : "")
+                .replace("%channelnickname%", LegacyComponentSerializer
+                .legacySection()
+                .serialize(LegacyComponentSerializer
+                .legacyAmpersand()
+                .deserialize(destinationChannel.getChannelTag())))
                 .replace("%message%", legacy);
 
         for (Player player : PlayerUtil.getOnlinePlayers()) {

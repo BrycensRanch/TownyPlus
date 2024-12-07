@@ -110,10 +110,14 @@ settings:
   # Basic gist of it is that it will send messages to Discord when something happens with a town
   discordsrv-integration:
     enabled: true
+    # Enables creating town,nation,etc roles on your main server
+    main-discord-create-roles: true
+    # The ID of your main Discord Server. You can find this by enabling Developer Mode in your Discord client and right-clicking the server name to copy the ID
+    main-discord-server: "422627791738109953"
     # The channel to log general towny actions to (e.g. town creation, town deletion, etc.)
     log-channel: 'towny-logs'
     # Whether to use a webhook for logging general towny actions
-    log-webhook-enabled: false
+    log-webhook-enabled: true
     # The webhook to use for logging general towny actions instead of using the bot's account
     log-webhook: 'https://discord.com/api/webhooks/1234567890/1234567890'
 

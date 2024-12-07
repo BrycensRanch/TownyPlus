@@ -1,20 +1,17 @@
 /*
  * This file is part of TownyPlus, licensed under the GPL v3 License.
- * Copyright (C) Romvnly <https://github.com/Romvnly-Gaming>
+ * Copyright (C) BrycensRanch <https://github.com/BrycensRanch>
  * Copyright (C) spigot-plugin-template team and contributors
  * Copyright (C) Pl3xmap team and contributors
  * Copyright (C) DiscordSRV team and contributors
+ * @author BrycensRanch
  * @author Romvnly
- * @link https://github.com/Romvnly-Gaming/TownyPlus
+ * @link https://github.com/BrycensRanch/TownyPlus
  */
 
 package me.romvnly.TownyPlus.command.commands;
 
 
-import cloud.commandframework.arguments.standard.StringArgument;
-import cloud.commandframework.bukkit.parsers.selector.SinglePlayerSelectorArgument;
-import cloud.commandframework.context.CommandContext;
-import cloud.commandframework.minecraft.extras.MinecraftExtrasMetaKeys;
 import me.romvnly.TownyPlus.TownyPlusMain;
 import me.romvnly.TownyPlus.command.BaseCommand;
 import me.romvnly.TownyPlus.command.CommandManager;
@@ -26,9 +23,14 @@ import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitScheduler;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.incendo.cloud.context.CommandContext;
+import org.incendo.cloud.paper.util.sender.Source;
 
 import java.util.List;
 
@@ -41,60 +43,60 @@ public final class ReloadCommand extends BaseCommand {
     @Override
     public void register() {
         this.commandManager.registerSubcommand(builder ->
-                builder.literal("reload").meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.miniMessage().deserialize("Reload the plugin's configuration"))
+                builder.literal("reload")
                         .permission(Constants.RELOAD_PERMISSION)
-                        .handler(context -> this.commandManager.taskRecipe()
-                                .begin(context)
-                                .synchronous(c -> {
-                                    this.execute(c);
-                                })
-                                .execute(() -> context.getSender().sendMessage("Reload done!"))
-                        ));
+                        .handler(this::execute));
     }
 
     private void execute(final @NonNull CommandContext<CommandSender> context) {
-        Audience sender = plugin.adventure().sender(context.getSender());
-        try {
-            Config.reload();
-            Lang.reload();
-            if (this.plugin.chatHook != null) {
-                this.plugin.chatHook.reload();
-            }
-            if (this.plugin.expansion != null) {
-                Boolean didUnRegisterSuccessfully = this.plugin.expansion.unregister();
-                if (didUnRegisterSuccessfully) {
-                    logger.info("Successfully unregistered with PlaceholderAPI!");
-                }
-                else {
-                    logger.warn("Failed to unregister with PlaceholderAPI!");
-                }
-                Boolean didRegisterSuccesfully = this.plugin.expansion.register();
-                if (didRegisterSuccesfully) {
-                    logger.info("Successfully registered with PlaceholderAPI!");
-                }
-                else {
-                    logger.warn("Failed to register with PlaceholderAPI!");
-                }
-            }
-            if (this.plugin.database != null) {
-                this.plugin.database.reload();
-            }
-            if (this.plugin.restAPI != null && this.plugin.restAPI.active) {
-                this.plugin.restAPI.stopServer();
-            }
-            if (Config.HTTPD_ENABLED) this.plugin.restAPI.startServer(Config.HTTPD_BIND, Config.HTTPD_PORT);
+        BukkitRunnable reloadTask = new BukkitRunnable() {
+            @Override
+            public void run() {
+                Audience sender = plugin.adventure().sender(context.sender());
+                try {
+                    Config.reload();
+                    Lang.reload();
+                    if (plugin.chatHook != null) {
+                        plugin.chatHook.reload();
+                    }
+                    if (plugin.expansion != null) {
+                        Boolean didUnRegisterSuccessfully = plugin.expansion.unregister();
+                        if (didUnRegisterSuccessfully) {
+                            logger.info("Successfully unregistered with PlaceholderAPI!");
+                        }
+                        else {
+                            logger.warn("Failed to unregister with PlaceholderAPI!");
+                        }
+                        Boolean didRegisterSuccesfully = plugin.expansion.register();
+                        if (didRegisterSuccesfully) {
+                            logger.info("Successfully registered with PlaceholderAPI!");
+                        }
+                        else {
+                            logger.warn("Failed to register with PlaceholderAPI!");
+                        }
+                    }
+                    if (plugin.database != null) {
+                        plugin.database.reload();
+                    }
+                    if (plugin.restAPI != null && plugin.restAPI.active) {
+                        plugin.restAPI.stopServer();
+                    }
+                    if (Config.HTTPD_ENABLED) plugin.restAPI.startServer(Config.HTTPD_BIND, Config.HTTPD_PORT);
 
-            sender.sendMessage(MiniMessage.miniMessage().deserialize(
-                    "<rainbow><plugin> has successfully reloaded!</rainbow>",
-                    Placeholder.unparsed("plugin", plugin.getName())
-            ));
-        } catch (Exception e) {
-            sender.sendMessage(MiniMessage.miniMessage().deserialize(
-                    "<red>Whilst attempting to reload <plugin>, the plugin ran into errors. Check your console.</red>",
-                    Placeholder.unparsed("plugin", plugin.getName())
-            ));
-            e.printStackTrace();
-        }
+                    sender.sendMessage(MiniMessage.miniMessage().deserialize(
+                            "<rainbow><plugin> has successfully reloaded!</rainbow>",
+                            Placeholder.unparsed("plugin", plugin.getName())
+                    ));
+                } catch (Exception e) {
+                    sender.sendMessage(MiniMessage.miniMessage().deserialize(
+                            "<red>Whilst attempting to reload <plugin>, the plugin ran into errors. Check your console.</red>",
+                            Placeholder.unparsed("plugin", plugin.getName())
+                    ));
+                    e.printStackTrace();
+                }
+            }
+        };
+        reloadTask.runTask(plugin);
     }
 
 }

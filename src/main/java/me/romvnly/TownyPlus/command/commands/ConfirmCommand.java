@@ -1,17 +1,17 @@
 /*
  * This file is part of TownyPlus, licensed under the GPL v3 License.
- * Copyright (C) Romvnly <https://github.com/Romvnly-Gaming>
+ * Copyright (C) BrycensRanch <https://github.com/BrycensRanch>
  * Copyright (C) spigot-plugin-template team and contributors
  * Copyright (C) Pl3xmap team and contributors
  * Copyright (C) DiscordSRV team and contributors
+ * @author BrycensRanch
  * @author Romvnly
- * @link https://github.com/Romvnly-Gaming/TownyPlus
+ * @link https://github.com/BrycensRanch/TownyPlus
  */
 
  package me.romvnly.TownyPlus.command.commands;
 
 
- import cloud.commandframework.minecraft.extras.MinecraftExtrasMetaKeys;
  import me.romvnly.TownyPlus.TownyPlusMain;
  import me.romvnly.TownyPlus.command.BaseCommand;
  import me.romvnly.TownyPlus.command.CommandManager;
@@ -29,9 +29,9 @@
      @Override
      public void register() {
          this.commandManager.registerSubcommand(builder ->
-                 builder.literal("confirm").meta(MinecraftExtrasMetaKeys.DESCRIPTION, MiniMessage.miniMessage().deserialize("Confirm a pending command"))
+                 builder.literal("confirm")
                          .permission(Constants.CONFIRM_PERMISSION)
-                         .handler(this.commandManager.confirmationManager.createConfirmationExecutionHandler())); 
+                         .handler(this.commandManager.confirmationManager.createExecutionHandler()));
                         }
  
  

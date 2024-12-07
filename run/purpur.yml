@@ -10,7 +10,13 @@
 
 verbose: false
 settings:
+  register-minecraft-debug-commands: false
+  bee-count-payload: false
+  player-deaths-always-show-item: false
+  startup-commands: []
   messages:
+    afk-broadcast-use-display-name: false
+    sleep-not-possible: default
     cannot-ride-mob: <red>You cannot mount that mob
     afk-broadcast-away: <yellow><italic>%s is now AFK
     afk-broadcast-back: <yellow><italic>%s is no longer AFK
@@ -34,6 +40,10 @@ settings:
   server-mod-name: Purpur
   clamp-attributes: true
   blocks:
+    magma-block:
+      reverse-bubble-column-flow: false
+    soul-sand:
+      reverse-bubble-column-flow: false
     barrel:
       rows: 3
     ender_chest:
@@ -70,10 +80,10 @@ settings:
     allow-looting-on-shears: false
     allow-transparent-blocks-in-enchantment-box: false
     anvil:
-      allow-unsafe-enchants: false
-      allow-inapplicable-enchants: true
-      allow-incompatible-enchants: true
-      allow-higher-enchants-levels: true
+      replace-incompatible-enchants: false
+      allow-inapplicable-enchants: false
+      allow-incompatible-enchants: false
+      allow-higher-enchants-levels: false
     allow-unsafe-enchant-command: false
     clamp-levels: true
   entity:
@@ -186,7 +196,7 @@ settings:
       minutes: '%02d minutes, and '
       second: '%02d second'
       seconds: '%02d seconds'
-config-version: 31
+config-version: 37
 world-settings:
   default:
     settings:
@@ -308,6 +318,7 @@ world-settings:
         deactivate-by-redstone: false
         fix-mc-238526: false
       sponge:
+        absorbs-water-from-mud: false
         absorption:
           area: 64
           radius: 6
@@ -345,11 +356,45 @@ world-settings:
           dripstone-water: 0.17578125
           dripstone-lava: 0.05859375
     ridable-settings:
+      use-dismounts-underwater-tag: true
       babies-are-ridable: true
       untamed-tamables-are-ridable: true
       use-night-vision: false
     mobs:
+      armadillo:
+        ridable: false
+        ridable-in-water: true
+        controllable: true
+        attributes:
+          max_health: 12.0
+          scale: 1.0
+        breeding-delay-ticks: 6000
+      bogged:
+        ridable: false
+        ridable-in-water: true
+        controllable: true
+        attributes:
+          max_health: 16.0
+          scale: 1.0
+      creaking:
+        ridable: false
+        ridable-in-water: true
+        controllable: true
+        attributes:
+          max_health: 1.0
+          scale: 1.0
+      sniffer:
+        ridable: false
+        ridable-in-water: true
+        controllable: true
+        attributes:
+          max_health: 14.0
+          scale: 1.0
+        breeding-delay-ticks: 6000
       allay:
+        attributes:
+          max_health: 20.0
+          scale: 1.0
         ridable: false
         ridable-in-water: false
         controllable: true
@@ -358,6 +403,7 @@ world-settings:
         ridable: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 14.0
         breeding-delay-ticks: 6000
         takes-damage-from-water: false
@@ -368,6 +414,14 @@ world-settings:
         controllable: true
         ridable-max-y: 320.0
         attributes:
+          scale: 1.0
+          follow_range: 16.0
+          knockback_resistance: 0.0
+          movement_speed: 0.6
+          flying_speed: 0.6
+          armor: 0.0
+          armor_toughness: 0.0
+          attack_knockback: 0.0
           max_health: 6.0
         takes-damage-from-water: false
         always-drop-exp: false
@@ -377,6 +431,7 @@ world-settings:
         controllable: true
         ridable-max-y: 320.0
         attributes:
+          scale: 1.0
           max_health: 10.0
         breeding-delay-ticks: 6000
         takes-damage-from-water: false
@@ -390,10 +445,12 @@ world-settings:
         controllable: true
         ridable-max-y: 320.0
         attributes:
+          scale: 1.0
           max_health: 20.0
         takes-damage-from-water: true
         always-drop-exp: false
       camel:
+        ridable-in-water: false
         attributes:
           max_health:
             min: 32.0
@@ -410,6 +467,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 10.0
         spawn-delay: 1200
         scan-range-for-other-cats:
@@ -424,6 +482,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 12.0
         takes-damage-from-water: false
         always-drop-exp: false
@@ -432,6 +491,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 4.0
         retaliate: false
         breeding-delay-ticks: 6000
@@ -441,6 +501,7 @@ world-settings:
         ridable: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 3.0
         takes-damage-from-water: false
         always-drop-exp: false
@@ -449,6 +510,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 10.0
         feed-mushrooms-for-mooshroom: 0
         breeding-delay-ticks: 6000
@@ -462,6 +524,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 20.0
         naturally-charged-chance: 0.0
         allow-griefing: true
@@ -480,6 +543,7 @@ world-settings:
           speed: 1.0
           damage: 2.0
         attributes:
+          scale: 1.0
           max_health: 10.0
         disable-treasure-searching: false
         takes-damage-from-water: false
@@ -505,6 +569,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 20.0
           spawn_reinforcements: 0.1
         jockey:
@@ -518,6 +583,7 @@ world-settings:
         ridable: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 80.0
         takes-damage-from-water: false
         always-drop-exp: false
@@ -537,6 +603,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 40.0
         allow-griefing: true
         can-despawn-with-held-block: false
@@ -553,6 +620,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 8.0
         takes-damage-from-water: false
         always-drop-exp: false
@@ -561,6 +629,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 24.0
         bypass-mob-griefing: false
         takes-damage-from-water: false
@@ -570,6 +639,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 10.0
         tulips-change-type: false
         breeding-delay-ticks: 6000
@@ -588,6 +658,7 @@ world-settings:
         controllable: true
         ridable-max-y: 320.0
         attributes:
+          scale: 1.0
           max_health: 10.0
         takes-damage-from-water: false
         always-drop-exp: false
@@ -598,6 +669,7 @@ world-settings:
         movement-speed: 0.5
         attack-damage: 50.0
         attributes:
+          scale: 1.0
           max_health: 100.0
         step-height: 2.0
         jump-height: 1.0
@@ -609,6 +681,7 @@ world-settings:
         ridable: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 10.0
         can-fly: false
         takes-damage-from-water: false
@@ -619,6 +692,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 10.0
         breeding-delay-ticks: 6000
         takes-damage-from-water: false
@@ -627,6 +701,7 @@ world-settings:
         ridable: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 30.0
         takes-damage-from-water: false
         always-drop-exp: false
@@ -635,6 +710,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 40.0
         breeding-delay-ticks: 6000
         takes-damage-from-water: false
@@ -659,6 +735,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 20.0
           spawn_reinforcements: 0.1
         jockey:
@@ -674,6 +751,7 @@ world-settings:
         movement-speed: 0.5
         follow-range: 18.0
         attributes:
+          scale: 1.0
           max_health: 32.0
         takes-damage-from-water: false
         always-drop-exp: false
@@ -683,6 +761,7 @@ world-settings:
         controllable: true
         can-swim: false
         attributes:
+          scale: 1.0
           max_health: 100.0
         takes-damage-from-water: false
         poppy-calms-anger: false
@@ -720,6 +799,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 10.0
         breeding-delay-ticks: 6000
         takes-damage-from-water: false
@@ -740,10 +820,12 @@ world-settings:
         takes-damage-from-water: false
         always-drop-exp: false
       ocelot:
+        spawn-below-sea-level: false
         ridable: false
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 10.0
         breeding-delay-ticks: 6000
         takes-damage-from-water: false
@@ -753,6 +835,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 20.0
         breeding-delay-ticks: 6000
         takes-damage-from-water: false
@@ -763,6 +846,7 @@ world-settings:
         controllable: true
         ridable-max-y: 320.0
         attributes:
+          scale: 1.0
           max_health: 6.0
         takes-damage-from-water: false
         can-breed: false
@@ -804,16 +888,19 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 10.0
         give-saddle-back: false
         breeding-delay-ticks: 6000
         takes-damage-from-water: false
         always-drop-exp: false
       piglin:
+        ignores-armor-with-gold-trim: false
         ridable: false
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 16.0
         bypass-mob-griefing: false
         takes-damage-from-water: false
@@ -825,6 +912,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 50.0
         takes-damage-from-water: false
         always-drop-exp: false
@@ -833,6 +921,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 24.0
         bypass-mob-griefing: false
         takes-damage-from-water: false
@@ -842,6 +931,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 30.0
         breedable-item: ''
         breeding-delay-ticks: 6000
@@ -851,6 +941,7 @@ world-settings:
         ridable: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 3.0
         takes-damage-from-water: false
         always-drop-exp: false
@@ -859,6 +950,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 3.0
         spawn-toast-chance: 0.0
         spawn-killer-rabbit-chance: 0.0
@@ -867,10 +959,12 @@ world-settings:
         takes-damage-from-water: false
         always-drop-exp: false
       ravager:
+        avoid-rabbits: false
         ridable: false
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 100.0
         bypass-mob-griefing: false
         takes-damage-from-water: false
@@ -890,6 +984,7 @@ world-settings:
         ridable: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 3.0
         takes-damage-from-water: false
         always-drop-exp: false
@@ -898,6 +993,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 8.0
         breeding-delay-ticks: 6000
         bypass-mob-griefing: false
@@ -909,6 +1005,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 30.0
         takes-damage-from-water: false
         spawn-from-bullet:
@@ -924,6 +1021,9 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
+          movement_speed: 0.25
+          attack_damage: 1.0
           max_health: 8.0
         bypass-mob-griefing: false
         takes-damage-from-water: false
@@ -933,6 +1033,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 20.0
         takes-damage-from-water: false
         always-drop-exp: false
@@ -940,6 +1041,7 @@ world-settings:
         feed-wither-roses: 0
         bow-accuracy: 14 - difficulty * 4
       skeleton_horse:
+        ridable: false
         ridable-in-water: true
         can-swim: false
         attributes:
@@ -969,6 +1071,7 @@ world-settings:
         controllable: true
         leave-trail-when-ridden: false
         attributes:
+          scale: 1.0
           max_health: 4.0
         drop-pumpkin-when-sheared: true
         pumpkin-can-be-added-back: false
@@ -983,6 +1086,7 @@ world-settings:
         ridable: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 10.0
         immune-to-EAR: true
         water-offset-check: 0.0
@@ -994,6 +1098,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 16.0
         takes-damage-from-water: false
         always-drop-exp: false
@@ -1002,6 +1107,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 20.0
         takes-damage-from-water: false
         always-drop-exp: false
@@ -1010,6 +1116,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 20.0
         breeding-delay-ticks: 6000
         give-saddle-back: false
@@ -1040,6 +1147,7 @@ world-settings:
         ridable: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 3.0
         takes-damage-from-water: false
         always-drop-exp: false
@@ -1048,6 +1156,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 30.0
         breeding-delay-ticks: 6000
         takes-damage-from-water: false
@@ -1058,14 +1167,20 @@ world-settings:
         controllable: true
         ridable-max-y: 320.0
         attributes:
+          scale: 1.0
           max_health: 14.0
         takes-damage-from-water: false
         always-drop-exp: false
       villager:
+        search-radius:
+          acquire-poi: 48
+          nearest-bed-sensor: 48
         ridable: false
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
+          tempt_range: 10.0
           max_health: 20.0
         follow-emerald-blocks: false
         can-be-leashed: false
@@ -1079,6 +1194,7 @@ world-settings:
         always-drop-exp: false
         minimum-demand: 0
         lobotomize:
+          wait-until-trade-locked: false
           enabled: false
           check-interval: 100
         display-trade-item: true
@@ -1090,6 +1206,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 24.0
         johnny:
           spawn-chance: 0.0
@@ -1100,6 +1217,8 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
+          tempt_range: 10.0
           max_health: 20.0
         follow-emerald-blocks: false
         can-be-leashed: false
@@ -1115,6 +1234,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 26.0
         takes-damage-from-water: false
         always-drop-exp: false
@@ -1124,6 +1244,7 @@ world-settings:
         controllable: true
         ridable-max-y: 320.0
         attributes:
+          scale: 1.0
           max_health: 300.0
         health-regen-amount: 1.0
         health-regen-delay: 20
@@ -1138,6 +1259,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 20.0
         takes-damage-from-water: false
         always-drop-exp: false
@@ -1146,6 +1268,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 8.0
         default-collar-color: RED
         milk-cures-rabid-wolves: true
@@ -1158,6 +1281,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 40.0
         takes-damage-from-water: false
         always-drop-exp: false
@@ -1166,6 +1290,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 20.0
           spawn_reinforcements: 0.1
         jockey:
@@ -1178,6 +1303,7 @@ world-settings:
         always-drop-exp: false
         head-visibility-percent: 0.5
       zombie_horse:
+        ridable: false
         ridable-in-water: false
         can-swim: false
         attributes:
@@ -1198,6 +1324,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 20.0
           spawn_reinforcements: 0.1
         jockey:
@@ -1216,6 +1343,7 @@ world-settings:
         ridable-in-water: false
         controllable: true
         attributes:
+          scale: 1.0
           max_health: 20.0
           spawn_reinforcements: 0.0
         jockey:
@@ -1282,6 +1410,15 @@ world-settings:
           minecraft:warped_stem:
             into: minecraft:stripped_warped_stem
             drops: {}
+          minecraft:cherry_log:
+            into: minecraft:stripped_cherry_log
+            drops: {}
+          minecraft:cherry_wood:
+            into: minecraft:stripped_cherry_wood
+            drops: {}
+          minecraft:bamboo_block:
+            into: minecraft:stripped_bamboo_block
+            drops: {}
         waxables:
           minecraft:waxed_exposed_cut_copper:
             into: minecraft:exposed_cut_copper
@@ -1331,6 +1468,66 @@ world-settings:
           minecraft:waxed_oxidized_cut_copper_stairs:
             into: minecraft:oxidized_cut_copper_stairs
             drops: {}
+          minecraft:waxed_chiseled_copper:
+            into: minecraft:chiseled_copper
+            drops: {}
+          minecraft:waxed_exposed_chiseled_copper:
+            into: minecraft:exposed_chiseled_copper
+            drops: {}
+          minecraft:waxed_weathered_chiseled_copper:
+            into: minecraft:weathered_chiseled_copper
+            drops: {}
+          minecraft:waxed_oxidized_chiseled_copper:
+            into: minecraft:oxidized_chiseled_copper
+            drops: {}
+          minecraft:waxed_copper_door:
+            into: minecraft:copper_door
+            drops: {}
+          minecraft:waxed_exposed_copper_door:
+            into: minecraft:exposed_copper_door
+            drops: {}
+          minecraft:waxed_weathered_copper_door:
+            into: minecraft:weathered_copper_door
+            drops: {}
+          minecraft:waxed_oxidized_copper_door:
+            into: minecraft:oxidized_copper_door
+            drops: {}
+          minecraft:waxed_copper_trapdoor:
+            into: minecraft:copper_trapdoor
+            drops: {}
+          minecraft:waxed_exposed_copper_trapdoor:
+            into: minecraft:exposed_copper_trapdoor
+            drops: {}
+          minecraft:waxed_weathered_copper_trapdoor:
+            into: minecraft:weathered_copper_trapdoor
+            drops: {}
+          minecraft:waxed_oxidized_copper_trapdoor:
+            into: minecraft:oxidized_copper_trapdoor
+            drops: {}
+          minecraft:waxed_copper_grate:
+            into: minecraft:copper_grate
+            drops: {}
+          minecraft:waxed_exposed_copper_grate:
+            into: minecraft:exposed_copper_grate
+            drops: {}
+          minecraft:waxed_weathered_copper_grate:
+            into: minecraft:weathered_copper_grate
+            drops: {}
+          minecraft:waxed_oxidized_copper_grate:
+            into: minecraft:oxidized_copper_grate
+            drops: {}
+          minecraft:waxed_copper_bulb:
+            into: minecraft:copper_bulb
+            drops: {}
+          minecraft:waxed_exposed_copper_bulb:
+            into: minecraft:exposed_copper_bulb
+            drops: {}
+          minecraft:waxed_weathered_copper_bulb:
+            into: minecraft:weathered_copper_bulb
+            drops: {}
+          minecraft:waxed_oxidized_copper_bulb:
+            into: minecraft:oxidized_copper_bulb
+            drops: {}
         weatherables:
           minecraft:weathered_cut_copper_slab:
             into: minecraft:exposed_cut_copper_slab
@@ -1368,6 +1565,51 @@ world-settings:
           minecraft:weathered_cut_copper_stairs:
             into: minecraft:exposed_cut_copper_stairs
             drops: {}
+          minecraft:exposed_chiseled_copper:
+            into: minecraft:chiseled_copper
+            drops: {}
+          minecraft:weathered_chiseled_copper:
+            into: minecraft:exposed_chiseled_copper
+            drops: {}
+          minecraft:oxidized_chiseled_copper:
+            into: minecraft:weathered_chiseled_copper
+            drops: {}
+          minecraft:exposed_copper_door:
+            into: minecraft:copper_door
+            drops: {}
+          minecraft:weathered_copper_door:
+            into: minecraft:exposed_copper_door
+            drops: {}
+          minecraft:oxidized_copper_door:
+            into: minecraft:weathered_copper_door
+            drops: {}
+          minecraft:exposed_copper_trapdoor:
+            into: minecraft:copper_trapdoor
+            drops: {}
+          minecraft:weathered_copper_trapdoor:
+            into: minecraft:exposed_copper_trapdoor
+            drops: {}
+          minecraft:oxidized_copper_trapdoor:
+            into: minecraft:weathered_copper_trapdoor
+            drops: {}
+          minecraft:exposed_copper_grate:
+            into: minecraft:copper_grate
+            drops: {}
+          minecraft:weathered_copper_grate:
+            into: minecraft:exposed_copper_grate
+            drops: {}
+          minecraft:oxidized_copper_grate:
+            into: minecraft:weathered_copper_grate
+            drops: {}
+          minecraft:exposed_copper_bulb:
+            into: minecraft:copper_bulb
+            drops: {}
+          minecraft:weathered_copper_bulb:
+            into: minecraft:exposed_copper_bulb
+            drops: {}
+          minecraft:oxidized_copper_bulb:
+            into: minecraft:weathered_copper_bulb
+            drops: {}
       hoe:
         tillables:
           minecraft:dirt_path:
@@ -1393,9 +1635,32 @@ world-settings:
             condition: air_above
         replant-crops: false
         replant-nether-warts: false
+      shovel:
+        flattenables:
+          minecraft:coarse_dirt:
+            into: minecraft:dirt_path
+            drops: {}
+          minecraft:dirt:
+            into: minecraft:dirt_path
+            drops: {}
+          minecraft:grass_block:
+            into: minecraft:dirt_path
+            drops: {}
+          minecraft:mycelium:
+            into: minecraft:dirt_path
+            drops: {}
+          minecraft:podzol:
+            into: minecraft:dirt_path
+            drops: {}
+          minecraft:rooted_dirt:
+            into: minecraft:dirt_path
+            drops: {}
     hunger:
       starvation-damage: 1.0
     gameplay-mechanics:
+      impose-teleport-restrictions-on-nether-portals: false
+      impose-teleport-restrictions-on-end-portals: false
+      disable-oxidation-proximity-penalty: false
       entity-lifespan: 0
       entity-left-handed-chance: 0.05000000074505806
       armorstand:
@@ -1421,14 +1686,11 @@ world-settings:
       milk-cures-bad-omen: true
       milk-clears-beneficial-effects: true
       note-block-ignore-above: false
-      persistent-tileentity-display-names-and-lore: false
       persistent-droppable-entity-display-names: false
       projectiles-bypass-mob-griefing: false
       tick-fluids: true
       entity-blindness-multiplier: 1.0
       trident-loyalty-void-return-height: 0.0
-      void-damage-height: -64.0
-      void-damage-dealt: 4.0
       raid-cooldown-seconds: 0
       animal-breeding-cooldown-seconds: 0
       mobs-ignore-rails: false
@@ -1457,12 +1719,17 @@ world-settings:
         spectral-arrows: false
         tipped-arrows: false
       item:
+        end-crystal:
+          place-anywhere: false
         immune:
           cactus: []
           explosion: []
           fire: []
           lightning: []
         shears:
+          defuse-tnt-chance: 0.0
+          ignore-in-water: false
+          ignore-in-lava: false
           damage-if-sprinting: false
           sprinting-damage: 1.0
         ender-pearl:
@@ -1542,13 +1809,6 @@ world-settings:
         snowball: 1.0
       projectile-damage:
         snowball: -1
-      shovel-turns-block-to-grass-path:
-      - minecraft:coarse_dirt
-      - minecraft:dirt
-      - minecraft:grass_block
-      - minecraft:mycelium
-      - minecraft:podzol
-      - minecraft:rooted_dirt
       silk-touch:
         enabled: false
         spawner-name: <reset><white>Monster Spawner
@@ -1577,3 +1837,5 @@ world-settings:
           block-speed:
             grass_block: 0.3
             stone: 0.5
+      persistent-tileentity-lore: false
+      persistent-tileentity-display-name: true

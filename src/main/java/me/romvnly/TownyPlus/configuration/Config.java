@@ -1,11 +1,12 @@
 /*
  * This file is part of TownyPlus, licensed under the GPL v3 License.
- * Copyright (C) Romvnly <https://github.com/Romvnly-Gaming>
+ * Copyright (C) BrycensRanch <https://github.com/BrycensRanch>
  * Copyright (C) spigot-plugin-template team and contributors
  * Copyright (C) Pl3xmap team and contributors
  * Copyright (C) DiscordSRV team and contributors
+ * @author BrycensRanch
  * @author Romvnly
- * @link https://github.com/Romvnly-Gaming/TownyPlus
+ * @link https://github.com/BrycensRanch/TownyPlus
  */
 
 package me.romvnly.TownyPlus.configuration;
@@ -63,12 +64,16 @@ public class Config extends BaseConfig {
         HTTPD_PORT = config.getInt("settings.internal-webserver.port", HTTPD_PORT);
         externalAPIToUse = config.getString("settings.internal-webserver.external-api", externalAPIToUse);
     }
+    public static String MAIN_DISCORD_SERVER_ID = "816686637849378857";
+    public static boolean MAIN_DISCORD_CREATE_ROLES = true;
     public static boolean DISCORDSRV_ENABLED = true;
     public static String DISCORDSRV_LOG_CHANNEL = "towny-logs";
     public static String DISCORDSRV_WEBHOOK = "https://discord.com/api/webhooks/1234567890/abcdefghijklmnopqrstuvwxyz";
     public static boolean DISCORDSRV_WEBHOOK_ENABLED = false;
 
     private static void discordSRVIntegrationSettings() {
+        MAIN_DISCORD_SERVER_ID = config.getString("settings.discordsrv-integration.main-discord-server", MAIN_DISCORD_SERVER_ID);
+        MAIN_DISCORD_CREATE_ROLES = config.getBoolean("settings.discordsrv-integration.main-discord-create-roles", MAIN_DISCORD_CREATE_ROLES);
         DISCORDSRV_ENABLED = config.getBoolean("settings.discordsrv-integration.enabled", DISCORDSRV_ENABLED);
         DISCORDSRV_LOG_CHANNEL = config.getString("settings.discordsrv-integration.log-channel", DISCORDSRV_LOG_CHANNEL);
         DISCORDSRV_WEBHOOK = config.getString("settings.discordsrv-integration.log-webhook", DISCORDSRV_WEBHOOK);

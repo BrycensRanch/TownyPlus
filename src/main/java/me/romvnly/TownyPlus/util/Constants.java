@@ -1,11 +1,12 @@
 /*
  * This file is part of TownyPlus, licensed under the GPL v3 License.
- * Copyright (C) Romvnly <https://github.com/Romvnly-Gaming>
+ * Copyright (C) BrycensRanch <https://github.com/BrycensRanch>
  * Copyright (C) spigot-plugin-template team and contributors
  * Copyright (C) Pl3xmap team and contributors
  * Copyright (C) DiscordSRV team and contributors
+ * @author BrycensRanch
  * @author Romvnly
- * @link https://github.com/Romvnly-Gaming/TownyPlus
+ * @link https://github.com/BrycensRanch/TownyPlus
  */
 
 package me.romvnly.TownyPlus.util;
@@ -25,6 +26,8 @@ public final class Constants {
     public static final String UPDATE_NOTIFICATIONS_PERMISSION = BASE_PERMISSION + ".updatenotifications";
     public static final String BYPASS_PERMISSION = BASE_PERMISSION + ".bypass";
     public static final String DUMP_PERMISSION = BASE_PERMISSION + ".dump";
+    public static final String DISCORD_PERMISSION = BASE_PERMISSION + ".discord";
+
     // MAHAHAHAHAHAH
     public static final String DUMP_URL = "https://sourceb.in/api/";
 

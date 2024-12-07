@@ -1,11 +1,12 @@
 /*
  * This file is part of TownyPlus, licensed under the GPL v3 License.
- * Copyright (C) Romvnly <https://github.com/Romvnly-Gaming>
+ * Copyright (C) BrycensRanch <https://github.com/BrycensRanch>
  * Copyright (C) spigot-plugin-template team and contributors
  * Copyright (C) Pl3xmap team and contributors
  * Copyright (C) DiscordSRV team and contributors
+ * @author BrycensRanch
  * @author Romvnly
- * @link https://github.com/Romvnly-Gaming/TownyPlus
+ * @link https://github.com/BrycensRanch/TownyPlus
  */
 
 package me.romvnly.TownyPlus;
@@ -28,6 +29,7 @@ import com.palmergames.bukkit.towny.object.Town;
 import com.vdurmont.semver4j.Semver;
 import github.scarsz.discordsrv.DiscordSRV;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.TextChannel;
+import lombok.Getter;
 import me.romvnly.TownyPlus.api.RestAPI;
 import me.romvnly.TownyPlus.command.CommandManager;
 import me.romvnly.TownyPlus.configuration.Config;
@@ -38,7 +40,9 @@ import me.romvnly.TownyPlus.hooks.chat.VentureChatHook;
 import me.romvnly.TownyPlus.listeners.DiscordSRVListener;
 import me.romvnly.TownyPlus.listeners.KickedFromTownListener;
 import me.romvnly.TownyPlus.listeners.MayorChangeListener;
+import me.romvnly.TownyPlus.listeners.TownDeletionListener;
 import me.romvnly.TownyPlus.listeners.TownToggleListener;
+import me.romvnly.TownyPlus.model.SavedTownData;
 import me.romvnly.TownyPlus.util.Debug;
 import me.romvnly.TownyPlus.util.GitProperties;
 import me.romvnly.TownyPlus.util.WebUtils;
@@ -65,6 +69,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 
 import static me.romvnly.TownyPlus.util.Constants.UPDATE_NOTIFICATIONS_PERMISSION;
@@ -85,14 +90,6 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
     }
     public static TownyPlusMain plugin;
     private BukkitAudiences adventure;
-    public static final ObjectMapper JSONMapper = new ObjectMapper()
-    .enable(JsonParser.Feature.IGNORE_UNDEFINED)
-    .enable(JsonParser.Feature.ALLOW_COMMENTS)
-    .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-    .enable(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES)
-            .configure(SerializationFeature.FAIL_ON_SELF_REFERENCES, false)
-    .enable(JsonParser.Feature.ALLOW_SINGLE_QUOTES);
-    public static final ObjectMapper YAMLMapper = new ObjectMapper(new YAMLFactory().disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER).enable(YAMLParser.Feature.EMPTY_STRING_AS_NULL).enable(YAMLGenerator.Feature.MINIMIZE_QUOTES)).configure(SerializationFeature.FAIL_ON_SELF_REFERENCES, false);
     public CommandManager commandManager;
     public ChatHook chatHook;
     public UpdateChecker updateChecker;
@@ -201,7 +198,7 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
             if (Config.CHECK_FOR_UPDATES) {
                 this.updateChecker = new UpdateChecker(this, UpdateCheckSource.GITHUB_RELEASE_TAG, githubRepo)
                         .setChangelogLink(String.format("https://github.com/%s/blob/%s/CHANGELOG.md", githubRepo, GitProperties.getGitProperty("git.branch")))
-                        .setDonationLink("https://paypal.me/romvnly")
+                        .setDonationLink("https://paypal.me/brycensranch")
                         .setDownloadLink(String.format("https://github.com/%s/releases", githubRepo))
                         .setUserAgent(new UserAgentBuilder().addPluginNameAndVersion())
                         .setNotifyByPermissionOnJoin(UPDATE_NOTIFICATIONS_PERMISSION)
@@ -265,6 +262,8 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
             new KickedFromTownListener();
             new MayorChangeListener();
             new TownToggleListener();
+            new TownDeletionListener();
+
         }
         // I will not be adding this to the localization file. It's just a message to let the user know that the plugin is enabled.
         logger.info("----------------------------------------");
@@ -314,6 +313,13 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
          commandSenders.forEachAudience(commandSender -> Lang.send(commandSender, Lang.ATTEMPTING_TO_AUTO_UPDATE));
         String releaseJSONString = WebUtils.getBody("https://api.github.com/repos/" + githubRepo + "/releases");
         try {
+            ObjectMapper JSONMapper = new ObjectMapper()
+            .enable(JsonParser.Feature.IGNORE_UNDEFINED)
+            .enable(JsonParser.Feature.ALLOW_COMMENTS)
+            .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+            .enable(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES)
+            .configure(SerializationFeature.FAIL_ON_SELF_REFERENCES, false)
+            .enable(JsonParser.Feature.ALLOW_SINGLE_QUOTES);
             JsonNode releaseJSONArray = JSONMapper.readTree(releaseJSONString);
             JsonNode latestRelease = null;
             Integer index = 0;
@@ -419,55 +425,78 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
         String channelName = channel.toLowerCase().trim();
         if (player == null) return;
         Resident resident = TownyUniverse.getInstance().getResident(player.getUniqueId());
+        Debug.log("processChatMessage: stage 1");
         // This is configured to do POST requests by default...
         me.romvnly.TownyPlus.api.Gson gson = new me.romvnly.TownyPlus.api.Gson();
-        if (channelName.equalsIgnoreCase("town")) {
-            assert resident != null;
-            Town town = resident.getTownOrNull();
-            if (town == null) return;
-        }
+        assert resident != null;
+
+        Town town = resident.getTownOrNull();
+
+        if (town == null) return;
+        Debug.log("processChatMessage: stage 2");
+
         if (channelName.equalsIgnoreCase("nation")) {
             assert resident != null;
             Nation nation = resident.getNationOrNull();
             if (nation == null) return;
         }
+        SavedTownData savedTownData;
+        try {
+            savedTownData = database.findTownByName(town.getName());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return;
+        }
+        var textChannelId = "town".equals(channelName) ? savedTownData.getTownChatDiscordID() : savedTownData.getNationChatDiscordID();
+        Debug.log("processChatMessage: stage 3");
+
         // We only want town/nation messages
-//        if (!List.of("town", "nation").contains(channelName)) return;
+       if (!List.of("town", "nation").contains(channelName)) return;
+       Debug.log("processChatMessage: stage 4");
+
         if (Config.DISCORDSRV_ENABLED) {
             Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
-            // check database
-            TextChannel textChannel = DiscordSRV.getPlugin().getJda().getTextChannelById("1079260674078810182");
-            if (textChannel != null) {
-                textChannel.sendMessage(String.format("[%s] %s: %s", channel, player.getName(), message)).queue();
-            }
-        });
+                // check database
+                TextChannel textChannel = DiscordSRV.getPlugin().getJda().getTextChannelById(textChannelId);
+                if (textChannel == null) return;
+                textChannel.sendMessage(String.format("%s » %s", player.getName(), message)).queue();
+            });
+            Debug.log("processChatMessage: stage 5a");
         } else {
             try {
+                Debug.log("processChatMessage: stage 5b");
                 String externalAPIURL = Config.externalAPIToUse;
                 String apiURL;
                 if (externalAPIURL.toLowerCase().equalsIgnoreCase("none")) {
                     apiURL = String.format("http://%s:%s", Config.HTTPD_BIND, Config.HTTPD_PORT);
-                }
-                else {
+                } else {
                     apiURL = Config.externalAPIToUse;
                 }
-                if (externalAPIURL.isBlank()) throw new IOException("You didn't provide a VALID URL in your configuration file");
+                if (externalAPIURL.isBlank())
+                    throw new IOException("You didn't provide a VALID URL in your configuration file");
                 Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
 
-                try {
-                    JsonNode body = JSONMapper.createObjectNode()
-                            .put("username", player.getName())
-                            .put("uuid", player.getUniqueId().toString())
-                            .put("message", message)
-                            .put("channel", channelName);
-                    gson.http(apiURL + String.format("/channels/%s/new/message", channel), JSONMapper.writeValueAsString(body));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                    });
+                    try {
+                        ObjectMapper JSONMapper = new ObjectMapper()
+                        .enable(JsonParser.Feature.IGNORE_UNDEFINED)
+                        .enable(JsonParser.Feature.ALLOW_COMMENTS)
+                        .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                        .enable(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES)
+                        .configure(SerializationFeature.FAIL_ON_SELF_REFERENCES, false)
+                        .enable(JsonParser.Feature.ALLOW_SINGLE_QUOTES);
+                        JsonNode body = JSONMapper.createObjectNode()
+                                .put("username", player.getName())
+                                .put("uuid", player.getUniqueId().toString())
+                                .put("message", message)
+                                .put("channel", channelName);
+                        gson.http(apiURL + String.format("/channels/%s/new/message", channel), JSONMapper.writeValueAsString(body));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
-}
+    }

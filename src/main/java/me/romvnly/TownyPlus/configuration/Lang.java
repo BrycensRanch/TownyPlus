@@ -1,11 +1,12 @@
 /*
  * This file is part of TownyPlus, licensed under the GPL v3 License.
- * Copyright (C) Romvnly <https://github.com/Romvnly-Gaming>
+ * Copyright (C) BrycensRanch <https://github.com/BrycensRanch>
  * Copyright (C) spigot-plugin-template team and contributors
  * Copyright (C) Pl3xmap team and contributors
  * Copyright (C) DiscordSRV team and contributors
+ * @author BrycensRanch
  * @author Romvnly
- * @link https://github.com/Romvnly-Gaming/TownyPlus
+ * @link https://github.com/BrycensRanch/TownyPlus
  */
 
 package me.romvnly.TownyPlus.configuration;
@@ -96,6 +97,8 @@ public final class Lang {
     public static String NOT_LINKED_TO_DISCORD = "<red>You are not linked to Discord. You may not use this command. Please link your account using /discord link";
     @LangKey("link-discord-to-town")
     public static String LINK_DISCORD_TO_TOWN = "<green>Invite the Discord bot to your town's Discord server (<town>) and say <code> in the server anywhere the bot can see it. You have <time> to do this.";
+    @LangKey("town-discord-link-success")
+    public static String TOWN_DISCORD_LINK_SUCCESS = "<green>Success! <gold>Your town is now linked to the Discord server <rainbow><server>";
     @LangKey("town-already-linked")
     public static String TOWN_ALREADY_LINKED = "<red>Your town is already linked to a Discord server.";
 //    @LangKey("render-not-in-progress")
