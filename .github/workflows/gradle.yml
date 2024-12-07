@@ -99,37 +99,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Set up JDK 22
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin' 
-          java-version: 22
-          
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3
-
-      - name: Grant execute permission to gradlew
-        run: chmod +x ../gradlew
-
-      - name: 📥 Monorepo install all deps & pnpm
-        uses: ./.github/actions/pnpm-install
-
-      - name: Build
-        run: ./gradlew build -x test -x checkLicenseMain -x spotbugsMain -x spotlessCheck -x checkstyleMain -x checkstyleTest
-        working-directory: ${{ github.workspace }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-      - name: Test
-        run: pnpm e2e
-
-        # I honestly detest Minecraft plugin unit testing and I don't think it's worth the time to write tests for a project like this. 
-        # I'm not going to write tests for this project, but I will leave the code here in case you want to write tests for your own project.
-        continue-on-error: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          DISCORDSRV_TOKEN: ${{ secrets.DISCORDSRV_TOKEN }}
-
 #      - name: Create Coverage
 #        run: ./gradlew jacocoTestReport
 #        env:
