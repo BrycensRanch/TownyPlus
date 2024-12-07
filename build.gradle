@@ -405,8 +405,8 @@ runServer {
         github("DiscordSRV", "DiscordSRV", "v1.29.0", "DiscordSRV-Build-1.29.0.jar")
         url("https://download.luckperms.net/1561/bukkit/loader/LuckPerms-Bukkit-5.4.146.jar")
         url("https://ci.extendedclip.com/job/PlaceholderAPI/lastSuccessfulBuild/artifact/build/libs/PlaceholderAPI-2.11.7-DEV-200.jar")
-        github("ViaVersion", "ViaVersion",  "5.1.1", "ViaVersion-5.1.1.jar")
-        github("ViaVersion", "ViaBackwards",  "5.1.1", "ViaBackwards-5.1.1.jar")
+        github("ViaVersion", "ViaVersion",  "5.2.0", "ViaVersion-5.2.0.jar")
+        github("ViaVersion", "ViaBackwards",  "5.2.0", "ViaBackwards-5.2.0.jar")
     }
 }
 processResources {
