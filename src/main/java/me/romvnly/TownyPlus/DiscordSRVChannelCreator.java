@@ -25,6 +25,7 @@ import com.palmergames.bukkit.towny.object.Town;
 import dev.vankka.mcdiscordreserializer.minecraft.MinecraftSerializer;
 import github.scarsz.discordsrv.DiscordSRV;
 import github.scarsz.discordsrv.dependencies.jda.api.EmbedBuilder;
+import github.scarsz.discordsrv.dependencies.jda.api.Permission;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.*;
 import github.scarsz.discordsrv.dependencies.jda.api.events.message.MessageReceivedEvent;
 import me.romvnly.TownyPlus.configuration.Config;
@@ -39,7 +40,14 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 
 import javax.annotation.Nonnull;
+
+import java.lang.reflect.Array;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -53,9 +61,24 @@ public class DiscordSRVChannelCreator {
             Debug.log("Created webhook " + webhookName + " for discord channel " + channel.getName());
         }
     }
-    public void createCategoryIfNotExist(@Nonnull final Guild guild, @Nonnull String categoryName) {
+    public void createCategoryIfNotExist(@Nonnull final Guild guild, @Nonnull String categoryName, @Nonnull final Town town) {
         if (guild.getCategoriesByName(categoryName, true).size() != 0) return;
-        guild.createCategory(categoryName).complete();
+        var everyoneRole = guild.getPublicRole();
+
+        var category = guild.createCategory(categoryName).addRolePermissionOverride(everyoneRole.getIdLong(), null, Collections.singleton(Permission.VIEW_CHANNEL));
+        category.complete();
+
+                for (Role role : guild.getRoles()) {
+                    // Check if the role name contains the categoryName 
+                    if (role.getName().contains(town.getName()) || role.getName().contains(categoryName)) {
+                        // Grant VIEW_CHANNEL permission to the role
+                        category.addRolePermissionOverride(role.getIdLong(), 
+                                Collections.singleton(Permission.VIEW_CHANNEL), 
+                                null).complete(); 
+                    }
+                }
+
+
         Debug.log("Created category " + categoryName + " for discord guild " + guild.getName());
     }
     public void createChannelIfNotExistInCategory(@Nonnull final Category category, @Nonnull String channelName) {
@@ -146,8 +169,8 @@ public class DiscordSRVChannelCreator {
 
             // Create channels, categories, and webhooks if they don't exist
 
-            createCategoryIfNotExist(guild, category);
-            createCategoryIfNotExist(guild, logsCate);
+            createCategoryIfNotExist(guild, category, residentTown);
+            createCategoryIfNotExist(guild, logsCate, residentTown);
 
             // Retrieving data
             Category townyCategory = guild.getCategoriesByName(category, true).get(0);

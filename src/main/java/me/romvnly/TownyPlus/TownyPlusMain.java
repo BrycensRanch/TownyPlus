@@ -447,6 +447,8 @@ public final class TownyPlusMain extends JavaPlugin implements Listener {
             e.printStackTrace();
             return;
         }
+        if (savedTownData == null) return;
+
         var textChannelId = "town".equals(channelName) ? savedTownData.getTownChatDiscordID() : savedTownData.getNationChatDiscordID();
         Debug.log("processChatMessage: stage 3");
 
