@@ -16,7 +16,7 @@ runs:
   using: 'composite'
 
   steps:
-    - uses: pnpm/action-setup@v2
+    - uses: pnpm/action-setup@v4
 
       # If you're not setting the packageManager field in package.json, add the version here
       with:
