@@ -25,7 +25,7 @@ importers:
         version: 1.0.13
       mineflayer:
         specifier: ^4.23.0
-        version: 4.29.0
+        version: 4.30.0
       mineflayer-pathfinder:
         specifier: ^2.4.5
         version: 2.4.5
@@ -456,8 +456,8 @@ packages:
   '@types/node@22.16.3':
     resolution: {integrity: sha512-sr4Xz74KOUeYadexo1r8imhRtlVXcs+j3XK3TcoiYk7B1t3YRVJgtaD3cwX73NYb71pmVuMLNRhJ9XKdoDB74g==}
 
-  '@types/readable-stream@4.0.18':
-    resolution: {integrity: sha512-21jK/1j+Wg+7jVw1xnSwy/2Q1VgVjWuFssbYGTREPUBeZ+rqVFl2udq0IkxzPC0ZhOzVceUbyIACFZKLqKEBlA==}
+  '@types/readable-stream@4.0.21':
+    resolution: {integrity: sha512-19eKVv9tugr03IgfXlA9UVUVRbW6IuqRO5B92Dl4a6pT7K8uaGrNS0GkxiZD0BOk6PLuXl5FhWl//eX/pzYdTQ==}
 
   '@types/stack-utils@2.0.3':
     resolution: {integrity: sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==}
@@ -847,15 +847,6 @@ packages:
 
   debug@4.3.7:
     resolution: {integrity: sha512-Er2nc/H7RrMXZBFCEim6TCmMk02Z8vLC2Rbi1KEBggpo0fS6l0S1nnapwmIi3yW/+GOJap1Krg4w0Hg80oCqgQ==}
-    engines: {node: '>=6.0'}
-    peerDependencies:
-      supports-color: '*'
-    peerDependenciesMeta:
-      supports-color:
-        optional: true
-
-  debug@4.4.0:
-    resolution: {integrity: sha512-6WTZ/IxCY/T6BALoZHaE4ctp9xm+Z5kY/pzYaCHRFeyVhojxlrm+46y68HA6hr0TcwEssoxNiDEUJQjfPZ/RYA==}
     engines: {node: '>=6.0'}
     peerDependencies:
       supports-color: '*'
@@ -1453,8 +1444,8 @@ packages:
     resolution: {integrity: sha512-PRp66vJ865SSqOlgqS8hujT5U4AOgMfhrwYIuIhfKaoSCZcirrmASQr8CX7cUg+RMih+hgznrjp99o+W4pJLHQ==}
     engines: {node: '>=12', npm: '>=6'}
 
-  jwa@1.4.1:
-    resolution: {integrity: sha512-qiLX/xhEEFKUAJ6FiBMbes3w9ATzyk5W7Hvzpa/SLYdxNtng+gcurvrI7TbACjIXlsJyr05/S1oUhZrc63evQA==}
+  jwa@1.4.2:
+    resolution: {integrity: sha512-eeH5JO+21J78qMvTIDdBXidBd6nG2kZjg5Ohz/1fpa28Z4CcsWUzJ1ZZyFq/3z3N17aZy+ZuBoHljASbL1WfOw==}
 
   jws@3.2.2:
     resolution: {integrity: sha512-YHlZCB6lMTllWDtSPHz/ZXTsi8S00usEV6v1tjq8tOUZzw7DpSDWVXjXDre6ed1w/pd495ODpHZYSdkRTsa0HA==}
@@ -1582,8 +1573,8 @@ packages:
   minecraft-folder-path@1.2.0:
     resolution: {integrity: sha512-qaUSbKWoOsH9brn0JQuBhxNAzTDMwrOXorwuRxdJKKKDYvZhtml+6GVCUrY5HRiEsieBEjCUnhVpDuQiKsiFaw==}
 
-  minecraft-protocol@1.55.0:
-    resolution: {integrity: sha512-jlzmRxoNuj2bFk1fxR+dTg6Z4RpOR1/FLrk1zhft0jCwAIEhgV2OPi6Ceg2KFKADneEX0suhCty855A/qFLQWA==}
+  minecraft-protocol@1.58.0:
+    resolution: {integrity: sha512-ctlsd1ob8NQD80QQaw7N8mQ5lEo2KTyRBILitTNd4awXN5/FVcYVP1XqjPMTNqVl1EiclUyA/K2Ki6ryvH/jzw==}
     engines: {node: '>=22'}
 
   minecraft-query@1.0.13:
@@ -1603,8 +1594,8 @@ packages:
     resolution: {integrity: sha512-IFFy4NgF24FU2PkAwazJphl2F+3gpbpN578ex0sq1XfcBBRge3kCz1UC2KDMjKI+V/8vffOL+OEnug9jt3f7Vw==}
     engines: {node: '>=14'}
 
-  mineflayer@4.29.0:
-    resolution: {integrity: sha512-NMH+1EiQi4inLKhnt2HCpqSAcK0cYc5dGOYrzoewTUoNZQ7w3BZ6tnmq3bpzyubn717IwJ/OfS8n+BKXFE13tQ==}
+  mineflayer@4.30.0:
+    resolution: {integrity: sha512-GtW4hkijyZbSu5LKYYD89xZu+XY7OoP7IkrCnNEn6EdPm0+vr2THoJgFGKrlze9/81+T+P3E4qvJXNFiU/zeJg==}
     engines: {node: '>=22'}
 
   minimatch@3.1.2:
@@ -1912,8 +1903,8 @@ packages:
     resolution: {integrity: sha512-mnpNPV3xwu63u3NwZuXM1RCp979vjHxUGHzVrb6dxbvof5Fx+b8Rs0G0c3xtEuFDreGAMWS7VrlNkDUDBMsFWQ==}
     engines: {node: '>=14'}
 
-  protodef@1.18.0:
-    resolution: {integrity: sha512-jO64lkzkh0dYc0AVWCU/GzCKwqhFFIz1kfEz0NBf0RUuRNcmvgKbopabJdfZ6W8NvALdySUXgEhvKDZPhdBwrg==}
+  protodef@1.19.0:
+    resolution: {integrity: sha512-94f3GR7pk4Qi5YVLaLvWBfTGUIzzO8hyo7vFVICQuu5f5nwKtgGDaeC1uXIu49s5to/49QQhEYeL0aigu1jEGA==}
     engines: {node: '>=14'}
 
   proxy-addr@2.0.7:
@@ -2003,9 +1994,6 @@ packages:
 
   rxjs@7.8.2:
     resolution: {integrity: sha512-dhKf903U/PQZY6boNNtAGdWbG85WAbjT/1xYoZIC7FAY0yWapOBQVsVrDl58W86//e1VpMNBtRV4MaXfdMySFA==}
-
-  safe-buffer@5.1.2:
-    resolution: {integrity: sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==}
 
   safe-buffer@5.2.1:
     resolution: {integrity: sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==}
@@ -2989,10 +2977,9 @@ snapshots:
     dependencies:
       undici-types: 6.21.0
 
-  '@types/readable-stream@4.0.18':
+  '@types/readable-stream@4.0.21':
     dependencies:
       '@types/node': 22.16.3
-      safe-buffer: 5.1.2
 
   '@types/stack-utils@2.0.3': {}
 
@@ -3065,10 +3052,10 @@ snapshots:
 
   '@xboxreplay/errors@0.1.0': {}
 
-  '@xboxreplay/xboxlive-auth@3.3.3(debug@4.4.0)':
+  '@xboxreplay/xboxlive-auth@3.3.3(debug@4.4.1)':
     dependencies:
       '@xboxreplay/errors': 0.1.0
-      axios: 0.21.4(debug@4.4.0)
+      axios: 0.21.4(debug@4.4.1)
     transitivePeerDependencies:
       - debug
 
@@ -3129,9 +3116,9 @@ snapshots:
 
   async@3.2.6: {}
 
-  axios@0.21.4(debug@4.4.0):
+  axios@0.21.4(debug@4.4.1):
     dependencies:
-      follow-redirects: 1.15.9(debug@4.4.0)
+      follow-redirects: 1.15.9(debug@4.4.1)
     transitivePeerDependencies:
       - debug
 
@@ -3372,10 +3359,6 @@ snapshots:
       ms: 2.0.0
 
   debug@4.3.7:
-    dependencies:
-      ms: 2.1.3
-
-  debug@4.4.0:
     dependencies:
       ms: 2.1.3
 
@@ -3630,9 +3613,9 @@ snapshots:
       locate-path: 5.0.0
       path-exists: 4.0.0
 
-  follow-redirects@1.15.9(debug@4.4.0):
+  follow-redirects@1.15.9(debug@4.4.1):
     optionalDependencies:
-      debug: 4.4.0
+      debug: 4.4.1
 
   foreground-child@3.3.1:
     dependencies:
@@ -4183,7 +4166,7 @@ snapshots:
       ms: 2.1.3
       semver: 7.7.2
 
-  jwa@1.4.1:
+  jwa@1.4.2:
     dependencies:
       buffer-equal-constant-time: 1.0.1
       ecdsa-sig-formatter: 1.0.11
@@ -4191,7 +4174,7 @@ snapshots:
 
   jws@3.2.2:
     dependencies:
-      jwa: 1.4.1
+      jwa: 1.4.2
       safe-buffer: 5.2.1
 
   leven@3.1.0: {}
@@ -4279,15 +4262,14 @@ snapshots:
 
   minecraft-folder-path@1.2.0: {}
 
-  minecraft-protocol@1.55.0:
+  minecraft-protocol@1.58.0:
     dependencies:
       '@types/node-rsa': 1.1.4
-      '@types/readable-stream': 4.0.18
+      '@types/readable-stream': 4.0.21
       aes-js: 3.1.2
       buffer-equal: 1.0.1
-      debug: 4.4.0
+      debug: 4.4.1
       endian-toggle: 0.0.0
-      lodash.get: 4.4.2
       lodash.merge: 4.6.2
       minecraft-data: 3.93.0
       minecraft-folder-path: 1.2.0
@@ -4297,7 +4279,7 @@ snapshots:
       prismarine-chat: 1.11.0
       prismarine-nbt: 2.7.0
       prismarine-realms: 1.3.2
-      protodef: 1.18.0
+      protodef: 1.19.0
       readable-stream: 4.7.0
       uuid-1345: 1.0.2
       yggdrasil: 1.7.0
@@ -4319,7 +4301,7 @@ snapshots:
 
   mineflayer-pvp@1.3.2(prismarine-registry@1.10.0):
     dependencies:
-      mineflayer: 4.29.0
+      mineflayer: 4.30.0
       mineflayer-pathfinder: 2.4.5
       mineflayer-utils: 0.1.4(prismarine-registry@1.10.0)
     transitivePeerDependencies:
@@ -4342,7 +4324,7 @@ snapshots:
   mineflayer@2.41.0(prismarine-registry@1.10.0):
     dependencies:
       minecraft-data: 2.221.0
-      minecraft-protocol: 1.55.0
+      minecraft-protocol: 1.58.0
       prismarine-biome: 1.3.0(minecraft-data@2.221.0)(prismarine-registry@1.10.0)
       prismarine-block: 1.21.0
       prismarine-chat: 1.11.0
@@ -4353,7 +4335,7 @@ snapshots:
       prismarine-recipe: 1.3.1(prismarine-registry@1.10.0)
       prismarine-windows: 1.6.0
       prismarine-world: 3.6.3
-      protodef: 1.18.0
+      protodef: 1.19.0
       typed-emitter: 1.4.0
       vec3: 0.1.10
     transitivePeerDependencies:
@@ -4361,10 +4343,10 @@ snapshots:
       - prismarine-registry
       - supports-color
 
-  mineflayer@4.29.0:
+  mineflayer@4.30.0:
     dependencies:
       minecraft-data: 3.93.0
-      minecraft-protocol: 1.55.0
+      minecraft-protocol: 1.58.0
       prismarine-biome: 1.3.0(minecraft-data@3.93.0)(prismarine-registry@1.11.0)
       prismarine-block: 1.21.0
       prismarine-chat: 1.11.0
@@ -4377,7 +4359,7 @@ snapshots:
       prismarine-registry: 1.11.0
       prismarine-windows: 2.9.0
       prismarine-world: 3.6.3
-      protodef: 1.18.0
+      protodef: 1.19.0
       typed-emitter: 1.4.0
       vec3: 0.1.10
     transitivePeerDependencies:
@@ -4565,8 +4547,8 @@ snapshots:
   prismarine-auth@2.7.0:
     dependencies:
       '@azure/msal-node': 2.16.2
-      '@xboxreplay/xboxlive-auth': 3.3.3(debug@4.4.0)
-      debug: 4.4.0
+      '@xboxreplay/xboxlive-auth': 3.3.3(debug@4.4.1)
+      debug: 4.4.1
       smart-buffer: 4.2.0
       uuid-1345: 1.0.2
     transitivePeerDependencies:
@@ -4613,8 +4595,8 @@ snapshots:
   prismarine-chat@1.10.1:
     dependencies:
       mojangson: 2.0.4
-      prismarine-nbt: 2.7.0
-      prismarine-registry: 1.10.0
+      prismarine-nbt: 2.6.0
+      prismarine-registry: 1.11.0
 
   prismarine-chat@1.11.0:
     dependencies:
@@ -4682,7 +4664,7 @@ snapshots:
 
   prismarine-nbt@2.7.0:
     dependencies:
-      protodef: 1.18.0
+      protodef: 1.19.0
 
   prismarine-physics@1.10.0:
     dependencies:
@@ -4698,7 +4680,7 @@ snapshots:
 
   prismarine-realms@1.3.2:
     dependencies:
-      debug: 4.4.0
+      debug: 4.4.1
       node-fetch: 2.7.0
     transitivePeerDependencies:
       - encoding
@@ -4773,9 +4755,8 @@ snapshots:
       protodef-validator: 1.3.1
       readable-stream: 4.5.2
 
-  protodef@1.18.0:
+  protodef@1.19.0:
     dependencies:
-      lodash.get: 4.4.2
       lodash.reduce: 4.6.0
       protodef-validator: 1.4.0
       readable-stream: 4.7.0
@@ -4869,8 +4850,6 @@ snapshots:
   rxjs@7.8.2:
     dependencies:
       tslib: 2.8.1
-
-  safe-buffer@5.1.2: {}
 
   safe-buffer@5.2.1: {}
 
