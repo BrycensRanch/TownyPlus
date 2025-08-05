@@ -2,7 +2,7 @@
 
 [plugins]
 
-com-gradleup-shadow = { id = "com.gradleup.shadow", version = "8.3.8" }
+com-gradleup-shadow = { id = "com.gradleup.shadow", version = "8.3.9" }
 
 net-minecrell-plugin-yml-bukkit = { id = "net.minecrell.plugin-yml.bukkit", version = "0.6.0" }
 
