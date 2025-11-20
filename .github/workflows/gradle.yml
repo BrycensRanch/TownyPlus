@@ -14,7 +14,7 @@ jobs:
       gradle: ${{ steps.filter.outputs.gradle }}
     steps:
       - name: Check out current repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - uses: dorny/paths-filter@v3
@@ -38,7 +38,7 @@ jobs:
 
     steps:
       - name: Check out current repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -96,7 +96,7 @@ jobs:
         working-directory: e2e
     steps:
       - name: Check out current repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 #      - name: Create Coverage
@@ -127,7 +127,7 @@ jobs:
 
     steps:
       - name: Check out current repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           persist-credentials: false
           fetch-depth: 0
